@@ -1,8 +1,15 @@
+---
+layout: post
+title:  "Seq的匹配"
+date:   2017-04-02 21:07:41 +0800
+categories: scala Seq match
+---
+
 # Seq的匹配
 
 Seq的匹配请见以下代码：
 
-```scala
+{% highlight scala %}
 val nonEmptySeq    = Seq(1, 2, 3, 4, 5)                              // <1>
 val emptySeq       = Seq.empty[Int]
 val nonEmptyList   = List(1, 2, 3, 4, 5)                             // <2>
@@ -22,14 +29,14 @@ for (seq <- Seq(                                                     // <8>
     nonEmptyVector, emptyVector, nonEmptyMap.toSeq, emptyMap.toSeq)) {
   println(seqToString(seq))
 }
-```
+{% endhighlight %}
 
 由于Seq的定义就是由一个head和一个tail构成，因此，对Seq的匹配分为两种情况，：
 
 * 匹配至少包含一个head和一个tail的Seq（可能是List或Vector），并且tail可能是Nil，但head不是，这样至少表示该Seq是一个非空序列（head不为Nil）
 * Nil，即该Seq是一个空序列
 
-以上<5>和<6>就示例了如何匹配Seq（List || Vector）的方法。
+以上<5>和<6>就示例了如何匹配`Seq（List || Vector）`的方法。
 
 这里很明显的暗示了一点：所有的Seq，要么是空（Nil），要么非空。
 
@@ -39,7 +46,7 @@ for (seq <- Seq(                                                     // <8>
 
 以下是执行结果：
 
-```
+{% highlight scala %}
 1 +: 2 +: 3 +: 4 +: 5 +: Nil
 Nil
 1 +: 2 +: 3 +: 4 +: 5 +: Nil
@@ -48,11 +55,12 @@ Nil
 Nil
 (one,1) +: (two,2) +: (three,3) +: Nil
 Nil
-```
+{% endhighlight %}
+
 
 在Scala 2.10之前，处理List还有另一种很相似的方法：
 
-```scala
+{% highlight scala %}
 val nonEmptyList = List(1, 2, 3, 4, 5)
 val emptyList    = Nil
 
@@ -62,13 +70,13 @@ def listToString[T](list: List[T]): String = list match {
 }
 
 for (l <- List(nonEmptyList, emptyList)) { println(listToString(l)) }
-```
+{% endhighlight %}
 
 * 这里用 `::` 代替了 `+:`
 
 输出也很类似：
 
-```
+{% highlight scala %}
 (1 :: (2 :: (3 :: (4 :: (5 :: (Nil))))))
 (Nil)
-```
+{% endhighlight %}
