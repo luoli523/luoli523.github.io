@@ -1,13 +1,37 @@
 ---
-layout: default
-title: Luoli's Blog
+# blog page must be named index.html and in its own folder to support pagination
+# https://jekyllrb.com/docs/pagination/
+layout: page
+title: Blog
 ---
-<h1>{{ page.title }}</h1>
-<ul class="posts">
+<!--This loops through the paginated posts 
+{% for post in site.posts %}
+	<h1> <a href="{{post.url}}">{{post.title}}</a> </h1>
+{% endfor %}
+-->
 
-  {% for post in site.posts %}
-    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
-  {% endfor %}
-    
-</ul>
+<section class="list">
+	{% if paginator.posts.size == 0 %}
+		<p class="text-center">Nothing published yet!</p>
+	{% elsif site.paginate >= 2 %}
+		{% for post in paginator.posts %}
+			{% if post.blog %}
+				{% if post.hidden != true %}
+					{% include blog-post.html %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
 
+		{% if paginator.posts.size >= 1 %}
+			{% include pagination.html%}
+		{% endif %}
+	{% else %}
+		{% for post in site.posts %}
+			{% if post.category == 'blog' %}
+				{% if post.hidden != true %}
+					{% include blog-post.html %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+</section>
