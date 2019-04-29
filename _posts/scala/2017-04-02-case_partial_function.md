@@ -5,8 +5,6 @@ date:   2017-04-02 21:07:41 +0800
 categories: scala partialfunction match
 ---
 
-# 模式匹配和PartialFunction
-
 一个case序列加上一对大括号可以在任何地方被当做函数使用。实际上，这种情况本身就是一个函数。不同于普通函数只有一个统一的入口，和参数列表，case序列的这种函数有多个入口，每一个入口拥有不同的参数列表。如下例：
 
 {% highlight scala %}
@@ -16,6 +14,7 @@ val withDefault: Option[Int] => Int = {
 }
 {% endhighlight %}
 
+<!--more-->
 
 上述函数的函数体还有两个case，第一个case匹配一个Some，并返回Some内部的数字；第二个case匹配一个None，并返回0。 上述函数的调用情况如下：
 

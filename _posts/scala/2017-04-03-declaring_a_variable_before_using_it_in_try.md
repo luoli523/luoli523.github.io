@@ -5,8 +5,6 @@ date:   2017-04-03 21:07:41 +0800
 categories: scala Seq match
 ---
 
-# finally中获取对象引用
-
 在scala的try/catch/finally中，通常的处理情况如下：
 
 {% highlight scala %}
@@ -20,6 +18,7 @@ try {
 }
 {% endhighlight %}
 
+<!--more-->
 但是有一种情况特殊，就是当需要finally中，利用一些对象的引用来进行操作（比如关闭文件，或者socket等引用时），需要在finally中拿到这些对象的引用。那么利用上述方式就无法达到。比如：
 
 {% highlight scala %}

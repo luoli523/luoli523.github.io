@@ -5,8 +5,6 @@ date:   2017-04-02 21:07:41 +0800
 categories: scala break continue
 ---
 
-# 在scala中使用break和continue
-
 Scala中默认是没有实现break和continue关键字的。但是提供了其他的解决方案来达到同样的效果，那就是`scala.util.control.Breaks`。
 
 如下示例如何通过它达到相同的代码流程控制：
@@ -23,7 +21,7 @@ object BreakAndContinueDemo extends App {
         break // break out of the for loop
     } 
   }
-  
+ <!--more--> 
   println("\n=== CONTINUE EXAMPLE ===")
   val searchMe = "peter piper picked a peck of pickled peppers"
   var numPs = 0

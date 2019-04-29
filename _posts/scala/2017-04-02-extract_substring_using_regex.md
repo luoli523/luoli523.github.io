@@ -5,8 +5,6 @@ date:   2017-04-02 21:07:41 +0800
 categories: scala match regex
 ---
 
-# scala从字符串中利用正则表达式抽取子字符串
-
 * 问题描述：
   * 希望通过正则表达式从字符串中提取一个或多个符合匹配模式的子字符串
   
@@ -19,7 +17,7 @@ categories: scala match regex
 val pattern = "([0-9]+) ([A-Za-z]+)".r
 val pattern(count, fruit) = "100 Bananas"
 {% endhighlight %}
-
+<!--more-->
 
 {% highlight scala %}
 scala> val pattern = "([0-9]+) ([A-Za-z]+)".r

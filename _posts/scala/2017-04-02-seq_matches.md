@@ -5,8 +5,6 @@ date:   2017-04-02 21:07:41 +0800
 categories: scala Seq match
 ---
 
-# Seq的匹配
-
 Seq的匹配请见以下代码：
 
 {% highlight scala %}
@@ -30,6 +28,8 @@ for (seq <- Seq(                                                     // <8>
   println(seqToString(seq))
 }
 {% endhighlight %}
+
+<!--more-->
 
 由于Seq的定义就是由一个head和一个tail构成，因此，对Seq的匹配分为两种情况，：
 
