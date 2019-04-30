@@ -3,7 +3,7 @@ excerpt_separator: <!--more-->
 layout: post
 title:  "finally中获取对象引用"
 date:   2017-04-03 21:07:41 +0800
-categories: [scala,blog]
+categories: [scala]
 ---
 
 在scala的try/catch/finally中，通常的处理情况如下：

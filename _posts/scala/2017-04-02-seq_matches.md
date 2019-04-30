@@ -3,7 +3,7 @@ excerpt_separator: <!--more-->
 layout: post
 title:  "Seq的匹配"
 date:   2017-04-02 21:07:41 +0800
-categories: [scala,blog]
+categories: [scala]
 ---
 
 Seq的匹配请见以下代码：

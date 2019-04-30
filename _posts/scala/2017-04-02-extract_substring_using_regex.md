@@ -3,7 +3,7 @@ excerpt_separator: <!--more-->
 layout: post
 title:  "scala从字符串中利用正则表达式抽取子字符串"
 date:   2017-04-02 21:07:41 +0800
-categories: [scala,blog]
+categories: [scala]
 ---
 
 * 问题描述：
