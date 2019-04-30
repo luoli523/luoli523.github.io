@@ -24,7 +24,7 @@ url: "https://luoli523.github.io" # the base hostname & protocol for your site, 
 twitter_username: luoli523
 github_username: luoli523
 weibo_username: luoli523
-permalink: /blog/:year/:month/:day/:title
+#permalink: /blog/:year/:month/:day/:title
 
 # if it's an external image, update below for true
 # better with square images
@@ -46,7 +46,7 @@ analytics-google: 'UA-MYANALYTICS'
 # if you don't want comments in your posts, leave categories empty
 disqus:
   shortname: luoli523 # enter this from your disqus account
-  categories: [blog] # only show disqus for posts that have these categories
+#  categories: [blog] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
 #facebook: profile.php?id=100010194227441
@@ -67,7 +67,7 @@ github: luoli523
 email: luoli523@gmail.com
 
 authors:
-    Jianfeng:
+    luoli:
         name: Luo Li
         bio: BigData Engineer
         external-image: true
@@ -105,6 +105,7 @@ related: true
 post-advance-links: [_posts]
 
 excerpt_separator: <!--more-->
+
 
 # Build settings
 markdown: kramdown

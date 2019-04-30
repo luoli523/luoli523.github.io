@@ -1,8 +1,9 @@
 ---
+excerpt_separator: <!--more-->
 layout: post
 title:  "Seq的匹配"
 date:   2017-04-02 21:07:41 +0800
-categories: scala Seq match
+categories: [scala,blog]
 ---
 
 Seq的匹配请见以下代码：
@@ -80,3 +81,6 @@ for (l <- List(nonEmptyList, emptyList)) { println(listToString(l)) }
 (1 :: (2 :: (3 :: (4 :: (5 :: (Nil))))))
 (Nil)
 {% endhighlight %}
+
+<hr/>
+{% include disqus.html %}
