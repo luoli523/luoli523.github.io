@@ -4,6 +4,7 @@ layout: post
 title:  "scala从字符串中利用正则表达式抽取子字符串"
 date:   2017-04-02 21:07:41 +0800
 categories: [scala]
+category: scala
 ---
 
 * 问题描述：
@@ -66,5 +67,3 @@ textUserTyped match {
 
 可以从以上语法中看出，代码非常的简洁直观。
 
-<hr/>
-{% include disqus.html %}

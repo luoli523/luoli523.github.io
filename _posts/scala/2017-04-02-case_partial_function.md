@@ -4,6 +4,7 @@ layout: post
 title:  "模式匹配和PartialFunction"
 date:   2017-04-02 21:07:41 +0800
 categories: [scala]
+category: scala
 ---
 
 一个case序列加上一对大括号可以在任何地方被当做函数使用。实际上，这种情况本身就是一个函数。不同于普通函数只有一个统一的入口，和参数列表，case序列的这种函数有多个入口，每一个入口拥有不同的参数列表。如下例：
@@ -115,6 +116,3 @@ val divide2 : PartialFunciton[Int, Int] => {
   case x if x != 0 => 42 / 2
 }
 {% endhighlight %}
-
-<hr/>
-{% include disqus.html %}

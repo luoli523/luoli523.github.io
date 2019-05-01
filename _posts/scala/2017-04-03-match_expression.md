@@ -4,6 +4,7 @@ layout: post
 title:  "Match表达式的各种匹配模式"
 date:   2017-04-03 21:07:41 +0800
 categories: [scala]
+category: scala
 ---
 
 match表达式有多种case匹配模式，比如有常量匹配模式，变量匹配模式，构造函数匹配模式，sequence匹配模式，tuple匹配模式，类型匹配模式等等。
@@ -127,6 +128,3 @@ object Test2 extends App {
 }
 
 {% endhighlight %}
-
-<hr/>
-{% include disqus.html %}

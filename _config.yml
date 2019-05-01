@@ -46,7 +46,7 @@ analytics-google: 'UA-MYANALYTICS'
 # if you don't want comments in your posts, leave categories empty
 disqus:
   shortname: luoli523 # enter this from your disqus account
-#  categories: [blog] # only show disqus for posts that have these categories
+  categories: [scala, spark] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
 #facebook: profile.php?id=100010194227441

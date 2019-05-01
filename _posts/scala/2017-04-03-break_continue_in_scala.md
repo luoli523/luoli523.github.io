@@ -4,6 +4,7 @@ layout: post
 title:  "在scala中使用break和continue"
 date:   2017-04-02 21:07:41 +0800
 categories: [scala]
+category: scala
 ---
 
 Scala中默认是没有实现break和continue关键字的。但是提供了其他的解决方案来达到同样的效果，那就是`scala.util.control.Breaks`。
@@ -56,6 +57,3 @@ object BreakAndContinueDemo extends App {
 === CONTINUE EXAMPLE ===
 Found 9 p's in the string.
 ```
-
-<hr/>
-{% include disqus.html %}

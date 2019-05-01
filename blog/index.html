@@ -75,9 +75,11 @@ title: Blog
   <ul>
     {% for post in category[1] %}
       <li><a href="{{ post.url }}">{{ post.title }}</a> &nbsp <span class="date">{{ post.date }}</span></li>
+      <!--
       <div class="content">
         {{ post.excerpt }}
       </div>
+      -->
     {% endfor %}
   </ul>
 {% endfor %}
