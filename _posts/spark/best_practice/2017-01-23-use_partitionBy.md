@@ -56,7 +56,7 @@ val userData = sc.sequenceFile[UserID, UserInfo]("hdfs://...")
 
 其他的代码维持不变（由于events RDD是在processNewLogs()函数local变量，每次调用的时候只使用一次，所以对events进行partition没有任何帮助）。由于调用了partitionBy()，Spark就知道userData是进行了hash-partitioned的RDD，于是调用join()的时候，就会使用这个有用的信息。实际上，调用`userData.join(events)`时，Spark只会shuffle events RDD，将相应UserID的数据shuffle到对应UserID所在的userData partition所在的机器（如下图）。结果就是，节省了很多网络shuffle userData RDD的开销，效率得到了提高.
 
-![partitionBy-before](/assets/images/spark/partitionBy-before.png)
+![partitionBy-after](/assets/images/spark/partitionBy-after.png)
 
 注意：partitionBy()是一个transformation，所以该调用始终会返回一个新的RDD，所以该操作并不会修改原来的RDD（Spark中RDD被创建之后是不能被修改的）。因此，对userData进行persist非常重要。另外，传给HashPartitioner的100参数，表示对该RDD进行多少个partition的分区，这将决定对该RDD的操作的parallel程度（有多少task在并行的处理该RDD的数据）。通常可以将该并行度设置为集群的最大core数。
 
