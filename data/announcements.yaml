@@ -1,0 +1,29 @@
+# 公告栏数据 — 首页右侧浮窗自动读取
+# color: teal / amber / purple / red
+# type: book / tool / life / note  （对应 CSS 类 ht-book / ht-tool / ht-life / ht-note）
+# date: 显示在公告前的日期（简短格式即可，如 03-23）
+# text: 支持 HTML 标签（<strong> 等）
+
+- date: "03-23"
+  color: teal
+  type: book
+  tag: 书籍
+  text: "<strong>Claude Code</strong> 第六章初稿完成，近期发布"
+
+- date: "03-20"
+  color: amber
+  type: tool
+  tag: 工具
+  text: "网站迁移到 <strong>Hugo + Stack</strong>，新设计上线"
+
+- date: "03-15"
+  color: red
+  type: life
+  tag: 随笔
+  text: "学指弹中：《<strong>River Flows in You</strong>》进展中"
+
+- date: "03-10"
+  color: purple
+  type: book
+  tag: 书籍
+  text: "<strong>学 LLM</strong> Transformer 章节大幅重写完成"

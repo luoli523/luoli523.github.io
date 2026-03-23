@@ -890,6 +890,8 @@
     }
 
     .post-item {
+      display: block;
+      color: inherit;
       padding: 36px 40px;
       border: 1px solid var(--border);
       transition: all var(--transition);
@@ -1559,46 +1561,18 @@
 
       <!-- List -->
       <ul class="hp-list">
+        {{ range first 4 .Site.Data.announcements }}
         <li class="hp-item">
-          <span class="hp-dot hd-teal" aria-hidden="true"></span>
+          <span class="hp-dot hd-{{ .color }}" aria-hidden="true"></span>
           <div class="hp-body">
             <div class="hp-meta">
-              <time>03-23</time>
-              <span class="hp-tag ht-book">书籍</span>
+              <time>{{ .date }}</time>
+              <span class="hp-tag ht-{{ .type }}">{{ .tag }}</span>
             </div>
-            <p class="hp-text"><strong>Claude Code</strong> 第六章初稿完成，近期发布</p>
+            <p class="hp-text">{{ .text | safeHTML }}</p>
           </div>
         </li>
-        <li class="hp-item">
-          <span class="hp-dot hd-amber" aria-hidden="true"></span>
-          <div class="hp-body">
-            <div class="hp-meta">
-              <time>03-20</time>
-              <span class="hp-tag ht-tool">工具</span>
-            </div>
-            <p class="hp-text">网站迁移到 <strong>Hugo + Stack</strong>，新设计上线</p>
-          </div>
-        </li>
-        <li class="hp-item">
-          <span class="hp-dot hd-red" aria-hidden="true"></span>
-          <div class="hp-body">
-            <div class="hp-meta">
-              <time>03-15</time>
-              <span class="hp-tag ht-life">随笔</span>
-            </div>
-            <p class="hp-text">学指弹中：《<strong>River Flows in You</strong>》进展中</p>
-          </div>
-        </li>
-        <li class="hp-item">
-          <span class="hp-dot hd-purple" aria-hidden="true"></span>
-          <div class="hp-body">
-            <div class="hp-meta">
-              <time>03-10</time>
-              <span class="hp-tag ht-book">书籍</span>
-            </div>
-            <p class="hp-text"><strong>学 LLM</strong> Transformer 章节大幅重写完成</p>
-          </div>
-        </li>
+        {{ end }}
       </ul>
 
     </aside>
@@ -1684,55 +1658,28 @@
       </header>
 
       <div class="posts-grid reveal-stagger">
-
-        <!-- Post 1 -->
-        <article class="post-item">
-          <span class="post-cat post-cat-ai">AI / LLM</span>
-          <h3 class="post-title">从 RAG 到 Agent：大语言模型应用架构的演进</h3>
-          <p class="post-excerpt">探讨检索增强生成（RAG）与 AI Agent 框架的设计哲学差异，以及在实际工程项目中如何选型与落地。</p>
-          <div class="post-meta">
-            <time datetime="2025-11-10">2025-11-10</time>
-            <span class="post-meta-sep"></span>
-            <span>8 分钟阅读</span>
-          </div>
-        </article>
-
-        <!-- Post 2 -->
-        <article class="post-item">
-          <span class="post-cat post-cat-tool">工具</span>
-          <h3 class="post-title">用 Claude Code 重构一个 Spark 数据管道</h3>
-          <p class="post-excerpt">记录一次真实的 AI 辅助重构经历：如何让 Claude Code 理解复杂的业务逻辑，逐步拆解并优化遗留代码库。</p>
-          <div class="post-meta">
-            <time datetime="2025-10-28">2025-10-28</time>
-            <span class="post-meta-sep"></span>
-            <span>12 分钟阅读</span>
-          </div>
-        </article>
-
-        <!-- Post 3 -->
-        <article class="post-item">
-          <span class="post-cat post-cat-misc">随笔</span>
-          <h3 class="post-title">Trino 与 Spark SQL 在湖仓一体中的边界思考</h3>
-          <p class="post-excerpt">在同一套数据湖之上，Trino 和 Spark SQL 各自擅长什么场景？从延迟、吞吐量与资源模型的角度做一次深度对比。</p>
-          <div class="post-meta">
-            <time datetime="2025-10-05">2025-10-05</time>
-            <span class="post-meta-sep"></span>
-            <span>10 分钟阅读</span>
-          </div>
-        </article>
-
-        <!-- Post 4 -->
-        <article class="post-item">
-          <span class="post-cat post-cat-life">随笔</span>
-          <h3 class="post-title">技术人的"慢思考"：在信息洪流里保持清醒</h3>
-          <p class="post-excerpt">AI 每天产出海量新闻，新工具层出不穷，焦虑悄悄蔓延。我如何建立自己的技术吸收节奏，保持长期学习的韧劲。</p>
-          <div class="post-meta">
-            <time datetime="2025-09-18">2025-09-18</time>
-            <span class="post-meta-sep"></span>
-            <span>6 分钟阅读</span>
-          </div>
-        </article>
-
+        {{ $posts := first 4 (where .Site.RegularPages "Section" "post") }}
+        {{ if $posts }}
+          {{ range $posts }}
+          {{ $cat := index .Params.categories 0 | default "随笔" }}
+          {{ $catClass := "post-cat-misc" }}
+          {{ if eq $cat "AI / LLM" }}{{ $catClass = "post-cat-ai" }}{{ end }}
+          {{ if eq $cat "工具" }}{{ $catClass = "post-cat-tool" }}{{ end }}
+          {{ if eq $cat "生活" }}{{ $catClass = "post-cat-life" }}{{ end }}
+          <a href="{{ .Permalink }}" class="post-item">
+            <span class="post-cat {{ $catClass }}">{{ $cat }}</span>
+            <h3 class="post-title">{{ .Title }}</h3>
+            <p class="post-excerpt">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 100 "..." }}{{ end }}</p>
+            <div class="post-meta">
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+              <span class="post-meta-sep"></span>
+              <span>{{ .ReadingTime }} 分钟阅读</span>
+            </div>
+          </a>
+          {{ end }}
+        {{ else }}
+          <p style="color:var(--text-muted);padding:60px;text-align:center;grid-column:1/-1;font-family:var(--font-mono);font-size:0.85rem;">暂无文章，快来写第一篇吧 ✍️</p>
+        {{ end }}
       </div>
     </div>
   </section>
