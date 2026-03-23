@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鬼哥的空间 — Gui Ge's Space</title>
+  <meta name="description" content="鬼哥的技术博客 — 记录 AI、大数据、LLM 探索实践的个人空间" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES — GHOST PROTOCOL COLOR SYSTEM
+    ============================================================ */
+    :root {
+      --bg-void:       #07090f;
+      --bg-surface:    #0d1117;
+      --bg-elevated:   #131920;
+      --bg-card:       #0f151e;
+
+      --teal:          #2dd4bf;
+      --teal-dim:      rgba(45, 212, 191, 0.15);
+      --teal-glow:     rgba(45, 212, 191, 0.35);
+      --teal-muted:    rgba(45, 212, 191, 0.6);
+
+      --amber:         #f59e0b;
+      --amber-dim:     rgba(245, 158, 11, 0.15);
+      --amber-glow:    rgba(245, 158, 11, 0.3);
+
+      --purple:        #a78bfa;
+      --purple-dim:    rgba(167, 139, 250, 0.15);
+      --purple-glow:   rgba(167, 139, 250, 0.3);
+
+      --red:           #f87171;
+      --red-dim:       rgba(248, 113, 113, 0.15);
+
+      --text-primary:  #e8eaf0;
+      --text-secondary:#8b9ab0;
+      --text-muted:    #4a5568;
+      --text-ghost:    rgba(232, 234, 240, 0.04);
+
+      --border:        rgba(255, 255, 255, 0.06);
+      --border-hover:  rgba(45, 212, 191, 0.4);
+
+      --radius-sm:     8px;
+      --radius-md:     12px;
+      --radius-lg:     20px;
+      --radius-xl:     28px;
+
+      --font-serif:    'Noto Serif SC', 'Source Han Serif SC', serif;
+      --font-mono:     'JetBrains Mono', 'Fira Code', monospace;
+
+      --nav-h:         64px;
+      --section-pad:   100px;
+      --transition:    0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background: var(--bg-void);
+      color: var(--text-primary);
+      font-family: var(--font-serif);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    ::selection {
+      background: var(--teal-dim);
+      color: var(--teal);
+    }
+
+    /* ============================================================
+       ANIMATED BACKGROUND ORBS
+    ============================================================ */
+    .orb-field {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.55;
+      animation: floatOrb var(--dur, 20s) ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(45,212,191,0.18) 0%, transparent 70%);
+      top: -200px; left: -150px;
+      --dur: 22s;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(167,139,250,0.14) 0%, transparent 70%);
+      top: 30%; right: -100px;
+      --dur: 28s;
+      animation-delay: -8s;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(245,158,11,0.10) 0%, transparent 70%);
+      bottom: 10%; left: 20%;
+      --dur: 24s;
+      animation-delay: -14s;
+    }
+    .orb-4 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(45,212,191,0.10) 0%, transparent 70%);
+      bottom: -100px; right: 30%;
+      --dur: 32s;
+      animation-delay: -5s;
+    }
+
+    @keyframes floatOrb {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(40px, -60px) scale(1.08); }
+      66%  { transform: translate(-30px, 40px) scale(0.95); }
+      100% { transform: translate(20px, -20px) scale(1.03); }
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(24px, 5vw, 80px);
+      background: rgba(7, 9, 15, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-primary);
+      transition: opacity var(--transition);
+    }
+
+    .nav-logo:hover { opacity: 0.8; }
+
+    .nav-logo .dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 10px var(--teal), 0 0 20px var(--teal-glow);
+      animation: dotPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--teal), 0 0 20px var(--teal-glow); }
+      50%       { opacity: 0.7; box-shadow: 0 0 4px var(--teal); }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 6px 14px;
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      transition: color var(--transition);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 14px; right: 14px;
+      height: 1px;
+      background: var(--teal);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 60px) clamp(24px, 8vw, 120px) 80px;
+      overflow: hidden;
+    }
+
+    /* Giant ghost watermark */
+    .hero-watermark {
+      position: absolute;
+      top: 50%;
+      right: -5vw;
+      transform: translateY(-55%);
+      font-family: var(--font-serif);
+      font-size: clamp(280px, 32vw, 520px);
+      font-weight: 700;
+      color: var(--text-ghost);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.05em;
+      z-index: 0;
+      background: linear-gradient(135deg, rgba(232,234,240,0.05) 0%, rgba(45,212,191,0.03) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--teal-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+
+    .hero-meta::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--teal);
+      opacity: 0.6;
+    }
+
+    .hero-title {
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.25s;
+    }
+
+    .hero-title-cn {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-shadow: 0 0 60px rgba(45, 212, 191, 0.08);
+    }
+
+    .hero-title-en {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: clamp(1.1rem, 2.2vw, 1.65rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--teal);
+      letter-spacing: 0.04em;
+      margin-top: 6px;
+      opacity: 0.9;
+    }
+
+    .hero-desc {
+      margin-top: 28px;
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      max-width: 560px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.4s;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.55s;
+    }
+
+    .tag {
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      border: 1px solid;
+      transition: all 0.25s ease;
+    }
+
+    .tag-teal {
+      color: var(--teal);
+      border-color: rgba(45, 212, 191, 0.35);
+      background: var(--teal-dim);
+    }
+    .tag-amber {
+      color: var(--amber);
+      border-color: rgba(245, 158, 11, 0.35);
+      background: var(--amber-dim);
+    }
+    .tag-purple {
+      color: var(--purple);
+      border-color: rgba(167, 139, 250, 0.35);
+      background: var(--purple-dim);
+    }
+    .tag-red {
+      color: var(--red);
+      border-color: rgba(248, 113, 113, 0.35);
+      background: var(--red-dim);
+    }
+    .tag-teal:hover   { background: rgba(45,212,191,0.22);  box-shadow: 0 0 16px var(--teal-dim); }
+    .tag-amber:hover  { background: rgba(245,158,11,0.22);  box-shadow: 0 0 16px var(--amber-dim); }
+    .tag-purple:hover { background: rgba(167,139,250,0.22); box-shadow: 0 0 16px var(--purple-dim); }
+    .tag-red:hover    { background: rgba(248,113,113,0.22); box-shadow: 0 0 16px var(--red-dim); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 44px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.7s;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      border: none;
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: var(--bg-void);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(45, 212, 191, 0.4);
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      color: var(--text-primary);
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.04);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       HERO FLOATING PANEL (announcement + stats)
+    ============================================================ */
+    .hero-panel {
+      position: absolute;
+      right: clamp(32px, 6vw, 100px);
+      top: 50%;
+      transform: translateY(-38%);
+      z-index: 2;
+      width: 300px;
+      background: rgba(10, 13, 20, 0.52);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(45, 212, 191, 0.14);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1s;
+    }
+
+    [data-theme="light"] .hero-panel {
+      background: rgba(253, 251, 247, 0.68);
+      border-color: rgba(13, 148, 136, 0.18);
+      box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.10),
+        0 0 0 1px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    /* Stats row */
+    .hp-stats {
+      display: flex;
+      align-items: center;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(45, 212, 191, 0.04);
+    }
+
+    .hp-stat {
+      flex: 1;
+      text-align: center;
+    }
+
+    .hp-stat-num {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--teal);
+      line-height: 1;
+    }
+
+    .hp-stat-label {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+      letter-spacing: 0.05em;
+    }
+
+    .hp-stat-sep {
+      width: 1px;
+      height: 32px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* Header */
+    .hp-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hp-live-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 6px var(--teal-glow);
+      flex-shrink: 0;
+      animation: dotPulse 2.5s ease-in-out infinite;
+    }
+
+    .hp-title {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      flex: 1;
+    }
+
+    .hp-more {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .hp-more:hover { color: var(--teal); }
+
+    /* List */
+    .hp-list {
+      list-style: none;
+    }
+
+    .hp-item {
+      display: flex;
+      gap: 12px;
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+      transition: background 0.2s ease;
+    }
+
+    .hp-item:last-child { border-bottom: none; }
+
+    .hp-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    [data-theme="light"] .hp-item:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .hp-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .hd-teal   { background: var(--teal);   box-shadow: 0 0 5px var(--teal-glow); }
+    .hd-amber  { background: var(--amber);  box-shadow: 0 0 5px var(--amber-glow); }
+    .hd-purple { background: var(--purple); box-shadow: 0 0 5px var(--purple-glow); }
+    .hd-red    { background: var(--red); }
+
+    .hp-body { flex: 1; min-width: 0; }
+
+    .hp-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 4px;
+    }
+
+    .hp-meta time {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .hp-tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    .ht-book { color: var(--teal);   background: var(--teal-dim); }
+    .ht-tool { color: var(--amber);  background: var(--amber-dim); }
+    .ht-life { color: var(--red);    background: var(--red-dim); }
+    .ht-note { color: var(--purple); background: var(--purple-dim); }
+
+    .hp-text {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hp-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards 1.4s;
+    }
+
+    .scroll-indicator span {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .scroll-mouse {
+      width: 22px; height: 36px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 11px;
+      display: flex;
+      justify-content: center;
+      padding-top: 6px;
+    }
+
+    .scroll-dot {
+      width: 3px; height: 8px;
+      background: var(--teal);
+      border-radius: 2px;
+      animation: scrollDot 2s ease-in-out infinite;
+      box-shadow: 0 0 8px var(--teal);
+    }
+
+    @keyframes scrollDot {
+      0%   { transform: translateY(0); opacity: 1; }
+      70%  { transform: translateY(10px); opacity: 0; }
+      71%  { transform: translateY(0); opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* ============================================================
+       SECTION COMMON
+    ============================================================ */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--section-pad) clamp(24px, 5vw, 80px);
+    }
+
+    .section-header {
+      margin-bottom: 60px;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px; height: 1px;
+      background: currentColor;
+      opacity: 0.7;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .section-subtitle {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      max-width: 520px;
+    }
+
+    /* ============================================================
+       BOOKS SECTION
+    ============================================================ */
+    .books {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .book-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      overflow: hidden;
+      transition: all 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Hover teal tint overlay */
+    .book-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(45,212,191,0.06) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      border-radius: inherit;
+    }
+
+    /* Top accent line */
+    .book-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 32px; right: 32px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--teal), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .book-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(45, 212, 191, 0.45);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(45,212,191,0.15),
+        0 0 40px rgba(45,212,191,0.08);
+    }
+
+    .book-card:hover::before,
+    .book-card:hover::after { opacity: 1; }
+
+    .book-number {
+      position: absolute;
+      top: 24px; right: 28px;
+      font-family: var(--font-mono);
+      font-size: 4.5rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      pointer-events: none;
+      transition: color 0.35s ease;
+    }
+
+    .book-card:hover .book-number {
+      color: rgba(45, 212, 191, 0.06);
+    }
+
+    .book-icon {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      display: block;
+      line-height: 1;
+      filter: drop-shadow(0 0 12px rgba(45,212,191,0.3));
+      transition: transform 0.3s ease;
+    }
+    .book-card:hover .book-icon { transform: scale(1.08); }
+
+    .book-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+
+    .book-tag {
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      background: var(--teal-dim);
+      color: var(--teal-muted);
+      border: 1px solid rgba(45,212,191,0.2);
+    }
+
+    .book-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .book-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      flex: 1;
+      margin-bottom: 28px;
+    }
+
+    .book-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--teal);
+      transition: all 0.25s ease;
+      margin-top: auto;
+    }
+
+    .book-link .arrow {
+      display: inline-block;
+      transition: transform 0.25s ease;
+    }
+
+    .book-card:hover .book-link {
+      color: var(--text-primary);
+    }
+    .book-card:hover .book-link .arrow {
+      transform: translateX(4px);
+    }
+
+    /* ============================================================
+       POSTS SECTION
+    ============================================================ */
+    .posts {
+      background: var(--bg-void);
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+
+    .post-item {
+      padding: 36px 40px;
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--accent-color, var(--teal)), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .post-item:hover {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .post-item:hover::before { opacity: 1; }
+
+    .post-cat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    .post-cat-ai   { color: var(--teal);   background: var(--teal-dim);   border: 1px solid rgba(45,212,191,0.2); --accent-color: var(--teal); }
+    .post-cat-tool { color: var(--amber);  background: var(--amber-dim);  border: 1px solid rgba(245,158,11,0.2); --accent-color: var(--amber); }
+    .post-cat-misc { color: var(--purple); background: var(--purple-dim); border: 1px solid rgba(167,139,250,0.2); --accent-color: var(--purple); }
+    .post-cat-life { color: var(--red);    background: var(--red-dim);    border: 1px solid rgba(248,113,113,0.2); --accent-color: var(--red); }
+
+    /* Pass accent color down to the ::before pseudo */
+    .post-item:has(.post-cat-ai)::before   { background: linear-gradient(to bottom, transparent, var(--teal), transparent); }
+    .post-item:has(.post-cat-tool)::before { background: linear-gradient(to bottom, transparent, var(--amber), transparent); }
+    .post-item:has(.post-cat-misc)::before { background: linear-gradient(to bottom, transparent, var(--purple), transparent); }
+    .post-item:has(.post-cat-life)::before { background: linear-gradient(to bottom, transparent, var(--red), transparent); }
+
+    .post-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      transition: color var(--transition);
+    }
+
+    .post-item:hover .post-title {
+      color: var(--teal);
+    }
+
+    .post-excerpt {
+      font-size: 0.83rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .post-meta-sep {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    /* ============================================================
+       ABOUT STRIP
+    ============================================================ */
+    .about {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px clamp(24px, 5vw, 80px);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-watermark {
+      font-family: var(--font-serif);
+      font-size: clamp(100px, 14vw, 200px);
+      font-weight: 700;
+      color: rgba(45, 212, 191, 0.03);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      user-select: none;
+      pointer-events: none;
+      transition: color 1s ease;
+    }
+
+    .about:hover .about-watermark {
+      color: rgba(45, 212, 191, 0.05);
+    }
+
+    .about-name {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .about-handle {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--teal);
+      margin-bottom: 20px;
+      letter-spacing: 0.08em;
+    }
+
+    .about-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      margin-bottom: 28px;
+      max-width: 480px;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .skill-pill {
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      background: rgba(255,255,255,0.04);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      transition: all 0.25s ease;
+    }
+
+    .skill-pill:hover {
+      background: var(--teal-dim);
+      color: var(--teal);
+      border-color: rgba(45,212,191,0.35);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--bg-void);
+      padding: 40px clamp(24px, 5vw, 80px);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--teal);
+      border-color: rgba(45,212,191,0.2);
+      background: var(--teal-dim);
+    }
+
+    .footer-link svg {
+      width: 14px; height: 14px;
+      opacity: 0.7;
+    }
+
+    /* ============================================================
+       KEYFRAME ANIMATIONS
+    ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Intersection observer fade-up for sections */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.12s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.24s; }
+    .reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.18s; }
+
+    /* ============================================================
+       DIVIDER
+    ============================================================ */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0 auto;
+      max-width: 1200px;
+    }
+
+    /* ============================================================
+       RESPONSIVE — MOBILE
+    ============================================================ */
+    @media (max-width: 900px) {
+      :root { --section-pad: 64px; }
+
+      .nav-links { display: none; }
+
+      .hero {
+        padding-right: clamp(24px, 5vw, 40px);
+        min-height: 100svh;
+      }
+
+      .hero-watermark {
+        font-size: 55vw;
+        right: -10vw;
+        opacity: 0.6;
+      }
+
+      .hero-panel {
+        display: none;
+      }
+
+      .books-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .about-watermark {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .btn { width: 100%; justify-content: center; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ============================================================
+       SCROLLBAR STYLING
+    ============================================================ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-void); }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(45,212,191,0.25);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(45,212,191,0.45);
+    }
+
+    /* ============================================================
+       LIGHT THEME
+    ============================================================ */
+    :root[data-theme="light"] {
+      --bg-void:       #faf7f2;
+      --bg-surface:    #f0ece4;
+      --bg-elevated:   #e8e3d8;
+      --bg-card:       #fdfbf7;
+
+      --teal:          #0d9488;
+      --teal-dim:      rgba(13, 148, 136, 0.09);
+      --teal-glow:     rgba(13, 148, 136, 0.28);
+      --teal-muted:    rgba(13, 148, 136, 0.75);
+
+      --amber:         #b45309;
+      --amber-dim:     rgba(180, 83, 9, 0.09);
+      --amber-glow:    rgba(180, 83, 9, 0.2);
+
+      --purple:        #6d28d9;
+      --purple-dim:    rgba(109, 40, 217, 0.09);
+      --purple-glow:   rgba(109, 40, 217, 0.2);
+
+      --red:           #dc2626;
+      --red-dim:       rgba(220, 38, 38, 0.09);
+
+      --text-primary:  #1c1917;
+      --text-secondary:#57534e;
+      --text-muted:    #a8a29e;
+      --text-ghost:    rgba(28, 25, 23, 0.04);
+
+      --border:        rgba(0, 0, 0, 0.08);
+      --border-hover:  rgba(13, 148, 136, 0.4);
+    }
+
+    [data-theme="light"] body {
+      color-scheme: light;
+    }
+
+    [data-theme="light"] .nav {
+      background: rgba(250, 247, 242, 0.82) !important;
+      border-bottom-color: rgba(0,0,0,0.07) !important;
+    }
+
+    [data-theme="light"] .orb-1 {
+      background: radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%);
+    }
+    [data-theme="light"] .orb-2 {
+      background: radial-gradient(circle, rgba(109,40,217,0.08) 0%, transparent 70%);
+    }
+    [data-theme="light"] .orb-3 {
+      background: radial-gradient(circle, rgba(180,83,9,0.09) 0%, transparent 70%);
+    }
+    [data-theme="light"] .orb-4 {
+      background: radial-gradient(circle, rgba(13,148,136,0.07) 0%, transparent 70%);
+    }
+
+    [data-theme="light"] .stat-card {
+      background: rgba(253, 251, 247, 0.85);
+    }
+
+    [data-theme="light"] .btn-primary {
+      color: #faf7f2;
+    }
+
+    [data-theme="light"] .book-card:hover {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(13,148,136,0.2);
+    }
+
+    [data-theme="light"] .post-item:hover {
+      background: rgba(0,0,0,0.02);
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-track { background: var(--bg-void); }
+
+    /* ============================================================
+       THEME TOGGLE BUTTON
+    ============================================================ */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--teal-dim);
+      color: var(--teal);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(45,212,191,0.18);
+      border-color: var(--border-hover);
+      transform: rotate(20deg);
+    }
+
+    .theme-toggle svg {
+      width: 16px; height: 16px;
+      pointer-events: none;
+    }
+
+    .icon-sun  { display: none; }
+    .icon-moon { display: block; }
+    [data-theme="light"] .icon-sun  { display: block; }
+    [data-theme="light"] .icon-moon { display: none; }
+
+
+    /* ============================================================
+       ANNOUNCEMENTS SECTION
+    ============================================================ */
+    .announcements {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .announce-board {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .announce-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(45,212,191,0.03);
+    }
+
+    .announce-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .announce-live-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal-glow);
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    .announce-more {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .announce-more:hover { color: var(--teal); }
+
+    .announce-list {
+      list-style: none;
+    }
+
+    .announce-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+    }
+
+    .announce-item:last-child { border-bottom: none; }
+    .announce-item:hover { background: rgba(255,255,255,0.02); }
+
+    [data-theme="light"] .announce-item:hover { background: rgba(0,0,0,0.015); }
+
+    .announce-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .ad-teal   { background: var(--teal);   box-shadow: 0 0 6px var(--teal-glow); }
+    .ad-amber  { background: var(--amber);  box-shadow: 0 0 6px var(--amber-glow); }
+    .ad-purple { background: var(--purple); box-shadow: 0 0 6px var(--purple-glow); }
+    .ad-red    { background: var(--red); }
+
+    .announce-body {
+      flex: 1;
+    }
+
+    .announce-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 5px;
+    }
+
+    .announce-date {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .announce-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .at-book   { color: var(--teal);   background: var(--teal-dim); }
+    .at-life   { color: var(--red);    background: var(--red-dim); }
+    .at-tool   { color: var(--amber);  background: var(--amber-dim); }
+    .at-note   { color: var(--purple); background: var(--purple-dim); }
+
+    .announce-text {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .announce-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       BACKGROUND ORB FIELD
+  ============================================================ -->
+  <div class="orb-field" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
+
+
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="nav" role="navigation" aria-label="主导航">
+    <a href="/" class="nav-logo" aria-label="鬼哥的空间 首页">
+      鬼哥<span class="dot" aria-hidden="true"></span>的空间
+    </a>
+    <ul class="nav-links">
+      <li><a href="/posts/">文章</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="#books">书籍</a></li>
+      <li><a href="#about">关于</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换亮暗模式">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="home" aria-label="主页横幅">
+    <div class="hero-watermark" aria-hidden="true">鬼</div>
+
+    <div class="hero-content">
+      <div class="hero-meta">luoli523 · Big Data &amp; AI Engineer</div>
+
+      <h1 class="hero-title">
+        <span class="hero-title-cn">鬼哥的空间</span>
+        <span class="hero-title-en">Gui Ge's Space</span>
+      </h1>
+
+      <p class="hero-desc">
+        记录技术探索的足迹，分享 AI 与大数据的实践心得，以及平时的一些随笔与思考。
+      </p>
+
+      <div class="hero-tags">
+        <span class="tag tag-teal">AI / LLM</span>
+        <span class="tag tag-amber">Big Data</span>
+        <span class="tag tag-purple">Vibe Coding</span>
+        <span class="tag tag-red">吉他</span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="/posts/" class="btn btn-primary">开始阅读</a>
+        <a href="#books" class="btn btn-ghost">我的书 →</a>
+      </div>
+    </div>
+
+    <!-- Floating announcement panel -->
+    <aside class="hero-panel" aria-label="近期动态">
+
+      <!-- Stats row -->
+      <div class="hp-stats">
+        <div class="hp-stat">
+          <span class="hp-stat-num">3+</span>
+          <span class="hp-stat-label">在线书籍</span>
+        </div>
+        <div class="hp-stat-sep"></div>
+        <div class="hp-stat">
+          <span class="hp-stat-num">∞</span>
+          <span class="hp-stat-label">持续学习中</span>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <div class="hp-header">
+        <span class="hp-live-dot" aria-hidden="true"></span>
+        <span class="hp-title">近期动态</span>
+        <a href="/notes/" class="hp-more">全部 →</a>
+      </div>
+
+      <!-- List -->
+      <ul class="hp-list">
+        <li class="hp-item">
+          <span class="hp-dot hd-teal" aria-hidden="true"></span>
+          <div class="hp-body">
+            <div class="hp-meta">
+              <time>03-23</time>
+              <span class="hp-tag ht-book">书籍</span>
+            </div>
+            <p class="hp-text"><strong>Claude Code</strong> 第六章初稿完成，近期发布</p>
+          </div>
+        </li>
+        <li class="hp-item">
+          <span class="hp-dot hd-amber" aria-hidden="true"></span>
+          <div class="hp-body">
+            <div class="hp-meta">
+              <time>03-20</time>
+              <span class="hp-tag ht-tool">工具</span>
+            </div>
+            <p class="hp-text">网站迁移到 <strong>Hugo + Stack</strong>，新设计上线</p>
+          </div>
+        </li>
+        <li class="hp-item">
+          <span class="hp-dot hd-red" aria-hidden="true"></span>
+          <div class="hp-body">
+            <div class="hp-meta">
+              <time>03-15</time>
+              <span class="hp-tag ht-life">随笔</span>
+            </div>
+            <p class="hp-text">学指弹中：《<strong>River Flows in You</strong>》进展中</p>
+          </div>
+        </li>
+        <li class="hp-item">
+          <span class="hp-dot hd-purple" aria-hidden="true"></span>
+          <div class="hp-body">
+            <div class="hp-meta">
+              <time>03-10</time>
+              <span class="hp-tag ht-book">书籍</span>
+            </div>
+            <p class="hp-text"><strong>学 LLM</strong> Transformer 章节大幅重写完成</p>
+          </div>
+        </li>
+      </ul>
+
+    </aside>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-mouse">
+        <div class="scroll-dot"></div>
+      </div>
+      <span>向下滚动</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BOOKS SECTION
+  ============================================================ -->
+  <section class="books" id="books" aria-label="书籍">
+    <div class="section-inner">
+
+      <header class="section-header reveal">
+        <div class="section-eyebrow">Books &amp; Guides</div>
+        <h2 class="section-title">我的书籍</h2>
+        <p class="section-subtitle">系统性的技术学习资料，由浅入深，理论与实践并重。</p>
+      </header>
+
+      <div class="books-grid reveal-stagger">
+
+        <!-- Book 1 -->
+        <a href="https://luoli523.github.io/learn-claw/" class="book-card" target="_blank" rel="noopener noreferrer" aria-label="跟鬼哥一起学 OpenClaw">
+          <span class="book-number" aria-hidden="true">01</span>
+          <span class="book-icon">🦾</span>
+          <div class="book-tags">
+            <span class="book-tag">AI Agent</span>
+            <span class="book-tag">OpenClaw</span>
+          </div>
+          <h3 class="book-title">跟鬼哥一起学 OpenClaw</h3>
+          <p class="book-desc">深入探索 OpenClaw AI 助手的设计思路与实现方法，从架构原理到实战部署，构建你自己的智能 AI 工作流。</p>
+          <span class="book-link">开始阅读 <span class="arrow">→</span></span>
+        </a>
+
+        <!-- Book 2 -->
+        <a href="https://luoli523.github.io/claude-code-book/" class="book-card" target="_blank" rel="noopener noreferrer" aria-label="Claude Code 实战指南">
+          <span class="book-number" aria-hidden="true">02</span>
+          <span class="book-icon">⚡</span>
+          <div class="book-tags">
+            <span class="book-tag">Claude Code</span>
+            <span class="book-tag">AI 编程</span>
+          </div>
+          <h3 class="book-title">Claude Code 实战指南</h3>
+          <p class="book-desc">掌握 Claude Code 的最佳实践，从日常编程辅助到大型项目协作，让 AI 真正成为你的得力编程伙伴。</p>
+          <span class="book-link">开始阅读 <span class="arrow">→</span></span>
+        </a>
+
+        <!-- Book 3 -->
+        <a href="https://luoli523.github.io/learn-llm/" class="book-card" target="_blank" rel="noopener noreferrer" aria-label="跟鬼哥一起学 LLM">
+          <span class="book-number" aria-hidden="true">03</span>
+          <span class="book-icon">🧠</span>
+          <div class="book-tags">
+            <span class="book-tag">LLM</span>
+            <span class="book-tag">深度学习</span>
+          </div>
+          <h3 class="book-title">跟鬼哥一起学 LLM</h3>
+          <p class="book-desc">从 Transformer 原理到大语言模型的预训练、微调与对齐，系统梳理 LLM 的理论基础与工程实践。</p>
+          <span class="book-link">开始阅读 <span class="arrow">→</span></span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       RECENT POSTS
+  ============================================================ -->
+  <section class="posts" id="posts" aria-label="最近文章">
+    <div class="section-inner">
+
+      <header class="section-header reveal">
+        <div class="section-eyebrow">Recent Writing</div>
+        <h2 class="section-title">最新文章</h2>
+        <p class="section-subtitle">技术笔记、工具探索与日常思考，持续更新。</p>
+      </header>
+
+      <div class="posts-grid reveal-stagger">
+
+        <!-- Post 1 -->
+        <article class="post-item">
+          <span class="post-cat post-cat-ai">AI / LLM</span>
+          <h3 class="post-title">从 RAG 到 Agent：大语言模型应用架构的演进</h3>
+          <p class="post-excerpt">探讨检索增强生成（RAG）与 AI Agent 框架的设计哲学差异，以及在实际工程项目中如何选型与落地。</p>
+          <div class="post-meta">
+            <time datetime="2025-11-10">2025-11-10</time>
+            <span class="post-meta-sep"></span>
+            <span>8 分钟阅读</span>
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="post-item">
+          <span class="post-cat post-cat-tool">工具</span>
+          <h3 class="post-title">用 Claude Code 重构一个 Spark 数据管道</h3>
+          <p class="post-excerpt">记录一次真实的 AI 辅助重构经历：如何让 Claude Code 理解复杂的业务逻辑，逐步拆解并优化遗留代码库。</p>
+          <div class="post-meta">
+            <time datetime="2025-10-28">2025-10-28</time>
+            <span class="post-meta-sep"></span>
+            <span>12 分钟阅读</span>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="post-item">
+          <span class="post-cat post-cat-misc">随笔</span>
+          <h3 class="post-title">Trino 与 Spark SQL 在湖仓一体中的边界思考</h3>
+          <p class="post-excerpt">在同一套数据湖之上，Trino 和 Spark SQL 各自擅长什么场景？从延迟、吞吐量与资源模型的角度做一次深度对比。</p>
+          <div class="post-meta">
+            <time datetime="2025-10-05">2025-10-05</time>
+            <span class="post-meta-sep"></span>
+            <span>10 分钟阅读</span>
+          </div>
+        </article>
+
+        <!-- Post 4 -->
+        <article class="post-item">
+          <span class="post-cat post-cat-life">随笔</span>
+          <h3 class="post-title">技术人的"慢思考"：在信息洪流里保持清醒</h3>
+          <p class="post-excerpt">AI 每天产出海量新闻，新工具层出不穷，焦虑悄悄蔓延。我如何建立自己的技术吸收节奏，保持长期学习的韧劲。</p>
+          <div class="post-meta">
+            <time datetime="2025-09-18">2025-09-18</time>
+            <span class="post-meta-sep"></span>
+            <span>6 分钟阅读</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- ============================================================
+       ABOUT STRIP
+  ============================================================ -->
+  <section class="about" id="about" aria-label="关于鬼哥">
+    <div class="about-inner">
+
+      <!-- Decorative text -->
+      <div class="about-watermark" aria-hidden="true">鬼哥</div>
+
+      <!-- Content -->
+      <div class="reveal">
+        <h2 class="about-name">鬼哥 · luoli523</h2>
+        <p class="about-handle">@luoli523 · luoli523.github.io</p>
+        <p class="about-desc">
+          大数据与 AI 工程师，专注于构建高性能的数据基础设施与智能应用。
+          热衷于探索 LLM 的工程边界，相信好的技术文章是送给未来自己的礼物。
+          这里是我记录思考、分享实践的私人空间。
+        </p>
+        <div class="skills">
+          <span class="skill-pill">Apache Spark</span>
+          <span class="skill-pill">Trino</span>
+          <span class="skill-pill">LLM</span>
+          <span class="skill-pill">Claude Code</span>
+          <span class="skill-pill">Data Engineering</span>
+          <span class="skill-pill">AI Agent</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <p class="footer-copy">© 2025 鬼哥的空间 · luoli523 · Powered by Hugo &amp; Stack</p>
+
+      <nav class="footer-links" aria-label="外部链接">
+        <!-- GitHub -->
+        <a href="https://github.com/luoli523" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+
+        <!-- RSS -->
+        <a href="/index.xml" class="footer-link" aria-label="RSS 订阅">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/>
+          </svg>
+          RSS
+        </a>
+      </nav>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       VANILLA JS — Intersection Observer for reveal animations
+       + Nav scroll state
+  ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      // --- Scroll-reveal via IntersectionObserver ---
+      const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        revealEls.forEach((el) => observer.observe(el));
+      } else {
+        // Fallback: make everything visible
+        revealEls.forEach((el) => el.classList.add('visible'));
+      }
+
+      // --- Theme toggle ---
+      const html = document.documentElement;
+      const toggleBtn = document.getElementById('themeToggle');
+      const savedTheme = localStorage.getItem('gg-theme') || 'dark';
+      html.dataset.theme = savedTheme;
+
+      toggleBtn.addEventListener('click', () => {
+        const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+        html.dataset.theme = next;
+        localStorage.setItem('gg-theme', next);
+        onScroll();
+      });
+
+      // --- Nav background opacity on scroll (theme-aware) ---
+      const nav = document.querySelector('.nav');
+      const onScroll = () => {
+        const scrolled = window.scrollY > 20;
+        const isLight = html.dataset.theme === 'light';
+        if (isLight) {
+          nav.style.background = scrolled
+            ? 'rgba(250, 247, 242, 0.96)'
+            : 'rgba(250, 247, 242, 0.82)';
+          nav.style.borderBottomColor = scrolled
+            ? 'rgba(0,0,0,0.10)'
+            : 'rgba(0,0,0,0.07)';
+        } else {
+          nav.style.background = scrolled
+            ? 'rgba(7, 9, 15, 0.92)'
+            : 'rgba(7, 9, 15, 0.72)';
+          nav.style.borderBottomColor = scrolled
+            ? 'rgba(255,255,255,0.08)'
+            : 'rgba(255,255,255,0.06)';
+        }
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // --- Smooth scroll for anchor links ---
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', (e) => {
+          const href = anchor.getAttribute('href');
+          if (href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            const navH = parseInt(
+              getComputedStyle(document.documentElement).getPropertyValue('--nav-h'),
+              10
+            ) || 64;
+            const top = target.getBoundingClientRect().top + window.scrollY - navH;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        });
+      });
+
+      // --- Book card ripple effect on click ---
+      document.querySelectorAll('.book-card').forEach((card) => {
+        card.addEventListener('mouseenter', () => {
+          card.style.willChange = 'transform, box-shadow';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.willChange = 'auto';
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

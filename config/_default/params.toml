@@ -1,0 +1,39 @@
+mainSections   = ["post"]
+rssFullContent = true
+favicon        = "img/avatar.png"
+
+[footer]
+    since = 2024
+
+[sidebar]
+    emoji    = "🧠"
+    subtitle = "技术探索 · AI实践 · 随想记录"
+    avatar   = "img/avatar.png"
+
+[article]
+    [article.license]
+        enabled = true
+        default = "本文采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议"
+
+[widgets]
+    homepage = [
+        { type = "search" },
+        { type = "archives", params = { limit = 5 } },
+        { type = "categories", params = { limit = 10 } },
+        { type = "tag-cloud", params = { limit = 10 } },
+    ]
+    page     = [{ type = "toc" }]
+
+[comments]
+    enabled  = true
+    provider = "waline"
+
+    [comments.waline]
+        serverURL   = "https://waline-server-xxx.vercel.app"  # 替换为你的 Waline 服务地址
+        lang        = "zh-CN"
+        dark        = "auto"
+        reaction    = true
+        requiredMeta = ["nick"]
+
+[cookies]
+    enabled = false
