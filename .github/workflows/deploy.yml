@@ -6,7 +6,7 @@ on:
       - master
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -26,6 +26,25 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+
+      - name: Auto-update announcements for new posts
+        run: |
+          NEW_POSTS=$(git diff --name-only --diff-filter=A HEAD~1 HEAD 2>/dev/null \
+            | grep 'content/post/.*/index\.md' || true)
+
+          if [ -z "$NEW_POSTS" ]; then
+            echo "No new posts detected, skipping announcement update."
+          else
+            echo "New posts found: $NEW_POSTS"
+            for POST in $NEW_POSTS; do
+              python3 scripts/update_announcements.py "$POST"
+            done
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add data/announcements.yaml
+            git diff --cached --quiet || \
+              git commit -m "auto: 新文章公告 [skip ci]" && git push
+          fi
 
       - name: Setup Hugo
         run: |
