@@ -22,7 +22,7 @@ tags:
 
 三本在写的书也会继续更新：
 - [跟鬼哥一起学 OpenClaw](https://luoli523.github.io/learn-claw/)
-- [Claude Code 实战指南](https://luoli523.github.io/claude-code-book/)
+- [Claude Code 实战指南](https://luoli523.github.io/learn-cc/)
 - [跟鬼哥一起学 LLM](https://luoli523.github.io/learn-llm/)
 
 欢迎在下面留言交流。

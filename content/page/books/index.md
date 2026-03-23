@@ -24,7 +24,7 @@ menu:
 
 深入探索 Anthropic 官方 CLI 工具 Claude Code 的使用技巧、工作流设计和最佳实践。
 
-👉 [开始阅读](https://luoli523.github.io/claude-code-book/)
+👉 [开始阅读](https://luoli523.github.io/learn-cc/)
 
 ---
 

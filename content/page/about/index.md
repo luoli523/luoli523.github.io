@@ -17,7 +17,7 @@ menu:
 ## 我在写的书
 
 - [跟鬼哥一起学 OpenClaw](https://luoli523.github.io/learn-claw/) — 本地 AI 助手 OpenClaw 从入门到实践
-- [Claude Code 实战指南](https://luoli523.github.io/claude-code-book/) — Claude Code 深度使用指南
+- [Claude Code 实战指南](https://luoli523.github.io/learn-cc/) — Claude Code 深度使用指南
 - [跟鬼哥一起学 LLM](https://luoli523.github.io/learn-llm/) — 大语言模型原理与实践
 
 ## 技术方向
