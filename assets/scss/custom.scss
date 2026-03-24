@@ -1,62 +1,86 @@
 /* ============================================================
    鬼哥的空间 — Stack theme color & font overrides
-   Aligns inner pages with the homepage's Ghost Protocol palette
+   支持 data-scheme="dark" 和 data-scheme="light" 双主题
 ============================================================ */
 
-/* --- Font system --- */
+/* --- 字体系统（通用） --- */
 :root {
-    --base-font-family: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", serif;
+    --base-font-family:    "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", serif;
     --article-font-family: "Noto Serif SC", "PingFang SC", serif;
-    --code-font-family: "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+    --code-font-family:    "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
 
-    /* Accent — teal */
+    /* Accent — teal（两套主题共用） */
     --accent-color:        #2dd4bf;
     --accent-color-darker: #22b5a0;
     --accent-color-text:   #07090f;
+
+    --heading-border-size: 3px;
 }
 
-/* --- Force dark palette regardless of scheme toggle --- */
-:root,
-[data-scheme="dark"],
-[data-scheme="light"] {
+/* ============================================================
+   暗色主题
+============================================================ */
+[data-scheme="dark"] {
     --body-background: #07090f;
 
-    --card-background:          #0f151e;
-    --card-background-selected: rgba(45, 212, 191, 0.08);
+    --card-background:           #0f151e;
+    --card-background-selected:  rgba(45, 212, 191, 0.08);
 
     --card-text-color-main:      #e8eaf0;
     --card-text-color-secondary: #8b9ab0;
     --card-text-color-tertiary:  rgba(139, 154, 176, 0.6);
     --card-separator-color:      rgba(255, 255, 255, 0.06);
 
-    --body-text-color: #8b9ab0;
+    --body-text-color:           #8b9ab0;
 
-    /* Code blocks */
-    --code-background-color: #131920;
-    --code-text-color: #8b9ab0;
-    --pre-background-color: #0d1117;
-    --pre-text-color: #e8eaf0;
+    --code-background-color:     #131920;
+    --code-text-color:           #8b9ab0;
+    --pre-background-color:      #0d1117;
+    --pre-text-color:            #e8eaf0;
 
-    /* Borders / misc */
-    --table-border-color: rgba(255, 255, 255, 0.08);
-    --tr-even-background-color: rgba(45, 212, 191, 0.04);
+    --table-border-color:        rgba(255, 255, 255, 0.08);
+    --tr-even-background-color:  rgba(45, 212, 191, 0.04);
     --blockquote-background-color: #131920;
-    --kbd-border-color: rgba(255, 255, 255, 0.15);
-
-    /* Heading accent line */
-    --heading-border-size: 3px;
+    --kbd-border-color:          rgba(255, 255, 255, 0.15);
 }
 
-/* --- Body & layout --- */
+/* ============================================================
+   亮色主题
+============================================================ */
+[data-scheme="light"] {
+    --body-background: #f0f4f8;
+
+    --card-background:           #ffffff;
+    --card-background-selected:  rgba(45, 212, 191, 0.06);
+
+    --card-text-color-main:      #1a202c;
+    --card-text-color-secondary: #4a5568;
+    --card-text-color-tertiary:  #718096;
+    --card-separator-color:      rgba(0, 0, 0, 0.07);
+
+    --body-text-color:           #4a5568;
+
+    --code-background-color:     #edf2f7;
+    --code-text-color:           #2d6a6a;
+    --pre-background-color:      #f7fafc;
+    --pre-text-color:            #1a202c;
+
+    --table-border-color:        rgba(0, 0, 0, 0.1);
+    --tr-even-background-color:  rgba(45, 212, 191, 0.05);
+    --blockquote-background-color: #edf2f7;
+    --kbd-border-color:          rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================
+   通用布局（两套主题都适用，用 CSS 变量引用颜色）
+============================================================ */
 body {
-    background: #07090f;
-    color: #8b9ab0;
+    background: var(--body-background);
+    color: var(--body-text-color);
 }
 
-/* --- Left sidebar --- */
-.left-sidebar {
-    background: transparent;
-}
+/* --- 侧边栏 --- */
+.left-sidebar { background: transparent; }
 
 .sidebar .site-avatar img {
     border: 2px solid rgba(45, 212, 191, 0.3);
@@ -66,21 +90,20 @@ body {
 .sidebar .site-name a {
     font-family: "Noto Serif SC", serif;
     font-weight: 700;
-    color: #e8eaf0 !important;
+    color: var(--card-text-color-main) !important;
 }
 
 .sidebar .site-description {
-    color: #8b9ab0;
+    color: var(--card-text-color-secondary);
     font-size: 1.3rem;
 }
 
 .sidebar nav ul li a {
-    color: #8b9ab0;
+    color: var(--card-text-color-secondary);
     font-family: "JetBrains Mono", monospace;
     font-size: 1.3rem;
     letter-spacing: 0.04em;
     transition: color 0.2s ease;
-
     &:hover { color: #2dd4bf; }
 }
 
@@ -89,28 +112,32 @@ body {
     font-weight: 600;
 }
 
-/* --- Cards --- */
+/* --- 卡片 --- */
 .card {
-    background: #0f151e;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--card-background);
     border-radius: 12px;
     box-shadow: none;
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
-
-    &:hover {
-        border-color: rgba(45, 212, 191, 0.25);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    }
+    &:hover { border-color: rgba(45, 212, 191, 0.25); }
 }
 
-/* Article list items */
+[data-scheme="dark"] .card {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    &:hover { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); }
+}
+
+[data-scheme="light"] .card {
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    &:hover { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); }
+}
+
+/* --- 文章列表 --- */
 .article-list--compact article {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
+    border-bottom: 1px solid var(--card-separator-color);
     &:last-child { border-bottom: none; }
-
     a {
-        color: #e8eaf0;
+        color: var(--card-text-color-main);
         &:hover { color: #2dd4bf; }
     }
 }
@@ -118,25 +145,22 @@ body {
 .article-title {
     font-family: "Noto Serif SC", serif;
     font-weight: 700;
-    color: #e8eaf0;
-
+    color: var(--card-text-color-main);
     a {
         color: inherit;
         &:hover { color: #2dd4bf; }
     }
 }
 
-.article-subtitle {
-    color: #8b9ab0;
-}
+.article-subtitle { color: var(--card-text-color-secondary); }
 
 .article-time {
-    color: rgba(139, 154, 176, 0.6);
+    color: var(--card-text-color-tertiary);
     font-family: "JetBrains Mono", monospace;
     font-size: 1.2rem;
 }
 
-/* --- Category / tag chips --- */
+/* --- 分类 / 标签 --- */
 .article-category a,
 .article-tags a {
     background: rgba(45, 212, 191, 0.08);
@@ -146,21 +170,20 @@ body {
     font-family: "JetBrains Mono", monospace;
     font-size: 1.2rem;
     transition: background 0.2s ease;
-
     &:hover {
         background: rgba(45, 212, 191, 0.18);
         color: #2dd4bf;
     }
 }
 
-/* --- Main article content --- */
+/* --- 文章正文 --- */
 .article-content {
     font-family: "Noto Serif SC", serif;
-    color: #c8cdd8;
+    color: var(--card-text-color-secondary);
     line-height: 1.9;
 
     h1, h2, h3, h4 {
-        color: #e8eaf0;
+        color: var(--card-text-color-main);
         font-family: "Noto Serif SC", serif;
         font-weight: 700;
     }
@@ -173,67 +196,63 @@ body {
     a {
         color: #2dd4bf;
         text-decoration-color: rgba(45, 212, 191, 0.3);
-
-        &:hover {
-            text-decoration-color: #2dd4bf;
-        }
+        &:hover { text-decoration-color: #2dd4bf; }
     }
 
     code {
         font-family: "JetBrains Mono", monospace;
-        background: #131920;
-        color: #7dd3c8;
-        border: 1px solid rgba(255,255,255,0.07);
+        background: var(--code-background-color);
+        color: var(--code-text-color);
         border-radius: 4px;
         padding: 0.15em 0.4em;
         font-size: 0.88em;
     }
 
-    pre {
-        background: #0d1117 !important;
+    [data-scheme="dark"] & code {
         border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 10px;
+    }
 
+    [data-scheme="light"] & code {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    pre {
+        background: var(--pre-background-color) !important;
+        border-radius: 10px;
         code {
             background: transparent;
             border: none;
             padding: 0;
-            color: #e8eaf0;
+            color: var(--pre-text-color);
         }
     }
 
+    [data-scheme="dark"] & pre  { border: 1px solid rgba(255, 255, 255, 0.07); }
+    [data-scheme="light"] & pre { border: 1px solid rgba(0, 0, 0, 0.08); }
+
     blockquote {
-        background: #131920;
+        background: var(--blockquote-background-color);
         border-left: 3px solid rgba(45, 212, 191, 0.5);
-        color: #8b9ab0;
+        color: var(--card-text-color-secondary);
         border-radius: 0 8px 8px 0;
     }
 
     table {
-        border-color: rgba(255, 255, 255, 0.08);
-
-        thead tr {
-            background: #131920;
-        }
-        tr:nth-child(even) {
-            background: rgba(45, 212, 191, 0.03);
-        }
+        border-color: var(--table-border-color);
+        thead tr { background: var(--blockquote-background-color); }
+        tr:nth-child(even) { background: var(--tr-even-background-color); }
     }
 
-    hr {
-        border-color: rgba(255, 255, 255, 0.07);
-    }
+    hr { border-color: var(--card-separator-color); }
 }
 
-/* --- Pagination --- */
+/* --- 分页 --- */
 .pagination .page-link {
-    background: #0f151e;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    color: #8b9ab0;
+    background: var(--card-background);
+    color: var(--card-text-color-secondary);
     font-family: "JetBrains Mono", monospace;
     border-radius: 8px;
     transition: all 0.2s ease;
-
     &:hover, &.current {
         background: rgba(45, 212, 191, 0.12);
         border-color: rgba(45, 212, 191, 0.35);
@@ -241,30 +260,31 @@ body {
     }
 }
 
-/* --- Widgets --- */
-.widget {
-    background: #0f151e;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 12px;
+[data-scheme="dark"] .pagination .page-link { border: 1px solid rgba(255, 255, 255, 0.07); }
+[data-scheme="light"] .pagination .page-link { border: 1px solid rgba(0, 0, 0, 0.1); }
 
+/* --- 侧边小部件 --- */
+.widget {
+    background: var(--card-background);
+    border-radius: 12px;
     .widget-title {
         font-family: "JetBrains Mono", monospace;
         font-size: 1.1rem;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: rgba(139, 154, 176, 0.7);
+        color: var(--card-text-color-tertiary);
     }
 }
 
+[data-scheme="dark"] .widget  { border: 1px solid rgba(255, 255, 255, 0.06); }
+[data-scheme="light"] .widget { border: 1px solid rgba(0, 0, 0, 0.07); box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+
 .tagCloud a {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    color: #8b9ab0;
+    color: var(--card-text-color-secondary);
     border-radius: 6px;
     font-family: "JetBrains Mono", monospace;
     font-size: 1.2rem;
     transition: all 0.2s ease;
-
     &:hover {
         background: rgba(45, 212, 191, 0.1);
         border-color: rgba(45, 212, 191, 0.3);
@@ -272,14 +292,15 @@ body {
     }
 }
 
-/* --- Search --- */
+[data-scheme="dark"] .tagCloud a  { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); }
+[data-scheme="light"] .tagCloud a { background: rgba(0,0,0,0.03);       border: 1px solid rgba(0,0,0,0.08); }
+
+/* --- 搜索 --- */
 #search-form input {
-    background: #0d1117;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #e8eaf0;
+    background: var(--card-background);
+    color: var(--card-text-color-main);
     font-family: "Noto Serif SC", serif;
     border-radius: 8px;
-
     &:focus {
         border-color: rgba(45, 212, 191, 0.4);
         outline: none;
@@ -287,31 +308,45 @@ body {
     }
 }
 
-/* --- Footer --- */
+[data-scheme="dark"] #search-form input  { border: 1px solid rgba(255,255,255,0.08); }
+[data-scheme="light"] #search-form input { border: 1px solid rgba(0,0,0,0.12); }
+
+/* --- 页脚 --- */
 footer.site-footer {
     background: transparent;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    color: rgba(139, 154, 176, 0.5);
+    border-top: 1px solid var(--card-separator-color);
+    color: var(--card-text-color-tertiary);
     font-family: "JetBrains Mono", monospace;
     font-size: 1.2rem;
-
     a {
-        color: rgba(139, 154, 176, 0.6);
+        color: var(--card-text-color-tertiary);
         &:hover { color: #2dd4bf; }
     }
 }
 
-/* --- Theme toggle button --- */
+/* --- 主题切换按钮 --- */
 .dark-mode-toggle {
-    color: #8b9ab0;
+    color: var(--card-text-color-secondary);
     &:hover { color: #2dd4bf; }
 }
 
-/* --- Scrollbar --- */
+/* --- 滚动条 --- */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #07090f; }
-::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    &:hover { background: rgba(45, 212, 191, 0.4); }
+
+[data-scheme="dark"] {
+    ::-webkit-scrollbar-track { background: #07090f; }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.1);
+        border-radius: 3px;
+        &:hover { background: rgba(45,212,191,0.4); }
+    }
+}
+
+[data-scheme="light"] {
+    ::-webkit-scrollbar-track { background: #f0f4f8; }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.15);
+        border-radius: 3px;
+        &:hover { background: rgba(45,212,191,0.5); }
+    }
 }

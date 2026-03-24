@@ -1,7 +1,7 @@
 mainSections   = ["post"]
 
 [colorScheme]
-    toggle  = false
+    toggle  = true
     default = "dark"
 rssFullContent = true
 favicon        = "img/avatar.png"

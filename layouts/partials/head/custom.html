@@ -1,0 +1,21 @@
+<script>
+// 监听 data-scheme 变化，同步写回 gg-theme 和 StackColorScheme
+(function () {
+    const GG_KEY    = 'gg-theme';
+    const STACK_KEY = 'StackColorScheme';
+
+    var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (m) {
+            if (m.attributeName === 'data-scheme') {
+                var scheme = document.documentElement.dataset.scheme || 'dark';
+                localStorage.setItem(GG_KEY,    scheme);
+                localStorage.setItem(STACK_KEY, scheme);
+                // 同步 data-theme，供首页 CSS 变量使用（如从内页跳回首页时生效）
+                document.documentElement.setAttribute('data-theme', scheme);
+            }
+        });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+})();
+</script>

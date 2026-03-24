@@ -2162,15 +2162,25 @@
       }
 
       // --- Theme toggle ---
+      // gg-theme 为唯一数据源，同步写入 StackColorScheme 供内页读取
       const html = document.documentElement;
       const toggleBtn = document.getElementById('themeToggle');
-      const savedTheme = localStorage.getItem('gg-theme') || 'dark';
+      const savedTheme = localStorage.getItem('gg-theme')
+                      || localStorage.getItem('StackColorScheme')
+                      || 'dark';
       html.dataset.theme = savedTheme;
+
+      function applyTheme(theme) {
+        html.dataset.theme = theme;
+        localStorage.setItem('gg-theme', theme);
+        localStorage.setItem('StackColorScheme', theme);
+      }
+
+      applyTheme(savedTheme);
 
       toggleBtn.addEventListener('click', () => {
         const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
-        html.dataset.theme = next;
-        localStorage.setItem('gg-theme', next);
+        applyTheme(next);
         onScroll();
       });
 

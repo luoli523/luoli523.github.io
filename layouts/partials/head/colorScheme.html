@@ -1,0 +1,31 @@
+<script>
+(function () {
+    const GG_KEY    = 'gg-theme';
+    const STACK_KEY = 'StackColorScheme';
+    const DEFAULT   = 'dark';
+
+    // gg-theme 为唯一数据源；如果 gg-theme 未设置，则回退到 StackColorScheme，
+    // 两者都没有则使用默认值 dark。
+    var stored = localStorage.getItem(GG_KEY)
+              || localStorage.getItem(STACK_KEY)
+              || DEFAULT;
+
+    // 只接受 dark / light，其余（如 auto）按系统偏好处理
+    var scheme;
+    if (stored === 'light') {
+        scheme = 'light';
+    } else if (stored === 'auto') {
+        scheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } else {
+        scheme = 'dark';
+    }
+
+    // 同步写入两个 key，保持一致
+    localStorage.setItem(GG_KEY,    scheme);
+    localStorage.setItem(STACK_KEY, scheme);
+
+    // 立即设置属性，避免 FOUC
+    document.documentElement.dataset.scheme = scheme;
+    document.documentElement.setAttribute('data-theme', scheme);
+})();
+</script>
