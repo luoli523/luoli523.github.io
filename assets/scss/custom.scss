@@ -1,0 +1,317 @@
+/* ============================================================
+   鬼哥的空间 — Stack theme color & font overrides
+   Aligns inner pages with the homepage's Ghost Protocol palette
+============================================================ */
+
+/* --- Font system --- */
+:root {
+    --base-font-family: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", serif;
+    --article-font-family: "Noto Serif SC", "PingFang SC", serif;
+    --code-font-family: "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+
+    /* Accent — teal */
+    --accent-color:        #2dd4bf;
+    --accent-color-darker: #22b5a0;
+    --accent-color-text:   #07090f;
+}
+
+/* --- Force dark palette regardless of scheme toggle --- */
+:root,
+[data-scheme="dark"],
+[data-scheme="light"] {
+    --body-background: #07090f;
+
+    --card-background:          #0f151e;
+    --card-background-selected: rgba(45, 212, 191, 0.08);
+
+    --card-text-color-main:      #e8eaf0;
+    --card-text-color-secondary: #8b9ab0;
+    --card-text-color-tertiary:  rgba(139, 154, 176, 0.6);
+    --card-separator-color:      rgba(255, 255, 255, 0.06);
+
+    --body-text-color: #8b9ab0;
+
+    /* Code blocks */
+    --code-background-color: #131920;
+    --code-text-color: #8b9ab0;
+    --pre-background-color: #0d1117;
+    --pre-text-color: #e8eaf0;
+
+    /* Borders / misc */
+    --table-border-color: rgba(255, 255, 255, 0.08);
+    --tr-even-background-color: rgba(45, 212, 191, 0.04);
+    --blockquote-background-color: #131920;
+    --kbd-border-color: rgba(255, 255, 255, 0.15);
+
+    /* Heading accent line */
+    --heading-border-size: 3px;
+}
+
+/* --- Body & layout --- */
+body {
+    background: #07090f;
+    color: #8b9ab0;
+}
+
+/* --- Left sidebar --- */
+.left-sidebar {
+    background: transparent;
+}
+
+.sidebar .site-avatar img {
+    border: 2px solid rgba(45, 212, 191, 0.3);
+    border-radius: 50%;
+}
+
+.sidebar .site-name a {
+    font-family: "Noto Serif SC", serif;
+    font-weight: 700;
+    color: #e8eaf0 !important;
+}
+
+.sidebar .site-description {
+    color: #8b9ab0;
+    font-size: 1.3rem;
+}
+
+.sidebar nav ul li a {
+    color: #8b9ab0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    transition: color 0.2s ease;
+
+    &:hover { color: #2dd4bf; }
+}
+
+.sidebar nav ul li.current a {
+    color: #2dd4bf;
+    font-weight: 600;
+}
+
+/* --- Cards --- */
+.card {
+    background: #0f151e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    box-shadow: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+        border-color: rgba(45, 212, 191, 0.25);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Article list items */
+.article-list--compact article {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    &:last-child { border-bottom: none; }
+
+    a {
+        color: #e8eaf0;
+        &:hover { color: #2dd4bf; }
+    }
+}
+
+.article-title {
+    font-family: "Noto Serif SC", serif;
+    font-weight: 700;
+    color: #e8eaf0;
+
+    a {
+        color: inherit;
+        &:hover { color: #2dd4bf; }
+    }
+}
+
+.article-subtitle {
+    color: #8b9ab0;
+}
+
+.article-time {
+    color: rgba(139, 154, 176, 0.6);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.2rem;
+}
+
+/* --- Category / tag chips --- */
+.article-category a,
+.article-tags a {
+    background: rgba(45, 212, 191, 0.08);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    color: #2dd4bf;
+    border-radius: 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.2rem;
+    transition: background 0.2s ease;
+
+    &:hover {
+        background: rgba(45, 212, 191, 0.18);
+        color: #2dd4bf;
+    }
+}
+
+/* --- Main article content --- */
+.article-content {
+    font-family: "Noto Serif SC", serif;
+    color: #c8cdd8;
+    line-height: 1.9;
+
+    h1, h2, h3, h4 {
+        color: #e8eaf0;
+        font-family: "Noto Serif SC", serif;
+        font-weight: 700;
+    }
+
+    h2 {
+        border-left: 3px solid #2dd4bf;
+        padding-left: 12px;
+    }
+
+    a {
+        color: #2dd4bf;
+        text-decoration-color: rgba(45, 212, 191, 0.3);
+
+        &:hover {
+            text-decoration-color: #2dd4bf;
+        }
+    }
+
+    code {
+        font-family: "JetBrains Mono", monospace;
+        background: #131920;
+        color: #7dd3c8;
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 4px;
+        padding: 0.15em 0.4em;
+        font-size: 0.88em;
+    }
+
+    pre {
+        background: #0d1117 !important;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 10px;
+
+        code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            color: #e8eaf0;
+        }
+    }
+
+    blockquote {
+        background: #131920;
+        border-left: 3px solid rgba(45, 212, 191, 0.5);
+        color: #8b9ab0;
+        border-radius: 0 8px 8px 0;
+    }
+
+    table {
+        border-color: rgba(255, 255, 255, 0.08);
+
+        thead tr {
+            background: #131920;
+        }
+        tr:nth-child(even) {
+            background: rgba(45, 212, 191, 0.03);
+        }
+    }
+
+    hr {
+        border-color: rgba(255, 255, 255, 0.07);
+    }
+}
+
+/* --- Pagination --- */
+.pagination .page-link {
+    background: #0f151e;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    color: #8b9ab0;
+    font-family: "JetBrains Mono", monospace;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &:hover, &.current {
+        background: rgba(45, 212, 191, 0.12);
+        border-color: rgba(45, 212, 191, 0.35);
+        color: #2dd4bf;
+    }
+}
+
+/* --- Widgets --- */
+.widget {
+    background: #0f151e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+
+    .widget-title {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1.1rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(139, 154, 176, 0.7);
+    }
+}
+
+.tagCloud a {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    color: #8b9ab0;
+    border-radius: 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: rgba(45, 212, 191, 0.1);
+        border-color: rgba(45, 212, 191, 0.3);
+        color: #2dd4bf;
+    }
+}
+
+/* --- Search --- */
+#search-form input {
+    background: #0d1117;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #e8eaf0;
+    font-family: "Noto Serif SC", serif;
+    border-radius: 8px;
+
+    &:focus {
+        border-color: rgba(45, 212, 191, 0.4);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.08);
+    }
+}
+
+/* --- Footer --- */
+footer.site-footer {
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(139, 154, 176, 0.5);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.2rem;
+
+    a {
+        color: rgba(139, 154, 176, 0.6);
+        &:hover { color: #2dd4bf; }
+    }
+}
+
+/* --- Theme toggle button --- */
+.dark-mode-toggle {
+    color: #8b9ab0;
+    &:hover { color: #2dd4bf; }
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #07090f; }
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    &:hover { background: rgba(45, 212, 191, 0.4); }
+}
