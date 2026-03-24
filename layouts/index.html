@@ -905,244 +905,266 @@
       overflow: hidden;
     }
 
-    .project-feature-card {
+    .projects-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* — individual card — */
+    .project-card {
+      display: flex;
+      flex-direction: column;
       border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
+      border-radius: var(--radius-lg);
       overflow: hidden;
       background: var(--bg-card);
       position: relative;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+      color: inherit;
     }
 
-    .project-feature-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg,
-        rgba(245, 158, 11, 0.04) 0%,
-        transparent 60%
-      );
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.35);
+    }
+
+    .project-card.is-live {
+      border-color: rgba(245, 158, 11, 0.2);
+    }
+    .project-card.is-live:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.4), 0 0 40px rgba(245,158,11,0.08);
+    }
+
+    .project-card.is-coming {
+      border-color: var(--border);
+      opacity: 0.82;
       pointer-events: none;
-      z-index: 0;
     }
 
-    .project-feature-card:hover {
-      border-color: rgba(245, 158, 11, 0.35);
-      box-shadow: 0 0 60px rgba(245, 158, 11, 0.08);
-    }
-
-    .project-image-pane {
+    /* — card thumbnail — */
+    .project-card-thumb {
       position: relative;
+      height: 190px;
       overflow: hidden;
-      background: #060912;
-      min-height: 400px;
+      flex-shrink: 0;
     }
 
-    .project-image-pane img {
+    .project-card-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: top center;
       display: block;
-      transition: transform 0.6s ease;
-      opacity: 0.9;
+      transition: transform 0.5s ease;
+      opacity: 0.88;
     }
 
-    .project-feature-card:hover .project-image-pane img {
-      transform: scale(1.03);
+    .project-card:hover .project-card-thumb img {
+      transform: scale(1.05);
     }
 
-    .project-image-pane::after {
+    /* placeholder thumb for coming-soon */
+    .project-card-thumb-placeholder {
+      height: 190px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card-thumb-placeholder::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to right, transparent 60%, var(--bg-card) 100%);
-      pointer-events: none;
+      background-size: 24px 24px;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      opacity: 0.5;
     }
 
-    .project-content-pane {
-      padding: 60px 56px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .project-card-thumb-placeholder .placeholder-icon {
       position: relative;
       z-index: 1;
+      filter: drop-shadow(0 0 20px currentColor);
+    }
+
+    /* — card body — */
+    .project-card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0;
     }
 
     .project-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--amber);
-      background: var(--amber-dim);
-      border: 1px solid rgba(245, 158, 11, 0.25);
       border-radius: 100px;
-      padding: 5px 14px;
-      margin-bottom: 28px;
+      padding: 4px 11px;
+      margin-bottom: 14px;
       width: fit-content;
     }
 
-    .project-badge::before {
+    .project-badge.badge-live {
+      color: var(--amber);
+      background: var(--amber-dim);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .project-badge.badge-live::before {
       content: '';
-      width: 6px; height: 6px;
+      width: 5px; height: 5px;
       border-radius: 50%;
       background: var(--amber);
       animation: pulse-dot 2s ease-in-out infinite;
     }
 
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
+    .project-badge.badge-soon {
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
     }
 
-    .project-feature-title {
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    .project-card-title {
       font-family: var(--font-serif);
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-size: 1.15rem;
       font-weight: 700;
-      line-height: 1.25;
+      line-height: 1.35;
       color: var(--text-primary);
-      margin-bottom: 18px;
+      margin-bottom: 10px;
       letter-spacing: -0.01em;
     }
 
-    .project-feature-desc {
-      font-size: 0.95rem;
+    .project-card-desc {
+      font-size: 0.85rem;
       color: var(--text-secondary);
-      line-height: 1.75;
-      margin-bottom: 32px;
+      line-height: 1.7;
       font-weight: 300;
-    }
-
-    .project-stats {
-      display: flex;
-      gap: 28px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-
-    .project-stat {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .project-stat-value {
-      font-family: var(--font-mono);
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--amber);
-      letter-spacing: -0.02em;
-    }
-
-    .project-stat-label {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      flex: 1;
+      margin-bottom: 20px;
     }
 
     .project-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 40px;
+      gap: 6px;
+      margin-bottom: 20px;
     }
 
     .project-tag {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-secondary);
+      font-size: 0.65rem;
+      color: var(--text-muted);
       background: var(--bg-elevated);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 4px 10px;
+      border-radius: 5px;
+      padding: 3px 8px;
     }
 
     .project-cta {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: var(--amber);
       color: #07090f;
       font-family: var(--font-mono);
-      font-size: 0.82rem;
-      font-weight: 600;
+      font-size: 0.75rem;
+      font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 14px 28px;
-      border-radius: 10px;
+      padding: 11px 20px;
+      border-radius: 8px;
       text-decoration: none;
-      transition: all 0.25s ease;
+      transition: all 0.22s ease;
       width: fit-content;
+      margin-top: auto;
     }
 
     .project-cta:hover {
       background: #fbbf24;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
     }
 
     .project-cta .cta-arrow {
       transition: transform 0.2s ease;
     }
+    .project-cta:hover .cta-arrow { transform: translateX(3px); }
 
-    .project-cta:hover .cta-arrow {
-      transform: translateX(4px);
+    .project-coming-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: auto;
     }
 
-    /* Responsive */
-    @media (max-width: 820px) {
-      .project-feature-card {
+    /* — responsive — */
+    @media (max-width: 900px) {
+      .projects-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .project-card.is-coming:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .projects-grid {
         grid-template-columns: 1fr;
       }
-      .project-image-pane {
-        min-height: 220px;
-      }
-      .project-image-pane::after {
-        background: linear-gradient(to bottom, transparent 60%, var(--bg-card) 100%);
-      }
-      .project-content-pane {
-        padding: 40px 32px;
+      .project-card.is-coming:last-child {
+        grid-column: auto;
       }
     }
 
-    /* Light mode */
-    [data-theme="light"] .project-feature-card {
+    /* — light mode — */
+    [data-theme="light"] .project-card {
       background: #ffffff;
-      border-color: rgba(0,0,0,0.08);
+      border-color: rgba(0,0,0,0.07);
     }
-    [data-theme="light"] .project-feature-card:hover {
-      border-color: rgba(217, 119, 6, 0.4);
-      box-shadow: 0 0 60px rgba(245, 158, 11, 0.1);
+    [data-theme="light"] .project-card.is-live {
+      border-color: rgba(217,119,6,0.25);
     }
-    [data-theme="light"] .project-image-pane {
-      background: #f0f4f8;
-    }
-    [data-theme="light"] .project-image-pane::after {
-      background: linear-gradient(to right, transparent 60%, #ffffff 100%);
-    }
-    [data-theme="light"] .project-content-pane {
-      background: #ffffff;
+    [data-theme="light"] .project-card.is-live:hover {
+      border-color: rgba(217,119,6,0.5);
     }
     [data-theme="light"] .project-tag {
       background: #f1f5f9;
-      border-color: rgba(0,0,0,0.08);
-      color: #475569;
+      border-color: rgba(0,0,0,0.07);
+      color: #64748b;
     }
     [data-theme="light"] .project-cta {
-      color: #ffffff;
       background: #d97706;
+      color: #ffffff;
     }
     [data-theme="light"] .project-cta:hover {
       background: #b45309;
+    }
+    [data-theme="light"] .project-card-thumb-placeholder::before {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.07) 1px, transparent 1px);
     }
 
     /* ============================================================
@@ -1933,68 +1955,73 @@
 
 
   <!-- ============================================================
-       FEATURED PROJECT — FIN-REPORT
+       FEATURED PROJECTS
   ============================================================ -->
-  <section class="featured-project" id="projects" aria-label="精选项目">
+  <section class="featured-project" id="projects" aria-label="鬼哥的精选项目">
     <div class="section-inner">
 
       <header class="section-header reveal">
-        <div class="section-eyebrow">Featured Project</div>
-        <h2 class="section-title">精选项目</h2>
+        <div class="section-eyebrow">Featured Projects</div>
+        <h2 class="section-title">鬼哥的精选项目</h2>
         <p class="section-subtitle">AI 驱动的应用实践，探索技术落地的更多可能。</p>
       </header>
 
-      <div class="reveal">
-        <div class="project-feature-card">
+      <div class="projects-grid reveal-stagger">
 
-          <!-- Left: screenshot / infographic -->
-          <div class="project-image-pane">
-            <img
-              src="/img/fin-report-preview.png"
-              alt="AI 产业链投资简报 — 系统架构图"
-              loading="lazy"
-            />
+        <!-- Card 1: fin-report (LIVE) -->
+        <a href="https://luoli523.github.io/fin-report/" class="project-card is-live" target="_blank" rel="noopener noreferrer" aria-label="AI 产业链投资简报">
+          <div class="project-card-thumb">
+            <img src="/img/fin-report-preview.png" alt="AI 产业链投资简报架构图" loading="lazy" />
           </div>
-
-          <!-- Right: text & CTA -->
-          <div class="project-content-pane">
-            <span class="project-badge">Live · 每日更新</span>
-            <h3 class="project-feature-title">AI 产业链<br>投资简报</h3>
-            <p class="project-feature-desc">
-              由 AI Agent 驱动的每日财经简报系统，自动追踪 60 支 AI 产业链核心标的，
-              覆盖芯片、算力、大模型、AI 应用等九大赛道。结合 LLM 深度分析市场动态，
-              每日生成结构化投资参考报告。
-            </p>
-
-            <div class="project-stats">
-              <div class="project-stat">
-                <span class="project-stat-value">60+</span>
-                <span class="project-stat-label">追踪标的</span>
-              </div>
-              <div class="project-stat">
-                <span class="project-stat-value">9</span>
-                <span class="project-stat-label">AI 赛道</span>
-              </div>
-              <div class="project-stat">
-                <span class="project-stat-value">24h</span>
-                <span class="project-stat-label">更新周期</span>
-              </div>
-            </div>
-
+          <div class="project-card-body">
+            <span class="project-badge badge-live">Live · 每日更新</span>
+            <h3 class="project-card-title">AI 产业链投资简报</h3>
+            <p class="project-card-desc">AI Agent 驱动的每日财经简报，自动追踪 60 支核心标的，覆盖芯片、算力、大模型等九大赛道，LLM 深度分析市场动态。</p>
             <div class="project-tags">
               <span class="project-tag">AI Agent</span>
               <span class="project-tag">量化分析</span>
-              <span class="project-tag">LLM</span>
               <span class="project-tag">A股 / 港股</span>
-              <span class="project-tag">自动化</span>
             </div>
-
-            <a href="https://luoli523.github.io/fin-report/" class="project-cta" target="_blank" rel="noopener noreferrer">
-              查看今日简报 <span class="cta-arrow">→</span>
-            </a>
+            <span class="project-cta">查看简报 <span class="cta-arrow">→</span></span>
           </div>
+        </a>
 
+        <!-- Card 2: AI 儿童绘本 (COMING SOON) -->
+        <div class="project-card is-coming" aria-label="AI 儿童绘本生成 — 即将推出">
+          <div class="project-card-thumb-placeholder" style="background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(45,212,191,0.06) 100%);">
+            <span class="placeholder-icon" style="color: var(--purple);">📖</span>
+          </div>
+          <div class="project-card-body">
+            <span class="project-badge badge-soon">Coming Soon</span>
+            <h3 class="project-card-title">AI 儿童绘本生成</h3>
+            <p class="project-card-desc">用 AI 为孩子创作专属绘本故事。输入主题或角色，自动生成图文并茂的儿童故事绘本，支持多种画风与语言风格。</p>
+            <div class="project-tags">
+              <span class="project-tag">图文生成</span>
+              <span class="project-tag">儿童教育</span>
+              <span class="project-tag">多模态</span>
+            </div>
+            <span class="project-coming-label">🔒 敬请期待</span>
+          </div>
         </div>
+
+        <!-- Card 3: AI 儿童诗词 (COMING SOON) -->
+        <div class="project-card is-coming" aria-label="AI 儿童诗词学习与视频生成 — 即将推出">
+          <div class="project-card-thumb-placeholder" style="background: linear-gradient(135deg, rgba(45,212,191,0.08) 0%, rgba(245,158,11,0.06) 100%);">
+            <span class="placeholder-icon" style="color: var(--teal);">🎋</span>
+          </div>
+          <div class="project-card-body">
+            <span class="project-badge badge-soon">Coming Soon</span>
+            <h3 class="project-card-title">AI 儿童诗词学习与视频生成</h3>
+            <p class="project-card-desc">让传统诗词以生动方式呈现给孩子。AI 解读诗词意境，配合动画视频生成，寓教于乐，让古典文化焕发新生。</p>
+            <div class="project-tags">
+              <span class="project-tag">诗词教育</span>
+              <span class="project-tag">视频生成</span>
+              <span class="project-tag">儿童学习</span>
+            </div>
+            <span class="project-coming-label">🔒 敬请期待</span>
+          </div>
+        </div>
+
       </div>
 
     </div>
