@@ -5,25 +5,25 @@
 # text: 支持 HTML 标签（<strong> 等）
 
 - date: "03-23"
+  color: amber
+  type: tool
+  tag: 动态
+  text: "<strong>鬼哥的空间</strong> 重新调整上线"
+
+- date: "03-18"
   color: teal
   type: book
   tag: 书籍
-  text: "<strong>Claude Code</strong> 第六章初稿完成，近期发布"
-
-- date: "03-20"
-  color: amber
-  type: tool
-  tag: 工具
-  text: "网站迁移到 <strong>Hugo + Stack</strong>，新设计上线"
+  text: "《<strong>跟鬼哥玩转 OpenClaw</strong>》书籍上传"
 
 - date: "03-15"
-  color: red
-  type: life
-  tag: 随笔
-  text: "学指弹中：《<strong>River Flows in You</strong>》进展中"
-
-- date: "03-10"
-  color: purple
+  color: teal
   type: book
   tag: 书籍
-  text: "<strong>学 LLM</strong> Transformer 章节大幅重写完成"
+  text: "《<strong>跟鬼哥玩转 Claude Code</strong>》书籍上传"
+
+- date: "03-14"
+  color: teal
+  type: book
+  tag: 书籍
+  text: "《<strong>跟鬼哥一起学 LLM</strong>》书籍上传"
