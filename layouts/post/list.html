@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章 — {{ .Site.Title }}</title>
+  <meta name="description" content="鬼哥的技术博客文章列表">
+  <link rel="icon" href="/img/avatar.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       GHOST PROTOCOL — POST LIST
+    ============================================================ */
+    :root {
+      --bg-void:       #07090f;
+      --bg-surface:    #0d1117;
+      --bg-elevated:   #131920;
+      --bg-card:       #0f151e;
+
+      --teal:          #2dd4bf;
+      --teal-dim:      rgba(45, 212, 191, 0.15);
+      --teal-glow:     rgba(45, 212, 191, 0.35);
+      --teal-muted:    rgba(45, 212, 191, 0.6);
+
+      --amber:         #f59e0b;
+      --amber-dim:     rgba(245, 158, 11, 0.15);
+
+      --purple:        #a78bfa;
+      --purple-dim:    rgba(167, 139, 250, 0.15);
+
+      --red:           #f87171;
+      --red-dim:       rgba(248, 113, 113, 0.15);
+
+      --text-primary:  #e8eaf0;
+      --text-secondary:#8b9ab0;
+      --text-muted:    #4a5568;
+
+      --border:        rgba(255, 255, 255, 0.06);
+      --border-hover:  rgba(45, 212, 191, 0.4);
+
+      --radius-sm:     8px;
+      --radius-md:     12px;
+      --radius-lg:     20px;
+
+      --font-serif:    'Noto Serif SC', 'Source Han Serif SC', serif;
+      --font-mono:     'JetBrains Mono', 'Fira Code', monospace;
+
+      --nav-h:         64px;
+      --sidebar-w:     240px;
+      --transition:    0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-void:       #faf7f2;
+      --bg-surface:    #f0ece4;
+      --bg-elevated:   #e8e3d8;
+      --bg-card:       #fdfbf7;
+
+      --teal:          #0d9488;
+      --teal-dim:      rgba(13, 148, 136, 0.09);
+      --teal-glow:     rgba(13, 148, 136, 0.28);
+      --teal-muted:    rgba(13, 148, 136, 0.75);
+
+      --amber:         #b45309;
+      --amber-dim:     rgba(180, 83, 9, 0.09);
+
+      --purple:        #6d28d9;
+      --purple-dim:    rgba(109, 40, 217, 0.09);
+
+      --red:           #dc2626;
+      --red-dim:       rgba(220, 38, 38, 0.09);
+
+      --text-primary:  #1c1917;
+      --text-secondary:#57534e;
+      --text-muted:    #a8a29e;
+
+      --border:        rgba(0, 0, 0, 0.08);
+      --border-hover:  rgba(13, 148, 136, 0.4);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg-void); color: var(--text-primary);
+      font-family: var(--font-serif); line-height: 1.7;
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+    ::selection { background: var(--teal-dim); color: var(--teal); }
+
+    /* ---- Orbs ---- */
+    .orb-field { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55;
+      animation: floatOrb var(--dur, 20s) ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(45,212,191,0.18) 0%, transparent 70%); top: -200px; left: -150px; --dur: 22s; }
+    .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(167,139,250,0.14) 0%, transparent 70%); top: 30%; right: -100px; --dur: 28s; animation-delay: -8s; }
+    .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(245,158,11,0.10) 0%, transparent 70%); bottom: 10%; left: 20%; --dur: 24s; animation-delay: -14s; }
+    [data-theme="light"] .orb-1 { background: radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%); }
+    [data-theme="light"] .orb-2 { background: radial-gradient(circle, rgba(109,40,217,0.08) 0%, transparent 70%); }
+    [data-theme="light"] .orb-3 { background: radial-gradient(circle, rgba(180,83,9,0.09) 0%, transparent 70%); }
+    @keyframes floatOrb {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(40px, -60px) scale(1.08); }
+      66%  { transform: translate(-30px, 40px) scale(0.95); }
+      100% { transform: translate(20px, -20px) scale(1.03); }
+    }
+
+    /* ---- Nav ---- */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(24px, 5vw, 80px);
+      background: rgba(7, 9, 15, 0.72);
+      backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="light"] .nav { background: rgba(250, 247, 242, 0.82); }
+    .nav-logo {
+      font-family: var(--font-serif); font-weight: 700; font-size: 1.2rem;
+      display: flex; align-items: center; gap: 6px;
+      color: var(--text-primary); transition: opacity var(--transition);
+    }
+    .nav-logo:hover { opacity: 0.8; }
+    .nav-logo .dot {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 10px var(--teal), 0 0 20px var(--teal-glow);
+      animation: dotPulse 3s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--teal), 0 0 20px var(--teal-glow); }
+      50%       { opacity: 0.7; box-shadow: 0 0 4px var(--teal); }
+    }
+    .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; }
+    .nav-links a {
+      position: relative; padding: 6px 14px;
+      font-family: var(--font-serif); font-size: 0.9rem;
+      color: var(--text-secondary); transition: color var(--transition); letter-spacing: 0.04em;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 2px; left: 14px; right: 14px; height: 1px;
+      background: var(--teal); transform: scaleX(0); transform-origin: center;
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--teal); }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    .theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--teal-dim);
+      color: var(--teal); cursor: pointer; transition: all 0.25s ease;
+      flex-shrink: 0; margin-left: 12px;
+    }
+    .theme-toggle:hover { background: rgba(45,212,191,0.18); border-color: var(--border-hover); transform: rotate(20deg); }
+    .theme-toggle svg { width: 16px; height: 16px; pointer-events: none; }
+    .icon-sun  { display: none; }
+    .icon-moon { display: block; }
+    [data-theme="light"] .icon-sun  { display: block; }
+    [data-theme="light"] .icon-moon { display: none; }
+
+    /* ---- Page layout ---- */
+    .page-shell {
+      position: relative; z-index: 1; display: flex;
+      max-width: 1400px; margin: 0 auto;
+      padding-top: var(--nav-h); min-height: 100vh;
+    }
+
+    /* ---- Sidebar ---- */
+    .page-sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      position: sticky; top: var(--nav-h); height: calc(100vh - var(--nav-h));
+      overflow-y: auto; padding: 32px 20px 32px 28px;
+      border-right: 1px solid var(--border);
+    }
+    .page-sidebar::-webkit-scrollbar { width: 3px; }
+    .page-sidebar::-webkit-scrollbar-thumb { background: rgba(45,212,191,0.2); border-radius: 2px; }
+
+    .nav-group { border-bottom: 1px solid var(--border); }
+    .nav-group:last-child { border-bottom: none; }
+    .nav-group[open] > summary .nav-chevron { transform: rotate(0deg); }
+    .nav-group > summary .nav-chevron { transform: rotate(-90deg); transition: transform 0.2s ease; }
+    .nav-group-title {
+      display: flex; align-items: center; gap: 6px; padding: 10px 0;
+      font-family: var(--font-serif); font-size: 0.875rem; font-weight: 700;
+      color: var(--text-primary); cursor: pointer; list-style: none; user-select: none;
+    }
+    .nav-group-title::-webkit-details-marker { display: none; }
+    .nav-group-title:hover { color: var(--teal); }
+    .nav-chevron { flex-shrink: 0; opacity: 0.5; }
+
+    .nav-group-items { list-style: none; margin: 0 0 8px; padding: 0 0 0 20px; }
+    .nav-group-items li { margin: 0; }
+    .nav-group-items li a {
+      display: flex; align-items: center; gap: 6px; padding: 4px 0;
+      font-family: var(--font-serif); font-size: 0.8rem;
+      color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .nav-group-items li a:hover { color: var(--teal); }
+    .nav-group-items li.current a { color: var(--teal); font-weight: 600; }
+    .nav-group-items li.coming-soon {
+      padding: 4px 0; font-family: var(--font-serif); font-size: 0.8rem;
+      color: var(--text-muted); display: flex; align-items: center; gap: 6px;
+    }
+    .nav-badge {
+      flex-shrink: 0; font-family: var(--font-mono); font-size: 0.6rem;
+      padding: 1px 6px; border-radius: 4px; line-height: 1.4;
+    }
+    .nav-badge.live { color: var(--amber); background: var(--amber-dim); border: 1px solid rgba(245, 158, 11, 0.25); }
+    .nav-badge.soon { color: var(--text-muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); }
+    [data-theme="light"] .nav-badge.soon { background: rgba(0,0,0,0.03); }
+
+    /* ---- Main content ---- */
+    .page-main {
+      flex: 1; min-width: 0;
+      padding: 48px 40px 80px;
+      max-width: 900px;
+    }
+
+    /* ---- Page header ---- */
+    .list-header {
+      margin-bottom: 48px;
+      animation: fadeUp 0.6s ease forwards;
+    }
+    .list-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 14px;
+    }
+    .list-eyebrow::before {
+      content: ''; width: 20px; height: 1px;
+      background: currentColor; opacity: 0.7;
+    }
+    .list-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700; line-height: 1.2;
+      letter-spacing: -0.01em; color: var(--text-primary);
+    }
+    .list-subtitle {
+      margin-top: 12px; font-size: 0.95rem;
+      color: var(--text-secondary); font-weight: 300;
+    }
+    .list-count {
+      margin-top: 8px; font-family: var(--font-mono);
+      font-size: 0.72rem; color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ---- Post list ---- */
+    .post-list {
+      list-style: none;
+    }
+
+    .post-item {
+      display: block;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.25s ease;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .post-item:first-child { border-top: 1px solid var(--border); }
+    .post-item:hover { padding-left: 12px; }
+
+    .post-item-meta {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 8px;
+    }
+    .post-item-date {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--text-muted); letter-spacing: 0.04em;
+    }
+    .post-item-category {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 4px;
+      color: var(--teal); background: var(--teal-dim);
+      border: 1px solid rgba(45,212,191,0.2);
+    }
+    .post-item-reading {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      color: var(--text-muted); letter-spacing: 0.04em;
+    }
+
+    .post-item-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem; font-weight: 700; line-height: 1.4;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      transition: color 0.2s ease;
+    }
+    .post-item:hover .post-item-title { color: var(--teal); }
+
+    .post-item-desc {
+      font-size: 0.9rem; color: var(--text-secondary);
+      line-height: 1.65; font-weight: 300;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .post-item-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 10px;
+    }
+    .post-item-tag {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: var(--text-muted); letter-spacing: 0.04em;
+      padding: 2px 8px; border-radius: 4px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+    .post-item-tag:hover {
+      color: var(--teal); border-color: rgba(45,212,191,0.3);
+      background: var(--teal-dim);
+    }
+    [data-theme="light"] .post-item-tag { background: rgba(0,0,0,0.03); }
+
+    /* Staggered animation */
+    .post-item:nth-child(1)  { animation-delay: 0.1s; }
+    .post-item:nth-child(2)  { animation-delay: 0.18s; }
+    .post-item:nth-child(3)  { animation-delay: 0.26s; }
+    .post-item:nth-child(4)  { animation-delay: 0.34s; }
+    .post-item:nth-child(5)  { animation-delay: 0.42s; }
+    .post-item:nth-child(6)  { animation-delay: 0.50s; }
+    .post-item:nth-child(7)  { animation-delay: 0.58s; }
+    .post-item:nth-child(8)  { animation-delay: 0.66s; }
+    .post-item:nth-child(9)  { animation-delay: 0.74s; }
+    .post-item:nth-child(10) { animation-delay: 0.82s; }
+
+    /* ---- Footer ---- */
+    .page-footer {
+      position: relative; z-index: 1;
+      padding: 32px clamp(24px, 5vw, 80px);
+      border-top: 1px solid var(--border);
+    }
+    .page-footer-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--text-muted); letter-spacing: 0.04em;
+    }
+    .footer-links { display: flex; align-items: center; gap: 6px; }
+    .footer-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: var(--radius-sm);
+      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.06em; color: var(--text-muted);
+      border: 1px solid transparent; transition: all 0.25s ease;
+    }
+    .footer-link:hover { color: var(--teal); border-color: rgba(45,212,191,0.2); background: var(--teal-dim); }
+    .footer-link svg { width: 14px; height: 14px; opacity: 0.7; }
+
+    /* ---- Mobile sidebar ---- */
+    .sidebar-toggle {
+      display: none; position: fixed; bottom: 24px; left: 24px; z-index: 200;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--teal); color: var(--bg-void);
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(45,212,191,0.4);
+      align-items: center; justify-content: center; transition: transform 0.2s ease;
+    }
+    .sidebar-toggle:hover { transform: scale(1.08); }
+    .sidebar-toggle svg { width: 20px; height: 20px; }
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0; z-index: 149;
+      background: rgba(7,9,15,0.6); backdrop-filter: blur(4px);
+    }
+
+    /* ---- Animations ---- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- Scrollbar ---- */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-void); }
+    ::-webkit-scrollbar-thumb { background: rgba(45,212,191,0.25); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(45,212,191,0.45); }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .page-sidebar {
+        position: fixed; left: -280px; top: var(--nav-h);
+        width: 280px; height: calc(100vh - var(--nav-h));
+        background: var(--bg-card); border-right: 1px solid var(--border);
+        z-index: 150; transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 24px 20px;
+      }
+      .page-sidebar.open { left: 0; }
+      .sidebar-toggle { display: flex; }
+      .sidebar-overlay.open { display: block; }
+      .page-main { padding: 32px 20px 60px; }
+    }
+
+    @media (max-width: 600px) {
+      .page-main { padding: 24px 16px 60px; }
+      .post-item-title { font-size: 1.1rem; }
+      .page-footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ORBS -->
+  <div class="orb-field" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation">
+    <a href="/" class="nav-logo">鬼哥<span class="dot"></span>的空间</a>
+    <ul class="nav-links">
+      <li><a href="/post/" class="active">文章</a></li>
+      <li><a href="/#projects">AI项目</a></li>
+      <li><a href="/#books">书籍</a></li>
+      <li><a href="/about/">关于</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </nav>
+
+  <!-- MOBILE SIDEBAR TOGGLE -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="切换侧边栏">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- PAGE LAYOUT -->
+  <div class="page-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="page-sidebar" id="pageSidebar">
+      <nav>
+        <details class="nav-group" open>
+          <summary class="nav-group-title">
+            <svg class="nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            我的书
+          </summary>
+          <ul class="nav-group-items">
+            <li><a href="https://luoli523.github.io/learn-claw/" target="_blank">跟鬼哥一起学 OpenClaw</a></li>
+            <li><a href="https://luoli523.github.io/learn-cc/" target="_blank">Claude Code 实战指南</a></li>
+            <li><a href="https://luoli523.github.io/learn-llm/" target="_blank">跟鬼哥一起学 LLM</a></li>
+          </ul>
+        </details>
+
+        <details class="nav-group" open>
+          <summary class="nav-group-title">
+            <svg class="nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            文章
+          </summary>
+          <ul class="nav-group-items">
+            {{ range where .Site.RegularPages "Section" "post" }}
+            <li>
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </li>
+            {{ end }}
+          </ul>
+        </details>
+
+        <details class="nav-group" open>
+          <summary class="nav-group-title">
+            <svg class="nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            AI项目
+          </summary>
+          <ul class="nav-group-items">
+            <li><a href="https://luoli523.github.io/fin-report/" target="_blank">AI 产业链投资简报 <span class="nav-badge live">Live</span></a></li>
+            <li class="coming-soon">AI 儿童绘本生成 <span class="nav-badge soon">Soon</span></li>
+            <li class="coming-soon">AI 儿童诗词学习与视频生成 <span class="nav-badge soon">Soon</span></li>
+          </ul>
+        </details>
+      </nav>
+    </aside>
+
+    <!-- MAIN: POST LIST -->
+    <div class="page-main">
+      <header class="list-header">
+        <div class="list-eyebrow">Blog</div>
+        <h1 class="list-title">文章</h1>
+        <p class="list-subtitle">技术探索 · AI实践 · 随想记录</p>
+        <p class="list-count">共 {{ len (where .Site.RegularPages "Section" "post") }} 篇</p>
+      </header>
+
+      <ol class="post-list">
+        {{ range where .Site.RegularPages "Section" "post" }}
+        <li class="post-item">
+          <a href="{{ .RelPermalink }}" style="display:block; color:inherit; text-decoration:none;">
+            <div class="post-item-meta">
+              <time class="post-item-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+              {{ with .Params.categories }}
+              <span class="post-item-category">{{ index . 0 }}</span>
+              {{ end }}
+              <span class="post-item-reading">{{ .ReadingTime }} min</span>
+            </div>
+            <h2 class="post-item-title">{{ .Title }}</h2>
+            {{ with .Description }}
+            <p class="post-item-desc">{{ . }}</p>
+            {{ else }}
+            <p class="post-item-desc">{{ .Summary | plainify | truncate 120 }}</p>
+            {{ end }}
+            {{ with .Params.tags }}
+            <div class="post-item-tags">
+              {{ range . }}
+              <span class="post-item-tag">{{ . }}</span>
+              {{ end }}
+            </div>
+            {{ end }}
+          </a>
+        </li>
+        {{ end }}
+      </ol>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <div class="page-footer-inner">
+      <span class="footer-copy">&copy; {{ now.Year }} 鬼哥的空间</span>
+      <div class="footer-links">
+        <a href="https://github.com/luoli523" class="footer-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="/index.xml" class="footer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          RSS
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('gg-theme');
+      if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      else document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('gg-theme', next);
+      localStorage.setItem('StackColorScheme', next);
+    });
+
+    var sidebar = document.getElementById('pageSidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('open');
+    });
+    overlay.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+    });
+  </script>
+</body>
+</html>

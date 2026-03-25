@@ -9,6 +9,9 @@
     --article-font-family: "Noto Serif SC", "PingFang SC", serif;
     --code-font-family:    "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
 
+    /* 文章正文字体大小（对齐 VitePress 16px） */
+    --article-font-size: 1.6rem;
+
     /* Accent — teal（两套主题共用） */
     --accent-color:        #2dd4bf;
     --accent-color-darker: #22b5a0;
@@ -176,17 +179,25 @@ body {
     }
 }
 
-/* --- 文章正文 --- */
+/* --- 文章正文（对齐 VitePress 排版） --- */
 .article-content {
     font-family: "Noto Serif SC", serif;
     color: var(--card-text-color-secondary);
-    line-height: 1.9;
+    font-size: 1.6rem;
+    line-height: 1.75;
+
+    p { margin: 16px 0; }
 
     h1, h2, h3, h4 {
         color: var(--card-text-color-main);
         font-family: "Noto Serif SC", serif;
-        font-weight: 700;
+        font-weight: 600;
     }
+
+    h1 { font-size: 2.8rem; line-height: 1.25; margin: 32px 0 16px; }
+    h2 { font-size: 2.4rem; line-height: 1.33; margin: 48px 0 16px; }
+    h3 { font-size: 2.0rem; line-height: 1.4;  margin: 32px 0 8px; }
+    h4 { font-size: 1.8rem; line-height: 1.33; margin: 24px 0 8px; }
 
     h2 {
         border-left: 3px solid #2dd4bf;
@@ -349,4 +360,123 @@ footer.site-footer {
         border-radius: 3px;
         &:hover { background: rgba(45,212,191,0.5); }
     }
+}
+
+/* ============================================================
+   侧边栏结构化导航
+============================================================ */
+.sidebar-nav {
+    padding: 0 0 16px;
+
+    .nav-group {
+        border-bottom: 1px solid var(--card-separator-color);
+
+        &:last-child { border-bottom: none; }
+
+        &[open] > summary .nav-chevron {
+            transform: rotate(0deg);
+        }
+
+        > summary .nav-chevron {
+            transform: rotate(-90deg);
+            transition: transform 0.2s ease;
+        }
+    }
+
+    .nav-group-title {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 0;
+        font-family: "Noto Serif SC", serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--card-text-color-main);
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+
+        &::-webkit-details-marker { display: none; }
+
+        &:hover { color: #2dd4bf; }
+    }
+
+    .nav-chevron {
+        flex-shrink: 0;
+        opacity: 0.5;
+    }
+
+    .nav-group-items {
+        list-style: none;
+        margin: 0 0 8px;
+        padding: 0 0 0 20px;
+
+        li {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        li a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 0;
+            font-family: "Noto Serif SC", serif;
+            font-size: 1.3rem;
+            color: var(--card-text-color-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            &:hover { color: #2dd4bf; }
+        }
+
+        li.current a {
+            color: #2dd4bf;
+            font-weight: 600;
+        }
+
+        li.coming-soon {
+            padding: 4px 0;
+            font-family: "Noto Serif SC", serif;
+            font-size: 1.3rem;
+            color: var(--card-text-color-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+
+    .nav-badge {
+        flex-shrink: 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1.0rem;
+        padding: 1px 6px;
+        border-radius: 4px;
+        line-height: 1.4;
+
+        &.live {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+
+        &.soon {
+            color: var(--card-text-color-tertiary);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-separator-color);
+        }
+    }
+}
+
+[data-scheme="light"] .sidebar-nav .nav-badge.soon {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.sidebar .menu-bottom-section {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--card-separator-color);
 }
