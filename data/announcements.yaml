@@ -4,6 +4,12 @@
 # date: 显示在公告前的日期（简短格式即可，如 03-23）
 # text: 支持 HTML 标签（<strong> 等）
 
+- date: "03-25"
+  color: teal
+  type: note
+  tag: 新文章
+  text: "新文章：<strong>深入解析 .claude/ 文件夹：完整指南</strong>"
+
 - date: "03-23"
   color: amber
   type: tool
