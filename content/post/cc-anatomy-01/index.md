@@ -3,7 +3,7 @@ title: "解剖 Claude Code（一）：512K 行代码，一个终端里的 Agent 
 description: "Anthropic Claude Code CLI 完整源码泄露，512K 行 TypeScript 揭示了一个完整的 AI Agent 运行时架构：Bun 运行时、React+Ink 终端渲染、ReAct 主循环、七层错误恢复、五层记忆体系、投机执行与多 Agent 编排。"
 date: 2026-04-02
 slug: cc-anatomy-01
-image: 01-cover.png
+image: 01-cover.webp
 categories:
     - AI
 tags:
@@ -42,7 +42,7 @@ tags:
 
 这套组合的底层逻辑是：**启动要快（Bun）、交互要好（React+Ink）、扩展要广（MCP/LSP）、安全要硬（TypeScript strict + Zod）**。
 
-![技术栈分层图](01-tech-stack.png)
+![技术栈分层图](01-tech-stack.webp)
 
 值得注意的是，Claude Code **完全不依赖传统的代码索引**——没有 Embedding 向量检索，没有 AST 分析，没有代码图谱。它纯靠大模型的推理能力配合 Grep/Glob 全局搜索来理解代码库。这是一个大胆的哲学选择：赌模型能力的增长速度会超过代码库的增长速度。
 
@@ -52,7 +52,7 @@ tags:
 
 当你在 Claude Code 中输入一条消息，数据会经过以下管线：
 
-![核心数据流：从用户输入到终端渲染](01-data-flow.png)
+![核心数据流：从用户输入到终端渲染](01-data-flow.webp)
 
 ```
 用户输入
@@ -130,7 +130,7 @@ tags:
 
 **七层恢复机制**则是韧性设计的典范：
 
-![七层恢复机制：从预警到紧急恢复的递进防线](01-seven-layer-recovery.png)
+![七层恢复机制：从预警到紧急恢复的递进防线](01-seven-layer-recovery.webp)
 
 | 层 | 触发条件 | 恢复策略 |
 |----|---------|---------|
@@ -150,7 +150,7 @@ tags:
 
 大多数 Agent 工具的"记忆"就是对话历史。Claude Code 构建了**五层记忆体系**，覆盖从毫秒到永久的全时间尺度：
 
-![五层记忆体系：从毫秒到永久](01-memory-layers.png)
+![五层记忆体系：从毫秒到永久](01-memory-layers.webp)
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -187,7 +187,7 @@ tags:
 
 一个能执行 Shell 命令的 AI Agent，安全不是可选项，是生存条件。Claude Code 构建了**六层纵深防御**：
 
-![六层安全纵深防御](01-security-layers.png)
+![六层安全纵深防御](01-security-layers.webp)
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -230,7 +230,7 @@ tags:
 
 Claude Code 不是单 Agent 工具。它支持**三种 Agent 执行模型**和一个编排层：
 
-![多 Agent 编排架构：Coordinator + 三种 Worker 模型](01-multi-agent.png)
+![多 Agent 编排架构：Coordinator + 三种 Worker 模型](01-multi-agent.webp)
 
 **三种执行模型**：
 
@@ -352,7 +352,7 @@ src/
 
 ## 一个关键哲学选择
 
-![哲学选择：无索引 vs 传统索引](01-no-index-philosophy.png)
+![哲学选择：无索引 vs 传统索引](01-no-index-philosophy.webp)
 
 最后值得讨论一个贯穿整个架构的哲学选择：**Claude Code 完全不做代码索引**。
 
