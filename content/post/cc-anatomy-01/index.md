@@ -14,8 +14,6 @@ tags:
 
 > 2026 年 3 月 31 日，Anthropic 的 Claude Code CLI 完整源码因 npm 包中的 `.map` 文件泄露。512,000 行 TypeScript，1,900 个文件——这不是一个 CLI 工具，这是一个藏在终端里的 **AI Agent 运行时**。
 
-![封面图：Claude Code 架构全景](01-cover.png)
-
 ---
 
 ## 为什么要读这份源码？
