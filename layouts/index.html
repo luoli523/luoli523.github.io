@@ -2914,7 +2914,8 @@
       musicBtn.addEventListener('click', () => {
         const isOpen = floatPlayer.classList.toggle('open');
         musicBtn.classList.toggle('active', isOpen);
-        if (!isOpen) musicVideo.pause();
+        if (isOpen) musicVideo.play();
+        else musicVideo.pause();
       });
 
       floatPlayerClose.addEventListener('click', () => {
