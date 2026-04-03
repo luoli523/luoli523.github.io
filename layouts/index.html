@@ -1742,6 +1742,101 @@
     [data-theme="light"] .icon-sun  { display: block; }
     [data-theme="light"] .icon-moon { display: none; }
 
+    /* ============================================================
+       MUSIC PLAYER
+    ============================================================ */
+    .music-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--teal-dim);
+      color: var(--teal);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+      margin-left: 12px;
+      font-size: 15px;
+      line-height: 1;
+    }
+    .music-btn:hover {
+      background: rgba(45,212,191,0.18);
+      border-color: var(--border-hover);
+    }
+    .music-btn.active {
+      background: rgba(45,212,191,0.18);
+      border-color: var(--teal);
+    }
+    .music-btn.active .music-icon {
+      display: inline-block;
+      animation: music-spin 1.5s linear infinite;
+    }
+    @keyframes music-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .float-player {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 340px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .float-player.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .float-player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .float-player-title {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .float-player-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .float-player-close:hover {
+      color: var(--text-primary);
+      background: var(--teal-dim);
+    }
+    .float-player video {
+      display: block;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .float-player {
+        width: calc(100% - 32px);
+        right: 16px;
+        bottom: 16px;
+      }
+    }
+
 
     /* ============================================================
        ANNOUNCEMENTS SECTION
@@ -2203,6 +2298,9 @@
       <li><a href="#books">书籍</a></li>
       <li><a href="#about">关于</a></li>
     </ul>
+    <button class="music-btn" id="musicToggle" aria-label="播放音乐" title="看累了听个音乐吧">
+      <span class="music-icon">🎵</span>
+    </button>
     <button class="theme-toggle" id="themeToggle" aria-label="切换亮暗模式">
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <svg class="icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -2798,6 +2896,24 @@
         onScroll();
       });
 
+      // --- Music player ---
+      const musicBtn = document.getElementById('musicToggle');
+      const floatPlayer = document.getElementById('floatPlayer');
+      const floatPlayerClose = document.getElementById('floatPlayerClose');
+      const musicVideo = document.getElementById('musicVideo');
+
+      musicBtn.addEventListener('click', () => {
+        const isOpen = floatPlayer.classList.toggle('open');
+        musicBtn.classList.toggle('active', isOpen);
+        if (!isOpen) musicVideo.pause();
+      });
+
+      floatPlayerClose.addEventListener('click', () => {
+        floatPlayer.classList.remove('open');
+        musicBtn.classList.remove('active');
+        musicVideo.pause();
+      });
+
       // --- Nav background opacity on scroll (theme-aware) ---
       const nav = document.querySelector('.nav');
       const onScroll = () => {
@@ -2887,6 +3003,15 @@
       });
     })();
   </script>
+
+  <!-- Floating Music Player -->
+  <div class="float-player" id="floatPlayer">
+    <div class="float-player-header">
+      <span class="float-player-title">🎵 看累了听个音乐吧</span>
+      <button class="float-player-close" id="floatPlayerClose" aria-label="关闭播放器">✕</button>
+    </div>
+    <video id="musicVideo" src="/dcxj.mp4" controls preload="none"></video>
+  </div>
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
