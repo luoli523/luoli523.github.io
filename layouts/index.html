@@ -2843,6 +2843,15 @@
   </footer>
 
 
+  <!-- Floating Music Player -->
+  <div class="float-player" id="floatPlayer">
+    <div class="float-player-header">
+      <span class="float-player-title">🎵 看累了听个音乐吧</span>
+      <button class="float-player-close" id="floatPlayerClose" aria-label="关闭播放器">✕</button>
+    </div>
+    <video id="musicVideo" src="/dcxj.mp4" controls preload="none"></video>
+  </div>
+
   <!-- ============================================================
        VANILLA JS — Intersection Observer for reveal animations
        + Nav scroll state
@@ -3003,15 +3012,6 @@
       });
     })();
   </script>
-
-  <!-- Floating Music Player -->
-  <div class="float-player" id="floatPlayer">
-    <div class="float-player-header">
-      <span class="float-player-title">🎵 看累了听个音乐吧</span>
-      <button class="float-player-close" id="floatPlayerClose" aria-label="关闭播放器">✕</button>
-    </div>
-    <video id="musicVideo" src="/dcxj.mp4" controls preload="none"></video>
-  </div>
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
