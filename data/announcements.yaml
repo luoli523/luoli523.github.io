@@ -4,6 +4,12 @@
 # date: 显示在公告前的日期（简短格式即可，如 03-23）
 # text: 支持 HTML 标签（<strong> 等）
 
+- date: "04-05"
+  color: teal
+  type: note
+  tag: 新文章
+  text: "新文章：<strong>Gemma 4 深度解析：从「不可用」到「生产级」的 Agent 质变</strong>"
+
 - date: "04-04"
   color: teal
   type: note
