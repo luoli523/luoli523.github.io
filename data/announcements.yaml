@@ -4,6 +4,12 @@
 # date: 显示在公告前的日期（简短格式即可，如 03-23）
 # text: 支持 HTML 标签（<strong> 等）
 
+- date: "04-06"
+  color: teal
+  type: note
+  tag: 新文章
+  text: "新文章：<strong>Karpathy 的 LLM Wiki：用大模型编译知识，而不是检索知识</strong>"
+
 - date: "04-05"
   color: teal
   type: note
