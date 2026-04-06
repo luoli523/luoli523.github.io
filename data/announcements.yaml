@@ -3,6 +3,7 @@
 # type: book / tool / life / note  （对应 CSS 类 ht-book / ht-tool / ht-life / ht-note）
 # date: 显示在公告前的日期（简短格式即可，如 03-23）
 # text: 支持 HTML 标签（<strong> 等）
+# link: 可选，点击跳转的链接
 
 - date: "04-06"
   color: teal
@@ -15,36 +16,42 @@
   type: note
   tag: 新文章
   text: "新文章：<strong>Gemma 4 深度解析：从「不可用」到「生产级」的 Agent 质变</strong>"
+  link: /p/gemma4-analysis/
 
 - date: "04-04"
   color: teal
   type: note
   tag: 新文章
   text: "新文章：<strong>解剖 Claude Code（三）：Prompt 缓存分割与四级上下文压缩</strong>"
+  link: /p/cc-anatomy-03/
 
 - date: "04-03"
   color: teal
   type: note
   tag: 新文章
   text: "新文章：<strong>解剖 Claude Code（二）：ReAct 循环 — while(true) 里的五个阶段与七层恢复</strong>"
+  link: /p/cc-anatomy-02/
 
 - date: "04-02"
   color: teal
   type: note
   tag: 新文章
   text: "新文章：<strong>解剖 Claude Code（一）：512K 行代码，一个终端里的 Agent Runtime</strong>"
+  link: /p/cc-anatomy-01/
 
 - date: "04-01"
   color: teal
   type: note
   tag: 新文章
   text: "新文章：<strong>Harness Engineering：当模型够强，系统设计成为胜负手</strong>"
+  link: /p/harness-engineering/
 
 - date: "03-25"
   color: teal
   type: note
   tag: 新文章
   text: "新文章：<strong>深入解析 .claude/ 文件夹：完整指南</strong>"
+  link: /p/claude-folder-anatomy/
 
 - date: "03-23"
   color: amber
@@ -57,15 +64,18 @@
   type: book
   tag: 书籍
   text: "《<strong>跟鬼哥玩转 OpenClaw</strong>》书籍上传"
+  link: https://luoli523.github.io/learn-claw/
 
 - date: "03-15"
   color: teal
   type: book
   tag: 书籍
   text: "《<strong>跟鬼哥玩转 Claude Code</strong>》书籍上传"
+  link: https://luoli523.github.io/learn-cc/
 
 - date: "03-14"
   color: teal
   type: book
   tag: 书籍
   text: "《<strong>跟鬼哥一起学 LLM</strong>》书籍上传"
+  link: https://luoli523.github.io/learn-llm/

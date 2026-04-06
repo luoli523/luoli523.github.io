@@ -644,6 +644,17 @@
       font-weight: 600;
     }
 
+    .hp-text a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .hp-text a:hover {
+      color: var(--teal);
+    }
+    .hp-text a:hover strong {
+      color: var(--teal);
+    }
+
     /* Scroll indicator */
     .scroll-indicator {
       position: absolute;
@@ -2373,7 +2384,7 @@
               <time>{{ .date }}</time>
               <span class="hp-tag ht-{{ .type }}">{{ .tag }}</span>
             </div>
-            <p class="hp-text">{{ .text | safeHTML }}</p>
+            <p class="hp-text">{{ if .link }}<a href="{{ .link }}">{{ .text | safeHTML }}</a>{{ else }}{{ .text | safeHTML }}{{ end }}</p>
           </div>
         </li>
         {{ end }}
