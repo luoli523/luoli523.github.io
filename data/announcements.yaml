@@ -10,6 +10,7 @@
   type: note
   tag: 新文章
   text: "新文章：<strong>Karpathy 的 LLM Wiki：用大模型编译知识，而不是检索知识</strong>"
+  link: /p/karpathy-llm-wiki/
 
 - date: "04-05"
   color: teal
