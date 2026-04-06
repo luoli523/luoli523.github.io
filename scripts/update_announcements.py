@@ -35,6 +35,9 @@ def parse_front_matter(content: str) -> dict:
     d = re.search(r'^date:\s*\d{4}-(\d{2}-\d{2})', fm, re.MULTILINE)
     result["short_date"] = d.group(1) if d else "??-??"
 
+    s = re.search(r'^slug:\s*["\']?(.+?)["\']?\s*$', fm, re.MULTILINE)
+    result["slug"] = s.group(1).strip("\"'") if s else None
+
     cats = re.findall(r'^\s+-\s+["\']?(.+?)["\']?\s*$', fm, re.MULTILINE)
     result["category"] = cats[0].strip("\"'") if cats else "随笔"
 
@@ -55,12 +58,14 @@ def main():
     cat = fm["category"]
     color, typ = CATEGORY_MAP.get(cat, ("teal", "note"))
 
+    link_line = f"  link: /p/{fm['slug']}/\n" if fm.get("slug") else ""
     new_entry = (
         f"- date: \"{fm['short_date']}\"\n"
         f"  color: {color}\n"
         f"  type: {typ}\n"
         f"  tag: 新文章\n"
         f"  text: \"新文章：<strong>{fm['title']}</strong>\"\n"
+        f"{link_line}"
     )
 
     ann_path = Path("data/announcements.yaml")
