@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-07"
+  color: teal
+  type: note
+  tag: 新文章
+  text: "新文章：<strong>Agent Skills：当 Google 工程文化遇上 AI 编程代理</strong>"
+  link: /p/agent-skills-analysis/
+
 - date: "04-06"
   color: teal
   type: note
