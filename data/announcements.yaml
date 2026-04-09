@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-09"
+  color: teal
+  type: note
+  tag: 新文章
+  text: "新文章：<strong>Claude Managed Agents：从聊天机器人到自主 Agent 的一步之遥</strong>"
+  link: /p/managed-agents-intro/
+
 - date: "04-07"
   color: teal
   type: note
