@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-10"
+  color: teal
+  type: note
+  tag: 新文章
+  text: "新文章：<strong>150 行代码，给你的博客装一个 AI 数字分身</strong>"
+  link: /p/diy-ai-avatar/
+
 - date: "04-09"
   color: teal
   type: note
