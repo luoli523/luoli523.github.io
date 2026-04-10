@@ -20,8 +20,6 @@ tags:
 
 这不是科幻，这是我两个月前实际做的事情。整个项目叫 [guige_avatar](https://github.com/luoli523/guige_avatar)，后端代码 150 行，两个依赖，免费部署在 Vercel 上。本文就以它为例，手把手带你从零搭建一个最小可用的 AI 数字分身。
 
-![封面](cover.webp)
-
 ---
 
 ## 先看效果
