@@ -59,12 +59,15 @@ def main():
     color, typ = CATEGORY_MAP.get(cat, ("teal", "note"))
 
     link_line = f"  link: /p/{fm['slug']}/\n" if fm.get("slug") else ""
+    # 用单引号包裹 text 字段，避免标题中含中文双引号时被 YAML 解析器误判。
+    # 若标题本身含单引号，则按 YAML 规范双写转义。
+    safe_title = fm["title"].replace("'", "''")
     new_entry = (
         f"- date: \"{fm['short_date']}\"\n"
         f"  color: {color}\n"
         f"  type: {typ}\n"
         f"  tag: 新文章\n"
-        f"  text: \"新文章：<strong>{fm['title']}</strong>\"\n"
+        f"  text: '新文章：<strong>{safe_title}</strong>'\n"
         f"{link_line}"
     )
 
