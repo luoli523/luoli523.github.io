@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-12"
+  color: teal
+  type: note
+  tag: 新文章
+  text: "新文章：<strong>DESIGN.md：让 AI 拥有"设计品味"的新标准</strong>"
+  link: /p/design-md-intro/
+
 - date: "04-10"
   color: teal
   type: note
