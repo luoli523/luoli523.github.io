@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-16"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>Claude Code 的 Session 管理：比模型本身更重要的使用方法</strong>'
+  link: /p/claude-code-session-management/
+
 - date: "04-12"
   color: teal
   type: note
