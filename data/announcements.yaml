@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-17"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>Prompt Caching 深度拆解：Claude Code 是如何做到 92% 命中率的</strong>'
+  link: /p/llm-prompt-caching-explained/
+
 - date: "04-16"
   color: teal
   type: note
