@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-18"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>Claude-Cookbooks 全景导航：被 README 藏起来的另一半</strong>'
+  link: /p/claude-cookbooks-index/
+
 - date: "04-17"
   color: teal
   type: note
