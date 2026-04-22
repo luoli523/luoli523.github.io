@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-22"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>后端上下文工程：一个开源工具把 Claude Code 的账单砍掉 2/3</strong>'
+  link: /p/backend-context-engineering/
+
 - date: "04-18"
   color: teal
   type: note
