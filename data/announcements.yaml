@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "04-26"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>Whisper Large V3 Turbo 上手指南：让你的电脑听懂 99 种语言</strong>'
+  link: /p/whisper-turbo-guide/
+
 - date: "04-22"
   color: teal
   type: note
