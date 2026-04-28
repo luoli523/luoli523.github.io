@@ -18,6 +18,8 @@ tags:
 
 过去社会喜欢把人压成一个标签：前端工程师、设计师、销售、产品经理、老师、会计。越窄越“专业”，越窄越好管理。但今天的问题是：**越窄，也越容易被替代。**
 
+先补一笔背景：Dan Koe 是英文创作者经济圈里很有代表性的“一人公司”写作者。他是《The Art of Focus》的作者，也是 AI 知识管理产品 Eden 的共同创始人，长期围绕写作、个人品牌、数字产品、AI 工具和 one-person business 输出。更重要的是，他不是站在岸上讲“兴趣变现”的观察者，而是把 newsletter、社交内容、课程产品和软件业务串成一套内容飞轮的人。
+
 Dan Koe 最近那篇 X Article《If you have multiple interests, do not waste the next 2-3 years》讲的就是这件事：多兴趣不是弱点，真正的问题是你缺少一个“容器”，把兴趣变成作品、信任、产品和收入。
 
 ![通才创作者系统全景图](generalist-creator-system-infographic.webp)
@@ -250,5 +252,6 @@ Dan Koe 的判断是：我们正在进入“系统经济”。人们不只是想
 
 ## 参考资料
 
+- Dan Koe: [Official Website](https://thedankoe.com/)
 - Dan Koe: [If you have multiple interests, do not waste the next 2-3 years](https://x.com/thedankoe/status/2010042119121957316)
 - Dan Koe Letters: [The Dan Koe Newsletter](https://letters.thedankoe.com/)
