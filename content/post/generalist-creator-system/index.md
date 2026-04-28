@@ -20,8 +20,6 @@ tags:
 
 Dan Koe 最近那篇 X Article《If you have multiple interests, do not waste the next 2-3 years》讲的就是这件事：多兴趣不是弱点，真正的问题是你缺少一个“容器”，把兴趣变成作品、信任、产品和收入。
 
-![封面](cover.webp)
-
 ![通才创作者系统全景图](generalist-creator-system-infographic.webp)
 
 ---
