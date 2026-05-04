@@ -1,0 +1,12 @@
+{
+  "model": "gemma4:26b",
+  "total_s": 13.337140107,
+  "load_s": 0.157731323,
+  "prompt_eval_count": 68,
+  "prompt_eval_s": 0.024009116,
+  "prompt_tokens_per_s": 2832.257547508205,
+  "eval_count": 1985,
+  "eval_s": 12.279030284,
+  "output_tokens_per_s": 161.65771678130997,
+  "done_reason": "stop"
+}
