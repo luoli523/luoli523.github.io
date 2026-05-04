@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "05-04"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>一张 4090 跑 Gemma4 26B：用 Ollama 搭本地 AI 开发环境实测</strong>'
+  link: /p/ollama-local-dev/
+
 - date: "04-28"
   color: teal
   type: note
