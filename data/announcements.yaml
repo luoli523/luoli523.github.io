@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "05-07"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>一场三十年的资产负债表修复：读《以日为鉴》</strong>'
+  link: /p/japan-balance-sheet-repair/
+
 - date: "05-04"
   color: teal
   type: note
