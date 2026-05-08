@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "05-08"
+  color: amber
+  type: tool
+  tag: 新文章
+  text: '新文章：<strong>ai-convo-exporter：别让 AI 对话死在终端里</strong>'
+  link: /p/ai-convo-exporter/
+
 - date: "05-07"
   color: teal
   type: note
