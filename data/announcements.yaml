@@ -5,6 +5,20 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "05-28"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>agent-skills 项目手册：六层架构的极致颗粒度参考</strong>'
+  link: /p/agent-skills-handbook/
+
+- date: "05-28"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>从使用者到学习者：agent-skills 架构深度剖析与高手思维体系</strong>'
+  link: /p/agent-skills-architecture/
+
 - date: "05-08"
   color: amber
   type: tool
