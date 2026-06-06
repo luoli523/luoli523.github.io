@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "06-06"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>从 install.sh 到 Plugin —— guige-skills 的进化史</strong>'
+  link: /p/claude-plugin-guide/
+
 - date: "05-28"
   color: teal
   type: note
