@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "06-10"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>别再调教模型了：聪明人都在设计循环</strong>'
+  link: /p/designing-agent-loops/
+
 - date: "06-06"
   color: teal
   type: note
