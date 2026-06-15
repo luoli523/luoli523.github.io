@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "06-15"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>桌面 AI Studio 怎么选：DGX Spark、Ryzen AI Halo 和 M4 Max Mac Studio</strong>'
+  link: /p/desktop-ai-studio/
+
 - date: "06-10"
   color: teal
   type: note
