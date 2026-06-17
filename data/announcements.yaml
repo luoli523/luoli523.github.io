@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "06-17"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>Loop Engineering：Agent 不是跑一次，而是活在循环里</strong>'
+  link: /p/loop-engineering-stack/
+
 - date: "06-15"
   color: teal
   type: note
