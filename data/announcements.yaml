@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "06-18"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>你是什么，你的 AI 就是什么</strong>'
+  link: /p/ai-mirrors-you/
+
 - date: "06-17"
   color: teal
   type: note
