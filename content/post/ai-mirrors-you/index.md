@@ -206,7 +206,7 @@ AI 只是把一扇原本关上的门，轻轻推开了一条缝。
 
 你可以在这里听这首歌：
 
-[The Beatles - Now And Then 官方 MV](https://www.youtube.com/watch?v=APJAQoSCwuA)
+[The Beatles - Now And Then 官方 MV（B站）](https://www.bilibili.com/video/BV14H4y167ca)
 
 ---
 
