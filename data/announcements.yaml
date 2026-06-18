@@ -9,6 +9,13 @@
   color: teal
   type: note
   tag: 新文章
+  text: '新文章：<strong>别再只会提示词了：下一代程序员要会设计 Agent 循环</strong>'
+  link: /p/coding-agent-loops/
+
+- date: "06-17"
+  color: teal
+  type: note
+  tag: 新文章
   text: '新文章：<strong>Loop Engineering：Agent 不是跑一次，而是活在循环里</strong>'
   link: /p/loop-engineering-stack/
 
