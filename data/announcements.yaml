@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "06-22"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>OKF：AI Agent 缺的不是模型，是可交接的上下文</strong>'
+  link: /p/open-knowledge-format/
+
 - date: "06-18"
   color: teal
   type: note
