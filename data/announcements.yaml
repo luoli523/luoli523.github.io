@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "06-30"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>苹果原生 Container来了 ：天下苦Docker Desktop久矣T_T</strong>'
+  link: /p/apple-container-mac/
+
 - date: "06-22"
   color: teal
   type: note
