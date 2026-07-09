@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "07-09"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>别让 Fable/Opus 干杂活：Agent 系统的省钱架构</strong>'
+  link: /p/fable-opus-agent-cost/
+
 - date: "06-30"
   color: teal
   type: note
