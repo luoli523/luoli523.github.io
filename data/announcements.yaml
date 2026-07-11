@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "07-11"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>人生，只是努力和运气共同作用以后，翻出的那张牌</strong>'
+  link: /p/skill-luck-trap/
+
 - date: "07-09"
   color: teal
   type: note
