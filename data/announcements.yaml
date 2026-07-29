@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "07-29"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>天下苦旧 MCP 久矣：Anthropic新MCP协议终于开始治病了</strong>'
+  link: /p/mcp-stateless-core/
+
 - date: "07-11"
   color: teal
   type: note
