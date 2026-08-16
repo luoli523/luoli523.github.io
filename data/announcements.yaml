@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "08-16"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>持续学习 - 读吴恩达老师的 AI Engineering Skills Map</strong>'
+  link: /p/you-are-your-ai/
+
 - date: "07-29"
   color: teal
   type: note
