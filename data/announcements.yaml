@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "08-18"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>从 agent-skills 拆解：如何开发一套 Skill + Agents 项目脚手架</strong>'
+  link: /p/skill-agent-scaffold/
+
 - date: "08-16"
   color: teal
   type: note
