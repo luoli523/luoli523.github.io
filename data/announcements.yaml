@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "??-??"
+  color: purple
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>AI Native 软件开发生命周期实战手册</strong>'
+  link: /p/anthropic-ai-native-sdlc/
+
 - date: "08-19"
   color: teal
   type: note
