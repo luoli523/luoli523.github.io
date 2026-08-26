@@ -1,5 +1,6 @@
 ---
 title: AI Native 软件开发生命周期实战手册
+date: 2026-08-26
 slug: anthropic-ai-native-sdlc
 image: cover.webp
 sourceTitle: The AI-Native SDLC playbook
