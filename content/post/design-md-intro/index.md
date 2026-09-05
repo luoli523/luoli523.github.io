@@ -285,4 +285,3 @@ Claude Code 会先读 `DESIGN.md`，然后生成的代码会：
 - [awesome-design-md（GitHub 仓库）](https://github.com/VoltAgent/awesome-design-md)
 - [getdesign.md（完整在线模板库）](https://getdesign.md/)
 - [Google Stitch 官方 DESIGN.md 文档](https://stitch.withgoogle.com/docs/design-md/overview/)
-- [跟鬼哥一起玩 Claude Code](https://claude-code.luoli523.com)

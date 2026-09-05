@@ -123,7 +123,6 @@ knowledge:
     - 大数据技术栈（Hadoop, Spark, Kafka, Flink）
   books:
     - name: 跟鬼哥一起玩 Claude Code
-      url: https://claude-code.luoli523.com
       description: Claude Code使用教程
   current_projects:
     - name: AI 产业链投资简报
