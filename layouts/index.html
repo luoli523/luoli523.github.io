@@ -823,6 +823,41 @@
       margin-left: 6px;
     }
 
+    .radar-thumb {
+      flex-shrink: 0;
+      display: block;
+      width: 120px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      cursor: zoom-in;
+      align-self: center;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .radar-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .radar-thumb:hover,
+    .radar-thumb:focus-visible {
+      border-color: var(--border-hover);
+      transform: scale(1.04);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      outline: none;
+    }
+
+    [data-theme="light"] .radar-thumb:hover,
+    [data-theme="light"] .radar-thumb:focus-visible {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    }
+
     .radar-body { flex: 1; min-width: 0; }
 
     .radar-title {
@@ -897,6 +932,8 @@
     @media (max-width: 640px) {
       .radar-item { flex-direction: column; align-items: stretch; gap: 8px; padding: 20px 14px; }
       .radar-date { width: auto; }
+      .radar-thumb { width: 100%; height: 150px; align-self: stretch; }
+      .radar-thumb:hover, .radar-thumb:focus-visible { transform: none; }
       .radar-arrow { display: none; }
     }
 
@@ -3039,7 +3076,7 @@
   (function () {
     'use strict';
 
-    var FEED  = '/guige-ai-site/daily/index.xml';   // 分区 feed，只含每日简报；站点根 feed 会混进「关于本站」
+    var FEED  = '/guige-ai-site/daily/index.json'; // JSON feed 比 RSS 多带标签与配图 URL（配图名有内容哈希，猜不出来）
     var SITE  = '/guige-ai-site/';
     var LIMIT = 5;
 
@@ -3057,28 +3094,19 @@
     fetch(FEED, { cache: 'no-cache' })
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        return res.text();
+        return res.json();
       })
-      .then(function (xml) {
-        var doc = new DOMParser().parseFromString(xml, 'application/xml');
-        if (doc.querySelector('parsererror')) throw new Error('feed 解析失败');
-
-        var items = Array.prototype.slice.call(doc.querySelectorAll('item')).slice(0, LIMIT);
+      .then(function (data) {
+        var items = (data && data.items || []).slice(0, LIMIT);
         if (!items.length) throw new Error('feed 里没有条目');
 
-        var text = function (item, tag) {
-          var el = item.querySelector(tag);
-          return el ? el.textContent.trim() : '';
-        };
-
         items.forEach(function (item, i) {
-          var link = text(item, 'link') || SITE;
-          var d    = new Date(text(item, 'pubDate'));
-          var ok   = !isNaN(d.getTime());
+          var d  = new Date(item.date + 'T08:00:00+08:00');
+          var ok = !isNaN(d.getTime());
 
           var a = document.createElement('a');
           a.className = 'radar-item';
-          a.href = link;
+          a.href = item.url || SITE;
           a.style.animationDelay = (i * 0.07) + 's';
 
           var time = document.createElement('time');
@@ -3092,16 +3120,44 @@
             time.appendChild(wd);
           }
 
+          // 配图缩略图：点它看大图，不跳转
+          var thumbWrap = null;
+          if (item.hero) {
+            thumbWrap = document.createElement('span');
+            thumbWrap.className = 'radar-thumb';
+            thumbWrap.setAttribute('role', 'button');
+            thumbWrap.tabIndex = 0;
+            thumbWrap.title = '查看当天配图大图';
+            thumbWrap.setAttribute('aria-label', '查看当天配图大图');
+
+            var thumb = document.createElement('img');
+            thumb.src = item.hero;
+            thumb.alt = item.hero_alt || item.title || '';
+            thumb.loading = 'lazy';
+            thumb.decoding = 'async';
+            thumbWrap.appendChild(thumb);
+
+            var zoom = function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (window.ggLightbox) window.ggLightbox(item.hero, thumb.alt);
+            };
+            thumbWrap.addEventListener('click', zoom);
+            thumbWrap.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') zoom(e);
+            });
+          }
+
           var body = document.createElement('div');
           body.className = 'radar-body';
 
           var h3 = document.createElement('h3');
           h3.className = 'radar-title';
-          h3.textContent = text(item, 'title');
+          h3.textContent = item.title || '';
 
           var desc = document.createElement('p');
           desc.className = 'radar-desc';
-          desc.textContent = text(item, 'description');
+          desc.textContent = item.summary || '';
 
           body.appendChild(h3);
           if (desc.textContent) body.appendChild(desc);
@@ -3111,6 +3167,7 @@
           arrow.textContent = '\u2192';
 
           a.appendChild(time);
+          if (thumbWrap) a.appendChild(thumbWrap);
           a.appendChild(body);
           a.appendChild(arrow);
           list.appendChild(a);
@@ -3300,6 +3357,9 @@
         box.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
+
+      // 暴露给「每日 AI 要闻」板块的缩略图复用，避免页面上出现两套大图浮层
+      window.ggLightbox = openLightbox;
 
       function closeLightbox() {
         const box = lb.box;
