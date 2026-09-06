@@ -758,6 +758,146 @@
     }
 
     /* ============================================================
+       AI RADAR SECTION — 每日 AI 要闻（数据来自 guige-ai-site 的 RSS）
+    ============================================================ */
+    .radar {
+      background: var(--bg-void);
+    }
+
+    .radar-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--border);
+    }
+
+    .radar-item {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      padding: 22px 20px;
+      border-bottom: 1px solid var(--border);
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--transition);
+      opacity: 0;
+      animation: radarIn 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes radarIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .radar-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 18%; bottom: 18%;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--teal), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .radar-item:hover { background: rgba(255,255,255,0.02); }
+    .radar-item:hover::before { opacity: 1; }
+
+    [data-theme="light"] .radar-item:hover { background: rgba(0,0,0,0.02); }
+
+    .radar-date {
+      flex-shrink: 0;
+      width: 126px;
+      white-space: nowrap;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      line-height: 1.6;
+    }
+
+    .radar-date .wd {
+      color: var(--teal-muted);
+      margin-left: 6px;
+    }
+
+    .radar-body { flex: 1; min-width: 0; }
+
+    .radar-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      transition: color var(--transition);
+    }
+
+    .radar-item:hover .radar-title { color: var(--teal); }
+
+    .radar-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .radar-arrow {
+      flex-shrink: 0;
+      align-self: center;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: all var(--transition);
+    }
+
+    .radar-item:hover .radar-arrow {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--teal);
+    }
+
+    .radar-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 32px;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      transition: all var(--transition);
+    }
+
+    .radar-more:hover {
+      border-color: var(--border-hover);
+      color: var(--teal);
+      transform: translateX(4px);
+    }
+
+    .radar-live {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 8px var(--amber);
+      animation: dotPulse 2.4s ease-in-out infinite;
+    }
+
+    @media (max-width: 640px) {
+      .radar-item { flex-direction: column; align-items: stretch; gap: 8px; padding: 20px 14px; }
+      .radar-date { width: auto; }
+      .radar-arrow { display: none; }
+    }
+
+    /* ============================================================
        BOOKS SECTION
     ============================================================ */
     .books {
@@ -2407,6 +2547,30 @@
 
 
   <!-- ============================================================
+       AI RADAR — 每日 AI 要闻
+       数据来自 guige-ai-site 的 RSS（同源，浏览器直接拉，主站无需重新构建）
+       拉取失败则整块保持隐藏，不在首页留空壳
+  ============================================================ -->
+  <section class="radar" id="radar" aria-label="每日 AI 要闻" hidden>
+    <div class="section-inner">
+
+      <header class="section-header">
+        <div class="section-eyebrow"><span class="radar-live" aria-hidden="true"></span> AI Radar · 每日更新</div>
+        <h2 class="section-title">每日 AI 要闻</h2>
+        <p class="section-subtitle">鬼哥每天替你盯着 AI 圈，一天一篇深读。点任意一条看当天全文。</p>
+      </header>
+
+      <div class="radar-list" id="radarList"></div>
+
+      <a class="radar-more" href="/guige-ai-site/">
+        进入「鬼哥的AI行业动态」看全部 →
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
        BOOKS SECTION
   ============================================================ -->
   <section class="books" id="books" aria-label="书籍">
@@ -2865,6 +3029,98 @@
   })();
   </script>
 
+
+
+  <!-- AI Radar：拉 guige-ai-site 的 RSS 渲染最近 5 天 -->
+  <script>
+  (function () {
+    'use strict';
+
+    var FEED  = '/guige-ai-site/daily/index.xml';   // 分区 feed，只含每日简报；站点根 feed 会混进「关于本站」
+    var SITE  = '/guige-ai-site/';
+    var LIMIT = 5;
+
+    var section = document.getElementById('radar');
+    var list    = document.getElementById('radarList');
+    if (!section || !list) return;
+
+    var WD = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+    function fmt(d) {
+      var p = function (n) { return n < 10 ? '0' + n : '' + n; };
+      return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+    }
+
+    fetch(FEED, { cache: 'no-cache' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function (xml) {
+        var doc = new DOMParser().parseFromString(xml, 'application/xml');
+        if (doc.querySelector('parsererror')) throw new Error('feed 解析失败');
+
+        var items = Array.prototype.slice.call(doc.querySelectorAll('item')).slice(0, LIMIT);
+        if (!items.length) throw new Error('feed 里没有条目');
+
+        var text = function (item, tag) {
+          var el = item.querySelector(tag);
+          return el ? el.textContent.trim() : '';
+        };
+
+        items.forEach(function (item, i) {
+          var link = text(item, 'link') || SITE;
+          var d    = new Date(text(item, 'pubDate'));
+          var ok   = !isNaN(d.getTime());
+
+          var a = document.createElement('a');
+          a.className = 'radar-item';
+          a.href = link;
+          a.style.animationDelay = (i * 0.07) + 's';
+
+          var time = document.createElement('time');
+          time.className = 'radar-date';
+          if (ok) {
+            time.dateTime = fmt(d);
+            time.appendChild(document.createTextNode(fmt(d)));
+            var wd = document.createElement('span');
+            wd.className = 'wd';
+            wd.textContent = WD[d.getDay()];
+            time.appendChild(wd);
+          }
+
+          var body = document.createElement('div');
+          body.className = 'radar-body';
+
+          var h3 = document.createElement('h3');
+          h3.className = 'radar-title';
+          h3.textContent = text(item, 'title');
+
+          var desc = document.createElement('p');
+          desc.className = 'radar-desc';
+          desc.textContent = text(item, 'description');
+
+          body.appendChild(h3);
+          if (desc.textContent) body.appendChild(desc);
+
+          var arrow = document.createElement('span');
+          arrow.className = 'radar-arrow';
+          arrow.textContent = '\u2192';
+
+          a.appendChild(time);
+          a.appendChild(body);
+          a.appendChild(arrow);
+          list.appendChild(a);
+        });
+
+        section.hidden = false;
+      })
+      .catch(function (e) {
+        // 动态站挂了或 feed 拿不到：整块不显示，首页保持原样
+        if (window.console) console.warn('[AI Radar] 跳过：', e.message);
+      });
+  })();
+  </script>
 
   <!-- ============================================================
        FOOTER
