@@ -3281,19 +3281,27 @@
       });
 
       // --- Lightbox ---
-      const lightbox    = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightboxImg');
-      const lightboxClose = document.getElementById('lightboxClose');
+      // 注意：这段脚本跑在 .lightbox 标记之前，所以元素必须惰性获取，
+      // 不能在这里 getElementById —— 那样拿到的全是 null。
+      const lb = {
+        get box()   { return document.getElementById('lightbox'); },
+        get img()   { return document.getElementById('lightboxImg'); },
+        get close() { return document.getElementById('lightboxClose'); },
+      };
 
       function openLightbox(src, alt) {
-        lightboxImg.src = src;
-        lightboxImg.alt = alt || '';
-        lightbox.classList.add('active');
+        const box = lb.box, img = lb.img;
+        if (!box || !img) return;
+        img.src = src;
+        img.alt = alt || '';
+        box.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
 
       function closeLightbox() {
-        lightbox.classList.remove('active');
+        const box = lb.box;
+        if (!box) return;
+        box.classList.remove('active');
         document.body.style.overflow = '';
       }
 
@@ -3308,15 +3316,26 @@
         });
       });
 
-      // 点击遮罩或关闭按钮关闭
-      lightboxClose.addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
-      });
+      // 点击遮罩或关闭按钮关闭。标记此时还没解析到，等 DOM 就绪再绑
+      function bindLightbox() {
+        const box = lb.box, closeBtn = lb.close;
+        if (!box || !closeBtn) return;
+        closeBtn.addEventListener('click', closeLightbox);
+        box.addEventListener('click', (e) => {
+          if (e.target === box) closeLightbox();
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindLightbox);
+      } else {
+        bindLightbox();
+      }
 
       // ESC 键关闭
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+        const box = lb.box;
+        if (e.key === 'Escape' && box && box.classList.contains('active')) closeLightbox();
       });
     })();
   </script>
