@@ -837,11 +837,11 @@
       transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
     }
 
+    /* 每天配图长宽比不固定（3:2 / 16:9 都有），信息图裁掉就丢信息，用 contain */
     .radar-thumb img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: top center;
+      object-fit: contain;
       display: block;
     }
 
