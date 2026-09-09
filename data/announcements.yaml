@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "09-08"
+  color: amber
+  type: tool
+  tag: 新文章
+  text: '新文章：<strong>Grok Bot 多 Agent 团队怎么搭：先把交接协议写清楚</strong>'
+  link: /p/grok-bot-handoffs/
+
 - date: "??-??"
   color: purple
   type: note
