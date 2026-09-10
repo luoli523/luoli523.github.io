@@ -3,6 +3,7 @@ title: 关于我
 description: 鬼哥的个人介绍
 date: 2024-01-01
 slug: about
+comments: false
 menu:
     main:
         weight: -90

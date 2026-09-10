@@ -3,6 +3,7 @@ title: 我的书
 description: 鬼哥写的技术书籍
 date: 2024-01-01
 slug: books
+comments: false
 menu:
     main:
         weight: -80
