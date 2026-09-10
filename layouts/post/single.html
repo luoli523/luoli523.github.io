@@ -270,13 +270,14 @@
     }
     .nav-group-items li { margin: 0; }
     .nav-group-items li a {
-      display: flex; align-items: center; gap: 6px;
+      display: block;
       padding: 4px 0;
       font-family: var(--font-serif); font-size: 0.8rem;
       color: var(--text-secondary); text-decoration: none;
       transition: color 0.2s ease;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
+    .nav-group-items li a .nav-badge { margin-left: 6px; vertical-align: middle; }
     .nav-group-items li a:hover { color: var(--teal); }
     .nav-group-items li.current a { color: var(--teal); font-weight: 600; }
     .nav-group-items li.coming-soon {
