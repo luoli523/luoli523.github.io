@@ -2842,6 +2842,8 @@
               <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
               <span class="post-meta-sep"></span>
               <span>{{ .ReadingTime }} 分钟阅读</span>
+              <span class="post-meta-sep"></span>
+              <span><span class="waline-pageview-count" data-path="{{ .RelPermalink }}">–</span> 次阅读</span>
             </div>
           </a>
           {{ end }}
@@ -3410,6 +3412,12 @@
     <button class="lightbox-close" id="lightboxClose" aria-label="关闭">✕</button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="" />
   </div>
+
+  <!-- Waline 浏览量（只读展示，不计数） -->
+  <script type="module">
+    import { pageviewCount } from 'https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/pageview.js';
+    pageviewCount({ serverURL: '{{ .Site.Params.comments.waline.serverURL }}', update: false });
+  </script>
 
 </body>
 </html>

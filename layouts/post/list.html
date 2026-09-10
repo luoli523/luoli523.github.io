@@ -514,6 +514,7 @@
               <span class="post-item-category">{{ index . 0 }}</span>
               {{ end }}
               <span class="post-item-reading">{{ .ReadingTime }} min</span>
+              <span class="post-item-reading"><span class="waline-pageview-count" data-path="{{ .RelPermalink }}">–</span> views</span>
             </div>
             <h2 class="post-item-title">{{ .Title }}</h2>
             {{ with .Description }}
@@ -579,6 +580,12 @@
       sidebar.classList.remove('open');
       overlay.classList.remove('open');
     });
+  </script>
+
+  <!-- Waline 浏览量（只读展示，不计数） -->
+  <script type="module">
+    import { pageviewCount } from 'https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/pageview.js';
+    pageviewCount({ serverURL: '{{ .Site.Params.comments.waline.serverURL }}', update: false });
   </script>
 </body>
 </html>
