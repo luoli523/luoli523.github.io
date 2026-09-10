@@ -842,6 +842,38 @@
       .page-footer-inner { flex-direction: column; align-items: flex-start; }
     }
   </style>
+
+  <!-- Waline 评论 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/waline.css" />
+  <style>
+    .article-comments {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border, rgba(255,255,255,0.08));
+    }
+    #waline {
+      --waline-font-size: 15px;
+      --waline-theme-color: var(--teal, #2dd4bf);
+      --waline-active-color: var(--amber, #f59e0b);
+      --waline-color: var(--text-primary, #e8eaf0);
+      --waline-dark-grey: var(--text-secondary, #8b9ab0);
+      --waline-light-grey: var(--text-muted, #5b6b80);
+      --waline-white: var(--bg-card, #0f151e);
+      --waline-bg-color: var(--bg-card, #0f151e);
+      --waline-bg-color-light: var(--bg-elevated, #131920);
+      --waline-bg-color-hover: var(--bg-elevated, #131920);
+      --waline-border-color: var(--border, rgba(255,255,255,0.08));
+      --waline-code-bg-color: var(--bg-elevated, #131920);
+      --waline-info-bg-color: var(--bg-elevated, #131920);
+      --waline-info-color: var(--text-muted, #5b6b80);
+      --waline-disable-bg-color: var(--bg-elevated, #131920);
+      --waline-disable-color: var(--text-muted, #5b6b80);
+      --waline-badge-color: var(--teal, #2dd4bf);
+      --waline-bq-color: var(--border, rgba(255,255,255,0.08));
+      --waline-avatar-radius: 50%;
+      --waline-box-shadow: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -952,6 +984,10 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 {{ .WordCount }} 字
               </span>
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span class="waline-pageview-count" data-path="{{ .RelPermalink }}">–</span> 次阅读
+              </span>
             </div>
 
             {{ with .Params.image }}
@@ -985,6 +1021,11 @@
               {{ end }}
             </div>
           </footer>
+
+          <!-- Comments -->
+          <section class="article-comments" id="comments" aria-label="评论">
+            <div id="waline"></div>
+          </section>
         </article>
       </div>
     </div>
@@ -1081,6 +1122,24 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     })();
+  </script>
+
+  <!-- Waline: 评论 + 表情反应 + 浏览量 -->
+  <script type="module">
+    import { init } from 'https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/waline.js';
+    init({
+      el: '#waline',
+      serverURL: '{{ .Site.Params.comments.waline.serverURL }}',
+      path: '{{ .RelPermalink }}',
+      lang: 'zh-CN',
+      dark: 'html[data-theme="dark"]',
+      reaction: true,
+      pageview: true,
+      login: 'enable',
+      requiredMeta: ['nick'],
+      search: false,
+      imageUploader: false,
+    });
   </script>
 </body>
 </html>

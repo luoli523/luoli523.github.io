@@ -33,7 +33,7 @@ favicon        = "img/favicon.png"
     provider = "waline"
 
     [comments.waline]
-        serverURL   = "https://waline-server-xxx.vercel.app"  # 替换为你的 Waline 服务地址
+        serverURL   = "https://waline-server-amber.vercel.app"
         lang        = "zh-CN"
         dark        = "auto"
         reaction    = true
