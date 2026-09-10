@@ -1,0 +1,7 @@
+{{- /* 站点访问统计：Cloudflare Web Analytics。token 配在 params.toml 的 [analytics.cloudflare]；hugo server 本地预览时不注入，避免污染数据 */ -}}
+{{- if not hugo.IsServer -}}
+{{- with .Site.Params.analytics.cloudflare.token -}}
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ . }}"}'></script>
+{{- end -}}
+{{- end -}}

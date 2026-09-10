@@ -39,5 +39,9 @@ favicon        = "img/favicon.png"
         reaction    = true
         requiredMeta = ["nick"]
 
+[analytics]
+    [analytics.cloudflare]
+        token = "6aaf83fc05e244f88ca89346fb1acdcb"
+
 [cookies]
     enabled = false
