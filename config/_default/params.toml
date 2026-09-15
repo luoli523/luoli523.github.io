@@ -28,6 +28,10 @@ favicon        = "img/favicon.png"
     ]
     page     = [{ type = "toc" }]
 
+# 邮件订阅：Buttondown 用户名（表单地址 …/embed-subscribe/<username>）；发送由 deploy.yml 触发
+[subscribe]
+    buttondown = "luoli523"
+
 [comments]
     enabled  = true
     provider = "waline"
