@@ -46,6 +46,7 @@ The site has a **split rendering model**:
 | `data/announcements.yaml` | Drives the floating announcement panel on the homepage |
 | `scripts/update_announcements.py` | Prepends a new entry to `announcements.yaml` from a post's front matter |
 | `config/_default/params.toml` | Waline comments config, sidebar, widgets, color scheme |
+| `docs/WALINE.md` | Waline 评论后端运维手册：架构、排查 curl、版本升级流程、表结构、事故复盘 |
 | `config/_default/hugo.toml` | Base URL, language, theme, pagination, URL structure |
 | `config/_default/markup.toml` | LaTeX math passthrough, code highlighting settings |
 
