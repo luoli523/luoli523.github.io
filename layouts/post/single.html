@@ -1027,6 +1027,8 @@
             </div>
           </footer>
 
+          {{ partial "subscribe.html" (dict "site" .Site "size" "compact" "source" "main-post") }}
+
           <!-- Comments -->
           <section class="article-comments" id="comments" aria-label="评论">
             <div id="waline"></div>
