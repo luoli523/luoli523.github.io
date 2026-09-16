@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "09-16"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>让 AI 用上你手里的系统：鬼哥开源一套能跑通的 Connector + Plugin</strong>'
+  link: /p/guige-ai-connector-plugin-demo/
+
 - date: "09-08"
   color: amber
   type: tool
