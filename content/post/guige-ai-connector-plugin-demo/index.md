@@ -28,6 +28,12 @@ tags:
 
 打开 Cowork、ChatGPT、Grok 的设置，都有一页叫 Connectors 的东西，一排 Gmail、Drive、Notion 的图标。这些服务只做了一次接入，几家 AI 产品都能用，背后是同一个标准 MCP。你自己的系统按这个标准做一个"插头"，也能插上去。这个插头就是 connector。
 
+<div style="display:flex;gap:8px;align-items:flex-start;margin:0.5em 0 1em;">
+  <figure style="flex:1;margin:0;"><img src="connectors-codex.webp" alt="Codex 的 Plugins 页" style="width:100%;border-radius:6px;"><figcaption style="font-size:0.8em;text-align:center;opacity:0.7;">Codex / ChatGPT</figcaption></figure>
+  <figure style="flex:1;margin:0;"><img src="connectors-cowork.webp" alt="Claude 的 Connectors 目录" style="width:100%;border-radius:6px;"><figcaption style="font-size:0.8em;text-align:center;opacity:0.7;">Claude / Cowork</figcaption></figure>
+  <figure style="flex:1;margin:0;"><img src="connectors-grok.webp" alt="Grok 的 Marketplace" style="width:100%;border-radius:6px;"><figcaption style="font-size:0.8em;text-align:center;opacity:0.7;">Grok</figcaption></figure>
+</div>
+
 但光插上没用。AI 知道能查工单，不知道处理一张工单该先查人还是先搜文档，不知道搜到两篇日期不同的文档该信哪篇。所以 connector 之上还要一层 skill，把老员工脑子里的流程写成 AI 能照着做的说明书。最后把两样打成一个 plugin，同事一条命令装上。
 
 ![以前 vs 现在](before-after.webp)
