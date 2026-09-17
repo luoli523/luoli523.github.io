@@ -28,6 +28,10 @@ favicon        = "img/favicon.png"
     ]
     page     = [{ type = "toc" }]
 
+# 邮件订阅入口（仓库 luoli523/guige-subscribe，名单在 Resend）；群发由 deploy.yml 触发
+[subscribe]
+    endpoint = "https://subscribe.guige.ai/subscribe"
+
 [comments]
     enabled  = true
     provider = "waline"
