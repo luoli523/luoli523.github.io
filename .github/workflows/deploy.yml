@@ -71,3 +71,29 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # 邮件订阅：这次 push 新增的文章，部署完成后通过 Resend 发给「鬼哥博客」名单（摘要 + 链接）
+  # 脚本与 guige-ai-site 共用一份，直接拉取
+  notify:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Notify subscribers of new posts
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          NEW=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.sha }} 2>/dev/null \
+            | grep -E '^content/post/[^/]+/index\.md$' || true)
+          if [ -z "$NEW" ]; then echo "本次 push 没有新增文章，跳过"; exit 0; fi
+          curl -fsSL -o notify_subscribers.py \
+            https://raw.githubusercontent.com/luoli523/guige-ai-site/main/scripts/notify_subscribers.py
+          for F in $NEW; do
+            python3 notify_subscribers.py --kind post --file "$F" \
+              --base-url https://luoli523.github.io \
+              --audience beb5412b-f8dc-4377-815b-b82313550d30
+          done
