@@ -1,0 +1,86 @@
+{{/*
+  邮件订阅表单：纯 HTML，POST 到 subscribe.guige.ai（仓库 luoli523/guige-subscribe，名单在 Resend）
+  用法：{{ partial "subscribe.html" (dict "page" . "size" "large" "source" "main-home") }}
+    size   : "large"（首页整段）| "compact"（文末卡片）
+    source : 订阅来源标记，进确认 token，便于统计哪个入口带来订阅
+  与 guige-ai-site 的 layouts/_partials/subscribe.html 是同一份表单，改动请两边同步；
+  首页与文章页各自内联 CSS，所以样式也放在这里，跟着 partial 走。主站默认勾 博客 与 AI。
+*/}}
+{{ $endpoint := .page.Site.Params.subscribe.endpoint }}
+{{ $size := .size | default "compact" }}
+<style>
+  .subscribe {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    padding: 28px 32px;
+    background: var(--bg-card, #0f151e);
+    border: 1px solid var(--border, rgba(255,255,255,0.06));
+    border-radius: 20px;
+  }
+  .subscribe-compact { margin-top: 56px; padding: 22px 24px; gap: 20px; }
+  .subscribe-eyebrow {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--teal, #2dd4bf); margin-bottom: 6px;
+  }
+  .subscribe-title {
+    font-family: var(--font-serif, 'Noto Serif SC', serif);
+    font-size: 1.35rem; font-weight: 600; margin: 0 0 6px;
+    color: var(--text-primary, #e8eaf0);
+  }
+  .subscribe-compact .subscribe-title { font-size: 1.1rem; }
+  .subscribe-desc { margin: 0; color: var(--text-secondary, #8b9ab0); font-size: 0.92rem; line-height: 1.6; max-width: 46ch; }
+  .subscribe-compact .subscribe-desc { font-size: 0.86rem; }
+  .subscribe-form { display: flex; flex-direction: column; gap: 10px; flex: 0 0 auto; }
+  .subscribe-lists { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.86rem; color: var(--text-secondary, #8b9ab0); }
+  .subscribe-lists label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+  .subscribe-lists input { accent-color: var(--teal, #2dd4bf); width: 15px; height: 15px; margin: 0; }
+  .subscribe-row { display: flex; gap: 10px; }
+  .subscribe-input {
+    width: 260px; padding: 11px 14px;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 0.9rem;
+    color: var(--text-primary, #e8eaf0); background: var(--bg-elevated, #131920);
+    border: 1px solid var(--border, rgba(255,255,255,0.06)); border-radius: 8px; outline: none;
+    transition: border-color 0.35s;
+  }
+  .subscribe-input::placeholder { color: var(--text-muted, #4a5568); }
+  .subscribe-input:focus { border-color: var(--teal, #2dd4bf); }
+  [data-theme="light"] .subscribe-input { background: #f0f4f8; border-color: rgba(0, 0, 0, 0.1); }
+  .subscribe-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .subscribe-btn {
+    padding: 11px 22px;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 0.88rem; font-weight: 600;
+    color: var(--bg-void, #07090f); background: var(--teal, #2dd4bf);
+    border: none; border-radius: 8px; cursor: pointer;
+    transition: box-shadow 0.35s, transform 0.35s;
+  }
+  .subscribe-btn:hover { box-shadow: 0 0 0 4px rgba(45,212,191,0.15), 0 8px 24px rgba(45,212,191,0.35); transform: translateY(-1px); }
+  @media (max-width: 720px) {
+    .subscribe { flex-direction: column; align-items: stretch; gap: 18px; padding: 22px 20px; }
+    .subscribe-row { flex-direction: column; }
+    .subscribe-input { width: 100%; }
+  }
+</style>
+<div class="subscribe subscribe-{{ $size }}" role="region" aria-label="邮件订阅">
+  <div class="subscribe-text">
+    <div class="subscribe-eyebrow">Newsletter</div>
+    <h3 class="subscribe-title">{{ if eq $size "large" }}订阅鬼哥的更新{{ else }}订阅更新{{ end }}</h3>
+    <p class="subscribe-desc">新内容直接送到邮箱，只发摘要和链接，每封都能一键退订。勾选你想收的：</p>
+  </div>
+  <form class="subscribe-form" action="{{ $endpoint }}" method="post">
+    <div class="subscribe-lists">
+      <label><input type="checkbox" name="list" value="blog" checked /> 鬼哥博客</label>
+      <label><input type="checkbox" name="list" value="ai" checked /> AI 每日动态</label>
+      <label><input type="checkbox" name="list" value="poem" /> 鬼话诗</label>
+    </div>
+    <div class="subscribe-row">
+      <input class="subscribe-input" type="email" name="email" placeholder="you@example.com" autocomplete="email" required aria-label="邮箱地址" />
+      <button class="subscribe-btn" type="submit">订阅</button>
+    </div>
+    <input type="hidden" name="source" value="{{ .source }}" />
+    <input type="hidden" name="back" value="{{ .page.Permalink }}" />
+    <input class="subscribe-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  </form>
+</div>

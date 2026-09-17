@@ -2854,8 +2854,14 @@
     </div>
   </section>
 
-
-
+  <!-- ============================================================
+       SUBSCRIBE
+  ============================================================ -->
+  <section class="subscribe-strip" id="subscribe" aria-label="邮件订阅">
+    <div class="section-inner reveal" style="padding-top:0">
+      {{ partial "subscribe.html" (dict "page" . "size" "large" "source" "main-home") }}
+    </div>
+  </section>
 
   <!-- ============================================================
        ABOUT STRIP
