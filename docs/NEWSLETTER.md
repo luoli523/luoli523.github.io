@@ -45,6 +45,19 @@ subscribe.guige.ai/subscribe  ── Resend ──►  确认邮件（48 小时�
 
 发件人 `鬼哥 <hi@guige.ai>`，回信 `luoli523@gmail.com`，写在脚本和 Vercel 环境变量里。
 
+### 邮件抬头图
+
+确认邮件和群发邮件顶部各带一张站点封面，外链 600px JPEG（Outlook 不认 WebP），约 90 KB：
+
+| 站点 | 邮件用 | 全尺寸原图（WebP，1664px） |
+|---|---|---|
+| 主站 | `static/img/cover-email.jpg` → <https://luoli523.github.io/img/cover-email.jpg> | `static/img/cover.webp` |
+| guige-ai-site | `static/img/cover-email.jpg` → <https://luoli523.github.io/guige-ai-site/img/cover-email.jpg> | `static/img/cover.webp` |
+| poem_gen_pub | `site/static/cover-email.jpg` → <https://luoli523.github.io/poem_gen_pub/cover-email.jpg> | `site/static/cover.webp` |
+
+换图：`cwebp -q 88` 出 WebP，`sips -Z 600 -s format jpeg -s formatOptions 82` 出邮件版，文件名不变则代码不用动。
+引用处：`guige-subscribe/lib/common.js` 的 `LISTS.<key>.image`、`notify_subscribers.py` 的 `COVERS`。
+
 ---
 
 ## 密钥与配置在哪
