@@ -29,7 +29,7 @@ subscribe.guige.ai/subscribe  ── Resend ──►  确认邮件（48 小时�
 |---|---|---|
 | 域名 `guige.ai` | Cloudflare Registrar，到期 2028-09-17，DNS 在 Cloudflare | 发件域 + `subscribe.guige.ai` |
 | Resend | <https://resend.com>，账号 luoli523@gmail.com，区域 Tokyo | 名单（audience）、发确认信、群发、送达/打开/点击统计 |
-| `guige-subscribe` | 仓库 [luoli523/guige-subscribe](https://github.com/luoli523/guige-subscribe)（私有）→ Vercel 项目同名 → `subscribe.guige.ai` | 双重确认的两个接口，约 150 行 Node，无依赖 |
+| `guige-subscribe` | 仓库 [luoli523/guige-subscribe](https://github.com/luoli523/guige-subscribe)（私有）→ Vercel 项目同名 → `subscribe.guige.ai` | 双重确认的两个接口，约 150 行 Node，无依赖；三个名单各有一套确认邮件文案，在 `lib/common.js` 的 `LISTS` 里改 |
 | `notify_subscribers.py` | [guige-ai-site/scripts/notify_subscribers.py](https://github.com/luoli523/guige-ai-site/blob/main/scripts/notify_subscribers.py)，主站与诗词站 workflow 直接拉 raw | 把新文章组成邮件，调 Resend Broadcasts 发给指定名单 |
 | notify job | 三个仓库各自的 deploy workflow 末尾 | 部署成功后找新内容、调脚本 |
 
@@ -37,8 +37,8 @@ subscribe.guige.ai/subscribe  ── Resend ──►  确认邮件（48 小时�
 
 | 名单 | Resend audience id | 站点 | notify 触发 |
 |---|---|---|---|
-| AI 每日动态 | `78a9e1a3-2334-4cb2-a2b0-fefe971c28f5` | guige-ai-site | push 新增 `content/daily/YYYY-MM-DD.md` |
-| 鬼哥博客 | `beb5412b-f8dc-4377-815b-b82313550d30` | luoli523.github.io | push 新增 `content/post/*/index.md` |
+| 鬼哥AI行业动态&学习指引 | `78a9e1a3-2334-4cb2-a2b0-fefe971c28f5` | guige-ai-site | push 新增 `content/daily/YYYY-MM-DD.md`（bot 有内容才发，不固定每日） |
+| 鬼哥的笔记随想 | `beb5412b-f8dc-4377-815b-b82313550d30` | luoli523.github.io | push 新增 `content/post/*/index.md` |
 | 鬼话诗 | `32bad0bc-684d-4ade-8128-37d3000b9b2f` | poem_gen_pub | 部署后找目录名以今天（北京日期）开头的 `site/content/poems/*` |
 
 诗词站的部署由 `workflow_run` 触发，拿不到 push 的 diff，所以按日期找；脚本按 name 幂等，重复部署不会重发。
@@ -136,7 +136,7 @@ cd guige-ai-site && RESEND_API_KEY=$(cat ~/.config/resend/api_key) python3 scrip
 | 联系人 | 1000 | 更多 |
 | audience | 3 | 更多 |
 
-每日简报 + 每日诗词各一封，粗算：AI 名单 + 诗词名单合计约 100 人时触顶。到那时二选一：升 Pro，或把发信通道换成 Amazon SES（脚本只需改 `api()` 那一层，名单可导出迁移）。
+诗词每天一封、AI 动态不定期，粗算：两个名单合计约 100 人时可能触顶。到那时二选一：升 Pro，或把发信通道换成 Amazon SES（脚本只需改 `api()` 那一层，名单可导出迁移）。
 
 ---
 
