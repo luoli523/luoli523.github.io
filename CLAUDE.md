@@ -47,6 +47,7 @@ The site has a **split rendering model**:
 | `scripts/update_announcements.py` | Prepends a new entry to `announcements.yaml` from a post's front matter |
 | `config/_default/params.toml` | Waline comments config, sidebar, widgets, color scheme |
 | `docs/WALINE.md` | Waline 评论后端运维手册：架构、排查 curl、版本升级流程、表结构、事故复盘 |
+| `docs/NEWSLETTER.md` | 邮件订阅运维手册：guige.ai + Resend + subscribe.guige.ai，三名单、密钥位置、排查、加新站、踩坑 |
 | `config/_default/hugo.toml` | Base URL, language, theme, pagination, URL structure |
 | `config/_default/markup.toml` | LaTeX math passthrough, code highlighting settings |
 
