@@ -27,9 +27,9 @@ subscribe.guige.ai/subscribe  ── Resend ──►  确认邮件（48 小时�
 
 | 组件 | 在哪 | 干什么 |
 |---|---|---|
-| 域名 `guige.ai` | Cloudflare Registrar，到期 2028-09-17，DNS 在 Cloudflare | 发件域 + `subscribe.guige.ai` |
+| 域名 `guige.ai` | Cloudflare Registrar，到期 2028-09-17，DNS 在 Cloudflare | 发件域 + `subscribe.guige.ai` + `go.guige.ai` |
 | Resend | <https://resend.com>，账号 luoli523@gmail.com，区域 Tokyo | 名单（audience）、发确认信、群发、送达/打开/点击统计 |
-| `guige-subscribe` | 仓库 [luoli523/guige-subscribe](https://github.com/luoli523/guige-subscribe)（私有）→ Vercel 项目同名 → `subscribe.guige.ai` | 双重确认的两个接口，约 150 行 Node，无依赖；三个名单各有一套确认邮件文案，在 `lib/common.js` 的 `LISTS` 里改 |
+| `guige-subscribe` | 仓库 [luoli523/guige-subscribe](https://github.com/luoli523/guige-subscribe)（私有）→ Vercel 项目同名 → `subscribe.guige.ai`、`go.guige.ai`；**push `main` 即自动部署上线**（2026-09-25 起连了 GitHub，之前是本机 CLI 部署） | 双重确认的两个接口，约 150 行 Node，无依赖；三个名单各有一套确认邮件文案，在 `lib/common.js` 的 `LISTS` 里改。顺带挂短链接 `go.guige.ai/<短码>`：`vercel.json` 的 `redirects` 加一行即可，写法见该仓库 README |
 | `notify_subscribers.py` | [guige-ai-site/scripts/notify_subscribers.py](https://github.com/luoli523/guige-ai-site/blob/main/scripts/notify_subscribers.py)，主站与诗词站 workflow 直接拉 raw | 把新文章组成邮件，调 Resend Broadcasts 发给指定名单 |
 | notify job | 三个仓库各自的 deploy workflow 末尾 | 部署成功后找新内容、调脚本 |
 
@@ -80,6 +80,7 @@ Vercel CLI 本机需 `npx -y vercel@latest login`；`vercel env add NAME product
 | CNAME | `rsend` | `rsend-apne1.forge.rmta.net` | SPF / 退信域 |
 | TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:luoli523@gmail.com` | DMARC 监控模式；发信稳定后可改 `p=quarantine` |
 | CNAME | `subscribe` | `cname.vercel-dns.com` | 订阅接口 |
+| CNAME | `go` | `cname.vercel-dns.com` | 短链接，同一个 Vercel 项目 |
 
 ---
 
