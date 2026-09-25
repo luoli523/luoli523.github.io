@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "09-25"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>32G 的 M6 Mac mini，怎么同时养活聊天和画图两个大模型</strong>'
+  link: /p/mac-mini-ai-workstation/
+
 - date: "09-16"
   color: teal
   type: note
