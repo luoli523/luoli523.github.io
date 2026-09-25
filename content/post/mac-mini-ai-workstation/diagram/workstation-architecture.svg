@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="t d">
+  <title id="t">私人 AI 工作站的组成：一次聊着天出张图的完整流程</title>
+  <desc id="d">浏览器把中文描述发给 Open WebUI；Open WebUI 先请 Ollama 上的 Qwen3.8 写英文提示词，再提交给 ComfyUI 生成图片；ComfyUI 接到任务时先让 Ollama 卸载模型，出图 5 秒后释放自己的模型。</desc>
+  <defs>
+    <style>
+      text { font-family: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", sans-serif; fill: #172033; }
+      .mono { font-family: "SFMono-Regular", "JetBrains Mono", "Cascadia Code", monospace; }
+      .title { font-size: 28px; font-weight: 700; }
+      .sub { font-size: 15px; fill: #5B6475; }
+      .h { font-size: 19px; font-weight: 700; }
+      .n { font-size: 14px; fill: #3A4254; }
+      .lbl { font-size: 13px; fill: #3A4254; }
+      .small { font-size: 12px; fill: #5B6475; }
+      .flow { stroke: #475569; stroke-width: 2; fill: none; }
+      .ret { stroke: #475569; stroke-width: 2; fill: none; stroke-dasharray: 6 5; }
+      .evict { stroke: #B45309; stroke-width: 2; fill: none; stroke-dasharray: 3 5; }
+    </style>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="arwA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B45309"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F5F0E8"/>
+
+  <text x="40" y="56" class="title">一次“聊着天出张图”的完整流程</text>
+  <text x="40" y="86" class="sub">两个大模型轮流使用同一块 32G 统一内存</text>
+
+  <!-- machine boundary -->
+  <rect x="40" y="110" width="1200" height="570" rx="18" fill="#FBF8F2" stroke="#C9BFAE" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <text x="62" y="138" class="lbl" font-weight="600">M6 Mac mini · 32G 统一内存</text>
+
+  <!-- connectors (behind nodes) -->
+  <!-- you -> open webui -->
+  <path class="flow" d="M200,375 H306" marker-end="url(#arw)"/>
+  <text x="253" y="362" class="lbl" text-anchor="middle">描述画面</text>
+
+  <!-- open webui -> ollama (request) -->
+  <path class="flow" d="M380,320 V205 H616" marker-end="url(#arw)"/>
+  <text x="400" y="193" class="lbl">① 请 Qwen3.8 写提示词</text>
+  <!-- ollama -> open webui (return) -->
+  <path class="ret" d="M620,255 H450 V316" marker-end="url(#arw)"/>
+  <text x="470" y="276" class="small">英文提示词</text>
+
+  <!-- open webui -> comfyui (submit) -->
+  <path class="flow" d="M380,430 V505 H616" marker-end="url(#arw)"/>
+  <text x="462" y="493" class="lbl">② 提交提示词</text>
+  <!-- comfyui -> open webui (image back) -->
+  <path class="ret" d="M620,572 H450 V434" marker-end="url(#arw)"/>
+  <text x="462" y="598" class="small">③ 图片回到对话</text>
+  <text x="462" y="616" class="small">（约 4 分钟后）</text>
+
+  <!-- comfyui evicts ollama -->
+  <path class="evict" d="M770,466 V284" marker-end="url(#arwA)"/>
+  <text x="786" y="366" class="lbl" style="fill:#92400E">接到任务：</text>
+  <text x="786" y="386" class="lbl" style="fill:#92400E">先让 Ollama 卸载模型</text>
+
+  <!-- nodes -->
+  <rect x="60" y="330" width="140" height="90" rx="45" fill="#FFFFFF" stroke="#64748B" stroke-width="2"/>
+  <text x="130" y="368" class="h" text-anchor="middle">你</text>
+  <text x="130" y="394" class="small" text-anchor="middle">浏览器 · Tailscale</text>
+
+  <rect x="310" y="320" width="220" height="110" rx="14" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="420" y="366" class="h" text-anchor="middle">Open WebUI</text>
+  <text x="420" y="394" class="n mono" text-anchor="middle">:8080</text>
+
+  <rect x="620" y="160" width="300" height="120" rx="14" fill="#DDF4EF" stroke="#0F766E" stroke-width="2"/>
+  <text x="646" y="198" class="h" style="fill:#0F4C45">Ollama</text>
+  <text x="646" y="228" class="n">Qwen3.8-27B · MLX</text>
+  <rect x="646" y="244" width="78" height="24" rx="12" fill="#0F766E"/>
+  <text x="685" y="261" class="small" style="fill:#FFFFFF" text-anchor="middle" font-weight="600">约 18G</text>
+
+  <rect x="620" y="470" width="300" height="120" rx="14" fill="#FCEBCB" stroke="#B45309" stroke-width="2"/>
+  <text x="646" y="508" class="h" style="fill:#7C2D12">ComfyUI <tspan class="n mono" style="fill:#7C2D12">:8188</tspan></text>
+  <text x="646" y="538" class="n">Qwen-Image-2.1 · int8</text>
+  <rect x="646" y="554" width="78" height="24" rx="12" fill="#B45309"/>
+  <text x="685" y="571" class="small" style="fill:#FFFFFF" text-anchor="middle" font-weight="600">约 17G</text>
+  <text x="646" y="614" class="small" style="fill:#92400E">出图 5 秒后：/free 释放内存</text>
+
+  <!-- rules card -->
+  <rect x="980" y="160" width="236" height="430" rx="14" fill="#FFFFFF" stroke="#C9BFAE" stroke-width="1.5"/>
+  <text x="1000" y="196" class="h">轮流用内存的三条规则</text>
+
+  <circle cx="1011" cy="236" r="11" fill="#0F766E"/>
+  <text x="1011" y="241" class="small" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">1</text>
+  <text x="1030" y="241" class="n" font-weight="600">聊完 1 分钟就放手</text>
+  <text x="1030" y="264" class="small">Open WebUI 里给模型设</text>
+  <text x="1030" y="283" class="small mono">keep_alive = 1m</text>
+
+  <circle cx="1011" cy="330" r="11" fill="#B45309"/>
+  <text x="1011" y="335" class="small" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">2</text>
+  <text x="1030" y="335" class="n" font-weight="600">接单先腾地方</text>
+  <text x="1030" y="358" class="small">ComfyUI 收到任务，</text>
+  <text x="1030" y="377" class="small">立刻卸载 Ollama 的模型</text>
+
+  <circle cx="1011" cy="424" r="11" fill="#B45309"/>
+  <text x="1011" y="429" class="small" style="fill:#FFFFFF" text-anchor="middle" font-weight="700">3</text>
+  <text x="1030" y="429" class="n" font-weight="600">画完马上放手</text>
+  <text x="1030" y="452" class="small">出图 5 秒内调用 /free，</text>
+  <text x="1030" y="471" class="small mono">unload + free_memory</text>
+
+  <line x1="1000" y1="506" x2="1196" y2="506" stroke="#E4DCCD" stroke-width="1.5"/>
+  <text x="1000" y="534" class="small">生图开头的 swap 峰值</text>
+  <text x="1000" y="564" class="n" font-weight="700">15.5G → <tspan style="fill:#0F766E">4.0G</tspan></text>
+
+  <!-- footer -->
+  <text x="640" y="656" class="n" text-anchor="middle" font-weight="600">同一时刻，内存里只留一个大模型</text>
+</svg>

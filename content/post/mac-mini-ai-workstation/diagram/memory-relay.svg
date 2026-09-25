@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="t d">
+  <title id="t">一次生图的内存接力</title>
+  <desc id="d">2026-09-25 01:15 的实测记录：ComfyUI 接到任务后立刻卸载 Qwen3.8，生图约 4 分钟期间 swap 稳定在 3.8G 左右；出图后两者短暂重叠约 5 秒，swap 冲到 7.5G 后回落到 5.2G。</desc>
+  <defs>
+    <style>
+      text { font-family: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", sans-serif; fill: #172033; }
+      .mono { font-family: "SFMono-Regular", "JetBrains Mono", "Cascadia Code", monospace; }
+      .title { font-size: 28px; font-weight: 700; }
+      .sub { font-size: 15px; fill: #5B6475; }
+      .lane { font-size: 14px; font-weight: 600; }
+      .lbl { font-size: 13px; fill: #3A4254; }
+      .small { font-size: 12px; fill: #5B6475; }
+      .bar { font-size: 13px; font-weight: 600; fill: #FFFFFF; }
+    </style>
+  </defs>
+  <rect width="1280" height="720" fill="#F5F0E8"/>
+  <text x="40" y="52" class="title">一次生图的内存接力</text>
+  <text x="40" y="80" class="sub">2026-09-25 01:15 实测 · 1024×1024 · 25 步 · 每 5 秒采样一次</text>
+
+  <!-- overlap band -->
+  <rect x="994.9" y="128" width="21.8" height="472" fill="#F87171" opacity="0.22"/>
+
+  <!-- event lines -->
+  <line x1="274.7" y1="118" x2="274.7" y2="600" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="282.7" y="122" class="lbl">ComfyUI 接单 → 卸载 Qwen3.8</text>
+  <line x1="994.9" y1="118" x2="994.9" y2="600" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="986.9" y="122" class="lbl" text-anchor="end">出图</text>
+
+  <!-- lanes -->
+  <text x="40" y="167" class="lane" style="fill:#0F4C45">Qwen3.8</text>
+  <text x="40" y="185" class="small">Ollama</text>
+  <rect x="150" y="146" width="124.7" height="44" rx="6" fill="#0F766E"/>
+  <text x="212.4" y="173" class="bar" text-anchor="middle">写提示词</text>
+  <rect x="1010.5" y="146" width="199.5" height="44" rx="6" fill="#0F766E"/>
+  <text x="1110.2" y="173" class="bar" text-anchor="middle">回来写回复</text>
+  <text x="634.8" y="173" class="lbl" text-anchor="middle">已卸载，模型文件还在硬盘上</text>
+
+  <text x="40" y="237" class="lane" style="fill:#7C2D12">Qwen-Image</text>
+  <text x="40" y="255" class="small">ComfyUI</text>
+  <rect x="274.7" y="216" width="62.4" height="44" rx="6" fill="#D97706"/>
+  <rect x="337.1" y="216" width="645.4" height="44" rx="6" fill="#B45309"/>
+  <rect x="982.4" y="216" width="28.1" height="44" rx="4" fill="#D97706"/>
+  <text x="659.7" y="243" class="bar" text-anchor="middle">采样 25 步 × 约 8 秒</text>
+  <text x="305.9" y="284" class="small" text-anchor="middle">加载</text>
+  <text x="1016.5" y="284" class="small">5 秒内 /free</text>
+  <text x="1035.8" y="318" class="lbl" style="fill:#B91C1C">← 两者重叠约 5 秒</text>
+
+  <!-- swap chart -->
+  <text x="40" y="360" class="lane">swap 已用</text>
+  <text x="40" y="378" class="small">实测</text>
+    <line x1="150" y1="600.0" x2="1210" y2="600.0" stroke="#E4DCCD" stroke-width="1"/>
+  <text x="138" y="604.0" class="small" text-anchor="end">0G</text>
+  <line x1="150" y1="535.0" x2="1210" y2="535.0" stroke="#E4DCCD" stroke-width="1"/>
+  <text x="138" y="539.0" class="small" text-anchor="end">4G</text>
+  <line x1="150" y1="470.0" x2="1210" y2="470.0" stroke="#E4DCCD" stroke-width="1"/>
+  <text x="138" y="474.0" class="small" text-anchor="end">8G</text>
+  <line x1="150" y1="405.0" x2="1210" y2="405.0" stroke="#E4DCCD" stroke-width="1"/>
+  <text x="138" y="409.0" class="small" text-anchor="end">12G</text>
+  <line x1="150" y1="340.0" x2="1210" y2="340.0" stroke="#E4DCCD" stroke-width="1"/>
+  <text x="138" y="344.0" class="small" text-anchor="end">16G</text>
+  <line x1="215.5" y1="600" x2="215.5" y2="606" stroke="#94A3B8"/>
+  <text x="215.5" y="624" class="small mono" text-anchor="middle">01:15</text>
+  <line x1="402.5" y1="600" x2="402.5" y2="606" stroke="#94A3B8"/>
+  <text x="402.5" y="624" class="small mono" text-anchor="middle">01:16</text>
+  <line x1="589.6" y1="600" x2="589.6" y2="606" stroke="#94A3B8"/>
+  <text x="589.6" y="624" class="small mono" text-anchor="middle">01:17</text>
+  <line x1="776.6" y1="600" x2="776.6" y2="606" stroke="#94A3B8"/>
+  <text x="776.6" y="624" class="small mono" text-anchor="middle">01:18</text>
+  <line x1="963.7" y1="600" x2="963.7" y2="606" stroke="#94A3B8"/>
+  <text x="963.7" y="624" class="small mono" text-anchor="middle">01:19</text>
+  <line x1="1150.8" y1="600" x2="1150.8" y2="606" stroke="#94A3B8"/>
+  <text x="1150.8" y="624" class="small mono" text-anchor="middle">01:20</text>
+  <line x1="150" y1="348.1" x2="1210" y2="348.1" stroke="#B91C1C" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.7"/>
+  <text x="1206" y="340.1" class="small" text-anchor="end" style="fill:#B91C1C">调整前：生图开头冲到 15.5G</text>
+  <polyline points="274.7,534.7 290.3,535.0 305.9,535.0 321.5,535.2 337.1,537.0 352.6,537.0 368.2,537.0 383.8,537.0 399.4,537.0 415.0,537.0 430.6,537.0 446.2,537.0 461.8,537.1 480.5,537.3 496.1,537.3 511.6,537.3 527.2,537.3 542.8,537.3 558.4,537.4 574.0,537.4 589.6,537.4 605.2,537.4 620.8,537.4 636.4,537.5 651.9,537.5 667.5,537.7 683.1,537.7 698.7,537.8 714.3,537.8 729.9,537.8 745.5,537.8 761.1,537.8 776.6,537.8 792.2,537.8 807.8,537.8 826.5,537.8 842.1,537.8 857.7,537.9 873.3,537.9 888.9,537.9 904.5,537.9 920.1,537.9 935.6,537.9 951.2,537.9 966.8,537.9 982.4,538.0 1032.3,478.4 1047.9,505.7 1066.6,512.8 1082.2,513.2 1097.8,513.2 1113.4,514.1 1128.9,514.3 1144.5,514.6 1160.1,514.6 1175.7,514.7 1194.4,514.9 1210.0,515.0" fill="none" stroke="#DC2626" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="1032.3" cy="478.4" r="5" fill="#DC2626"/>
+  <text x="1042.3" y="468.4" class="lbl" style="fill:#B91C1C">7.5G，几秒后回落到 5.2G</text>
+  <text x="617.6" y="526.2" class="lbl" text-anchor="middle">生图全程稳定在 3.8G 左右</text>
+  <line x1="150" y1="600" x2="1210" y2="600" stroke="#94A3B8" stroke-width="1.5"/>
+
+  <!-- legend / note -->
+  <rect x="150" y="652" width="16" height="16" rx="3" fill="#0F766E"/>
+  <text x="174" y="665" class="small">Qwen3.8 在内存里</text>
+  <rect x="320" y="652" width="16" height="16" rx="3" fill="#B45309"/>
+  <text x="344" y="665" class="small">Qwen-Image-2.1 在内存里</text>
+  <line x1="530" y1="660" x2="556" y2="660" stroke="#DC2626" stroke-width="3"/>
+  <text x="564" y="665" class="small">swap 已用（实测）</text>
+  <text x="150" y="694" class="small">注：色带按日志时间表示哪个模型在内存里，不代表占用大小；swap 中约 3.8G 是其他程序早先换出的内存。</text>
+</svg>

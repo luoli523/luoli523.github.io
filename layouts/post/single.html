@@ -1148,5 +1148,34 @@
       imageUploader: false,
     });
   </script>
+
+  <!-- PhotoSwipe: 点击正文图片看大图 -->
+  <script type="module">
+    const imgs = [...document.querySelectorAll('.article-body img')];
+    if (imgs.length > 0) {
+      const { default: PhotoSwipeLightbox } = await import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js');
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css';
+      document.head.appendChild(css);
+
+      const lightbox = new PhotoSwipeLightbox({
+        bgOpacity: 0.95,
+        pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
+      });
+      lightbox.init();
+
+      const slides = () => imgs.map((img) => ({
+        src: img.getAttribute('src'),
+        width: img.naturalWidth || Number(img.getAttribute('width')) || 1600,
+        height: img.naturalHeight || Number(img.getAttribute('height')) || 1200,
+        alt: img.alt,
+      }));
+      imgs.forEach((img, i) => {
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', () => lightbox.loadAndOpen(i, slides()));
+      });
+    }
+  </script>
 </body>
 </html>
