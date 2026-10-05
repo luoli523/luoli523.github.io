@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "10-05"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>Qwen Image 40 步对上 Viggle Turbo 6 步：4090 上的四组实测</strong>'
+  link: /p/qwen-image-turbo/
+
 - date: "09-25"
   color: teal
   type: note
