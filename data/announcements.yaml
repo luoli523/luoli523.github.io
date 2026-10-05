@@ -9,6 +9,13 @@
   color: teal
   type: note
   tag: 新文章
+  text: '新文章：<strong>口播视频的 API 账单有点贵，鬼哥把 Mac mini 和 4090 接成了一间 AI 演播室</strong>'
+  link: /p/local-talking-studio/
+
+- date: "10-05"
+  color: teal
+  type: note
+  tag: 新文章
   text: '新文章：<strong>Qwen Image 40 步对上 Viggle Turbo 6 步：4090 上的四组实测</strong>'
   link: /p/qwen-image-turbo/
 
