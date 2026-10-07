@@ -38,7 +38,7 @@ subscribe.guige.ai/subscribe  ── Resend ──►  确认邮件（48 小时�
 | 名单 | Resend audience id | 站点 | notify 触发 |
 |---|---|---|---|
 | 鬼哥AI行业动态&学习指引 | `78a9e1a3-2334-4cb2-a2b0-fefe971c28f5` | guige-ai-site | push 新增 `content/daily/YYYY-MM-DD.md`（bot 有内容才发，不固定每日） |
-| 鬼哥的笔记随想 | `beb5412b-f8dc-4377-815b-b82313550d30` | luoli523.github.io | push 新增 `content/post/*/index.md` |
+| 鬼哥的笔记随想 | `beb5412b-f8dc-4377-815b-b82313550d30` | guige.ai | push 新增 `content/post/*/index.md` |
 | 鬼话诗 | `32bad0bc-684d-4ade-8128-37d3000b9b2f` | poem_gen_pub | 部署后找目录名以今天（北京日期）开头的 `site/content/poems/*` |
 
 诗词站的部署由 `workflow_run` 触发，拿不到 push 的 diff，所以按日期找；脚本按 name 幂等，重复部署不会重发。
@@ -51,9 +51,9 @@ subscribe.guige.ai/subscribe  ── Resend ──►  确认邮件（48 小时�
 
 | 站点 | 邮件用 | 全尺寸原图（WebP，1664px） |
 |---|---|---|
-| 主站 | `static/img/cover-email.jpg` → <https://luoli523.github.io/img/cover-email.jpg> | `static/img/cover.webp` |
-| guige-ai-site | `static/img/cover-email.jpg` → <https://luoli523.github.io/guige-ai-site/img/cover-email.jpg> | `static/img/cover.webp` |
-| poem_gen_pub | `site/static/cover-email.jpg` → <https://luoli523.github.io/poem_gen_pub/cover-email.jpg> | `site/static/cover.webp` |
+| 主站 | `static/img/cover-email.jpg` → <https://guige.ai/img/cover-email.jpg> | `static/img/cover.webp` |
+| guige-ai-site | `static/img/cover-email.jpg` → <https://guige.ai/guige-ai-site/img/cover-email.jpg> | `static/img/cover.webp` |
+| poem_gen_pub | `site/static/cover-email.jpg` → <https://guige.ai/poem_gen_pub/cover-email.jpg> | `site/static/cover.webp` |
 
 换图：`cwebp -q 88` 出 WebP，`sips -Z 600 -s format jpeg -s formatOptions 82` 出邮件版，文件名不变则代码不用动。
 引用处：`guige-subscribe/lib/common.js` 的 `LISTS.<key>.image`、`notify_subscribers.py` 的 `COVERS`。
@@ -122,11 +122,11 @@ cd /path/to/guige-subscribe && npx -y vercel@latest logs https://subscribe.guige
 ```bash
 cd guige-ai-site && RESEND_API_KEY=$(cat ~/.config/resend/api_key) python3 scripts/notify_subscribers.py \
   --kind daily --file content/daily/2026-09-18.md \
-  --base-url https://luoli523.github.io/guige-ai-site \
+  --base-url https://guige.ai/guige-ai-site \
   --audience 78a9e1a3-2334-4cb2-a2b0-fefe971c28f5 --dry-run   # 先建草稿看效果，去掉 --dry-run 真发
 ```
 
-`--kind post` 用 `--base-url https://luoli523.github.io`，`--kind poem` 用 `--base-url https://luoli523.github.io/poem_gen_pub`。
+`--kind post` 用 `--base-url https://guige.ai`，`--kind poem` 用 `--base-url https://guige.ai/poem_gen_pub`。
 草稿在 Resend 后台 Broadcasts 里能预览、能删（`DELETE /broadcasts/<id>`）。已发过的（name 相同）会被幂等跳过；确要重发，先在后台删掉那条 broadcast。
 
 ---

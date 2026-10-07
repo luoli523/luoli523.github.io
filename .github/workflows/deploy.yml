@@ -94,6 +94,6 @@ jobs:
             https://raw.githubusercontent.com/luoli523/guige-ai-site/main/scripts/notify_subscribers.py
           for F in $NEW; do
             python3 notify_subscribers.py --kind post --file "$F" \
-              --base-url https://luoli523.github.io \
+              --base-url https://guige.ai \
               --audience beb5412b-f8dc-4377-815b-b82313550d30
           done

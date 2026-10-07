@@ -1,6 +1,6 @@
 # Waline 评论后端运维手册
 
-主站（luoli523.github.io）与 [guige-ai-site](https://github.com/luoli523/guige-ai-site) 共用同一个 Waline 后端，
+主站（guige.ai）与 [guige-ai-site](https://github.com/luoli523/guige-ai-site) 共用同一个 Waline 后端，
 评论、表情反应、浏览量都走它。这份文档记录它部署在哪、怎么排查、怎么安全升级，以及踩过的坑。
 
 ---
@@ -49,7 +49,7 @@ curl -s "$S/api/article?path=$P&type=time&lang=zh-CN"
 
 # 跨域预检（前端提交评论前浏览器会先发这个，期望 204）
 curl -s -o /dev/null -w "%{http_code}\n" -X OPTIONS "$S/api/comment" \
-  -H "Origin: https://luoli523.github.io" -H "Access-Control-Request-Method: POST"
+  -H "Origin: https://guige.ai" -H "Access-Control-Request-Method: POST"
 ```
 
 正常返回都是 `{"errno":0,...}`。三种异常形态：

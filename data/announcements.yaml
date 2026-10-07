@@ -317,18 +317,18 @@
   type: book
   tag: 书籍
   text: "《<strong>跟鬼哥玩转 OpenClaw</strong>》书籍上传"
-  link: https://luoli523.github.io/learn-claw/
+  link: https://guige.ai/learn-claw/
 
 - date: "03-15"
   color: teal
   type: book
   tag: 书籍
   text: "《<strong>跟鬼哥玩转 Claude Code</strong>》书籍上传"
-  link: https://luoli523.github.io/learn-cc/
+  link: https://guige.ai/learn-cc/
 
 - date: "03-14"
   color: teal
   type: book
   tag: 书籍
   text: "《<strong>跟鬼哥一起学 LLM</strong>》书籍上传"
-  link: https://luoli523.github.io/learn-llm/
+  link: https://guige.ai/learn-llm/
