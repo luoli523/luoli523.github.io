@@ -11,6 +11,23 @@
 
 `4090-photo.webp` 复用 `qwen-image-turbo` 的 4090 实拍；`mac-mini-photo.webp` 复用 `mac-mini-ai-workstation` 的 Mac 实拍。`diana-talk.mp4` 与 `diana-poster.webp` 复用前文成片。
 
+## 已完成的工作台实截（2026-10-07）
+
+以下八张图片来自 `http://localhost:8080/audio-studio` 的真实界面，不是 AI 模拟。通过终端启动无头 Chrome，使用用户本人登录会话截图，再转换为 WebP。声音设计和播报表单填写了示例文字，未提交新的生成任务；Diana 视频及字幕是已存在的真实结果。
+
+| 建议文件名 | 截图内容 | 正文位置 |
+|---|---|---|
+| studio-voice-library.webp | 工作台导航、音色库、参考录音上传与现有音色列表 | 音色库介绍之后 |
+| studio-voice-design.webp | 文字设计音色表单、声音描述、语言、试听文案 | VoiceDesign 介绍之后 |
+| studio-portraits.webp | 人物库中的 Diana、人物名称、默认音色 | 人物库介绍之后 |
+| studio-narration.webp | Serena、示例文案和语速表单，不包含无关历史任务 | 生成播报介绍之后 |
+| studio-images.webp | Turbo/基础模型选择、参考图编辑、已有图像结果 | Qwen 图像工作台介绍之后 |
+| studio-video.webp | 4090 H3 引擎、Diana、文本配音入口、步数及预览参数 | 视频生成介绍之后 |
+| studio-video-result.webp | 已完成的 Diana 十二步短预览、字幕版播放和下载入口 | 视频参数图之后 |
+| studio-captions.webp | Diana 视频的字幕编辑器、逐句时间轴、样式和导出 | 字幕编辑介绍之后 |
+
+截图仅切换页面、填写未提交的示例、展开现有结果，不提交新生成任务、保存修改或发送 TG。音色库和图像工作台保留导航，其他图片聚焦对应表单或 Diana 卡片。已逐张检查，未截入密钥、Telegram 配置、账户信息或其他人物照片；字幕编辑器展示成片现有识别文字，仍需人工校对。
+
 ## service-architecture.webp — 服务架构
 
 Skill/style: `guige-svg / dark architecture / landscape`
