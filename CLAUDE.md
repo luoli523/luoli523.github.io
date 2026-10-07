@@ -96,3 +96,15 @@ Fonts: `Noto Serif SC` (serif body/headings) + `JetBrains Mono` (mono/UI labels)
 4. If a task requires changes to more than 3 files, stop and break it into smaller tasks first.
 5. When there's a bug, start by writing a test that reproduces it, then fix it until the test passes.
 6. Every time I correct you, reflect on what you did wrong and come up with a plan to never make the same mistake again.
+
+---
+
+## 站点地址（2026-10-07 起）
+
+本站发布在 **https://guige.ai/**（根域）。`guige.ai` 绑定在本仓库上
+（`static/CNAME` + Pages custom domain），**本账号下所有 Pages 项目站自动跟随**
+同域子路径，如 `guige.ai/guige-ai-site/`。旧地址 `luoli523.github.io/*` 自动 301。
+
+baseURL 在 `config/_default/hugo.toml`。根目录的 `hugo.toml` 是没用的残留默认文件，别改那个。
+
+域名拓扑、DNS 记录、各站构建配置、回滚方式，全部见 [docs/DOMAIN.md](docs/DOMAIN.md) —— 那里是唯一事实源。
