@@ -5,6 +5,13 @@
 # text: 支持 HTML 标签（<strong> 等）
 # link: 可选，点击跳转的链接
 
+- date: "11-20"
+  color: teal
+  type: note
+  tag: 新文章
+  text: '新文章：<strong>搭 Agent 平台，先设计 Action，再写 Orchestrator</strong>'
+  link: /p/agent-platform-action-first/
+
 - date: "10-05"
   color: teal
   type: note
