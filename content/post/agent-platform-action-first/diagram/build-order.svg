@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-label="两种搭法对比：从 loop 开始 vs 从 Action 开始">
+  <title>两种搭法对比：从 loop 开始 vs 从 Action 开始</title>
+
+  <defs>
+    <marker id="arr" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#111111"/>
+    </marker>
+    <marker id="arr-teal" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#0F766E"/>
+    </marker>
+    <marker id="arr-amber" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#92400E"/>
+    </marker>
+    <marker id="arr-red" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#DC2626"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#6B7280"/>
+    </marker>
+    <marker id="arr-open" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L11,5 L1,9" fill="none" stroke="#111111" stroke-width="2" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#F5F0E8"/>
+<text x='960' y='70' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='44' font-weight='700' fill='#111111' text-anchor='middle'>两种搭法对比：从 loop 开始 vs 从 Action 开始</text>
+  <line x1="960" y1="110" x2="960" y2="900" stroke="#111111" stroke-width="2" stroke-dasharray="6 8"/>
+  <rect x="80" y="118" width="820" height="70" rx="14" fill="#F3F4F6" stroke="#6B7280" stroke-width="2.5"/>
+  <text x='490' y='164' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='32' font-weight='700' fill='#374151' text-anchor='middle'>从 loop 开始</text>
+  <rect x="1020" y="118" width="820" height="70" rx="14" fill="#D8F6F0" stroke="#0F766E" stroke-width="2.5"/>
+  <text x='1430' y='164' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='32' font-weight='700' fill='#0F766E' text-anchor='middle'>从 Action 开始</text>
+  <line x1="120" y1="250" x2="120" y2="820" stroke="#6B7280" stroke-width="4"/>
+  <rect x="150" y="230" width="730" height="92" rx="14" fill="#FFFcf8" stroke="#6B7280" stroke-width="2.6"/>
+  <circle cx="120" cy="276.0" r="10" fill="#6B7280" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="130" y1="276.0" x2="150" y2="276.0" stroke="#6B7280" stroke-width="2"/>
+  <text x='174' y='266' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#111111' text-anchor='start'>第 1 周</text>
+  <text x='174' y='300' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='400' fill='#111111' text-anchor='start'>Orchestrator loop + 3 个 tools，demo 很顺</text>
+  <rect x="150" y="344" width="730" height="92" rx="14" fill="#FFFcf8" stroke="#6B7280" stroke-width="2.6"/>
+  <circle cx="120" cy="390.0" r="10" fill="#6B7280" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="130" y1="390.0" x2="150" y2="390.0" stroke="#6B7280" stroke-width="2"/>
+  <text x='174' y='380' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#111111' text-anchor='start'>上线</text>
+  <text x='174' y='414' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='400' fill='#111111' text-anchor='start'>重试导致重复 ticket</text>
+  <rect x="150" y="458" width="730" height="92" rx="14" fill="#FFF8F8" stroke="#DC2626" stroke-width="2.6"/>
+  <circle cx="120" cy="504.0" r="10" fill="#6B7280" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="130" y1="504.0" x2="150" y2="504.0" stroke="#6B7280" stroke-width="2"/>
+  <text x='174' y='494' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#DC2626' text-anchor='start'>补 idempotency</text>
+  <text x='174' y='528' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='400' fill='#111111' text-anchor='start'>改每个 tool adapter</text>
+  <g transform="translate(840,504.0) rotate(-18)">
+      <rect x="-16" y="-10" width="32" height="20" rx="4" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.8"/>
+      <line x1="-10" y1="0" x2="10" y2="0" stroke="#DC2626" stroke-width="1.6"/>
+      <line x1="-4" y1="-6" x2="-4" y2="6" stroke="#DC2626" stroke-width="1.2"/>
+      <line x1="4" y1="-6" x2="4" y2="6" stroke="#DC2626" stroke-width="1.2"/>
+    </g>
+  <rect x="150" y="572" width="730" height="92" rx="14" fill="#FFF8F8" stroke="#DC2626" stroke-width="2.6"/>
+  <circle cx="120" cy="618.0" r="10" fill="#6B7280" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="130" y1="618.0" x2="150" y2="618.0" stroke="#6B7280" stroke-width="2"/>
+  <text x='174' y='608' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#DC2626' text-anchor='start'>补审批</text>
+  <text x='174' y='642' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='400' fill='#111111' text-anchor='start'>参数在审批后被改</text>
+  <g transform="translate(840,618.0) rotate(-18)">
+      <rect x="-16" y="-10" width="32" height="20" rx="4" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.8"/>
+      <line x1="-10" y1="0" x2="10" y2="0" stroke="#DC2626" stroke-width="1.6"/>
+      <line x1="-4" y1="-6" x2="-4" y2="6" stroke="#DC2626" stroke-width="1.2"/>
+      <line x1="4" y1="-6" x2="4" y2="6" stroke="#DC2626" stroke-width="1.2"/>
+    </g>
+  <rect x="150" y="686" width="730" height="92" rx="14" fill="#FFF8F8" stroke="#DC2626" stroke-width="2.6"/>
+  <circle cx="120" cy="732.0" r="10" fill="#6B7280" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="130" y1="732.0" x2="150" y2="732.0" stroke="#6B7280" stroke-width="2"/>
+  <text x='174' y='722' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#DC2626' text-anchor='start'>补追溯</text>
+  <text x='174' y='756' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='400' fill='#111111' text-anchor='start'>四套 ID、四份日志对不齐</text>
+  <g transform="translate(840,732.0) rotate(-18)">
+      <rect x="-16" y="-10" width="32" height="20" rx="4" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.8"/>
+      <line x1="-10" y1="0" x2="10" y2="0" stroke="#DC2626" stroke-width="1.6"/>
+      <line x1="-4" y1="-6" x2="-4" y2="6" stroke="#DC2626" stroke-width="1.2"/>
+      <line x1="4" y1="-6" x2="4" y2="6" stroke="#DC2626" stroke-width="1.2"/>
+    </g>
+  <line x1="1060" y1="250" x2="1060" y2="820" stroke="#0F766E" stroke-width="4"/>
+  <rect x="1090" y="230" width="730" height="92" rx="14" fill="#FFFcf8" stroke="#0F766E" stroke-width="2.6"/>
+  <circle cx="1060" cy="276.0" r="10" fill="#0F766E" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="1070" y1="276.0" x2="1090" y2="276.0" stroke="#0F766E" stroke-width="2"/>
+  <text x='1114' y='266' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#0F766E' text-anchor='start'>第 1 周</text>
+  <text x='1114' y='300' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='400' fill='#111111' text-anchor='start'>Action 记录 + executor 闸门 + 默认拒绝 policy</text>
+  <g transform="translate(1784,276.0)">
+      <circle cx="0" cy="0" r="16" fill="#2dd4bf" stroke="#0F766E" stroke-width="1.6"/>
+      <polyline points="-7,0 -2.2,6 8,-7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  <rect x="1090" y="344" width="730" height="92" rx="14" fill="#FFFcf8" stroke="#0F766E" stroke-width="2.6"/>
+  <circle cx="1060" cy="390.0" r="10" fill="#0F766E" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="1070" y1="390.0" x2="1090" y2="390.0" stroke="#0F766E" stroke-width="2"/>
+  <text x='1114' y='398.0' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#0F766E' text-anchor='start'>加只读 tools（Tier 0）</text>
+  <g transform="translate(1784,390.0)">
+      <circle cx="0" cy="0" r="16" fill="#2dd4bf" stroke="#0F766E" stroke-width="1.6"/>
+      <polyline points="-7,0 -2.2,6 8,-7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  <rect x="1090" y="458" width="730" height="92" rx="14" fill="#FFFcf8" stroke="#0F766E" stroke-width="2.6"/>
+  <circle cx="1060" cy="504.0" r="10" fill="#0F766E" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="1070" y1="504.0" x2="1090" y2="504.0" stroke="#0F766E" stroke-width="2"/>
+  <text x='1114' y='494' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#0F766E' text-anchor='start'>加可逆写（Tier 1）</text>
+  <text x='1114' y='528' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='400' fill='#111111' text-anchor='start'>自动执行 + Audit Log</text>
+  <g transform="translate(1784,504.0)">
+      <circle cx="0" cy="0" r="16" fill="#2dd4bf" stroke="#0F766E" stroke-width="1.6"/>
+      <polyline points="-7,0 -2.2,6 8,-7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  <rect x="1090" y="572" width="730" height="92" rx="14" fill="#FFFcf8" stroke="#0F766E" stroke-width="2.6"/>
+  <circle cx="1060" cy="618.0" r="10" fill="#0F766E" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="1070" y1="618.0" x2="1090" y2="618.0" stroke="#0F766E" stroke-width="2"/>
+  <text x='1114' y='608' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#0F766E' text-anchor='start'>加外发 Action（Tier 2）</text>
+  <text x='1114' y='642' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='400' fill='#111111' text-anchor='start'>进 Approval Queue，冻结 hash</text>
+  <g transform="translate(1784,618.0)">
+      <circle cx="0" cy="0" r="16" fill="#2dd4bf" stroke="#0F766E" stroke-width="1.6"/>
+      <polyline points="-7,0 -2.2,6 8,-7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  <rect x="1090" y="686" width="730" height="92" rx="14" fill="#FFFcf8" stroke="#0F766E" stroke-width="2.6"/>
+  <circle cx="1060" cy="732.0" r="10" fill="#0F766E" stroke="#F5F0E8" stroke-width="3"/>
+  <line x1="1070" y1="732.0" x2="1090" y2="732.0" stroke="#0F766E" stroke-width="2"/>
+  <text x='1114' y='740.0' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#0F766E' text-anchor='start'>按 action_id 做 tracing、replay、regression evals</text>
+  <g transform="translate(1784,732.0)">
+      <circle cx="0" cy="0" r="16" fill="#2dd4bf" stroke="#0F766E" stroke-width="1.6"/>
+      <polyline points="-7,0 -2.2,6 8,-7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  <rect x="80" y="960" width="1760" height="80" rx="16" fill="#111111" stroke="#111111" stroke-width="0"/>
+  <text x='960' y='1012' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='36' font-weight='700' fill='#F5F0E8' text-anchor='middle'>能力可以从简，Action 模型不能后补</text>
+</svg>

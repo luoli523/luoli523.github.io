@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-label="Action 闸门：从 Orchestrator 到 tools 的唯一通路">
+  <title>Action 闸门：从 Orchestrator 到 tools 的唯一通路</title>
+
+  <defs>
+    <marker id="arr" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#111111"/>
+    </marker>
+    <marker id="arr-teal" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#0F766E"/>
+    </marker>
+    <marker id="arr-amber" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#92400E"/>
+    </marker>
+    <marker id="arr-red" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#DC2626"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#6B7280"/>
+    </marker>
+    <marker id="arr-open" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L11,5 L1,9" fill="none" stroke="#111111" stroke-width="2" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#F5F0E8"/>
+<text x='960' y='78' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='48' font-weight='700' fill='#111111' text-anchor='middle'>Action 闸门：从 Orchestrator 到 tools 的唯一通路</text>
+  <text x='960' y='124' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='24' font-weight='400' fill='#6B6B6B' text-anchor='middle'>Orchestrator 只能提议，执行必须经过 Permission Engine</text>
+  <rect x="64" y="300" width="310" height="170" rx="18" fill="#FFFDF8" stroke="#111111" stroke-width="3"/>
+  <text x='219.0' y='398' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='32' font-weight='700' fill='#111111' text-anchor='middle'>Orchestrator</text>
+  <rect x="400" y="318" width="330" height="200" rx="14" fill="#FFF" stroke="#111111" stroke-width="2.4"/>
+  <text x='420' y='356' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#111111' text-anchor='start'>Action 提议</text>
+  <g transform="translate(688,332) scale(1.15)">
+      <rect x="5" y="11" width="14" height="11" rx="2" fill="none" stroke="#92400E" stroke-width="2"/>
+      <path d="M8 11 V8.2 a4 4 0 0 1 8 0 V11" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  <text x='422' y='396' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='18' font-weight='500' fill='#1F2937' text-anchor='start'>tool: jira.create_issue</text>
+  <text x='422' y='426' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='18' font-weight='500' fill='#1F2937' text-anchor='start'>params: {...}</text>
+  <text x='422' y='456' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='18' font-weight='500' fill='#1F2937' text-anchor='start'>tier: 1</text>
+  <text x='422' y='486' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='18' font-weight='500' fill='#1F2937' text-anchor='start'>idempotency_key: 7f3c…</text>
+  <path d="M 374,385.0 L 398,385.0" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+  <rect x="780" y="250" width="380" height="300" rx="18" fill="#D8F6F0" stroke="#0F766E" stroke-width="5.5"/>
+  <text x='970.0' y='298' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='30' font-weight='700' fill='#111111' text-anchor='middle'>Permission Engine</text>
+  <rect x="804" y="340" width="150" height="52" rx="10" fill="#FFF" stroke="#6B7280" stroke-width="2"/>
+  <text x='879' y='374' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='22' font-weight='700' fill='#6B7280' text-anchor='middle'>deny</text>
+  <rect x="986" y="340" width="150" height="52" rx="10" fill="#ECFDF8" stroke="#0F766E" stroke-width="2.4"/>
+  <text x='1061' y='374' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='22' font-weight='700' fill='#0F766E' text-anchor='middle'>allow</text>
+  <rect x="850" y="460" width="240" height="56" rx="10" fill="#FEF3C7" stroke="#92400E" stroke-width="2.4"/>
+  <text x='970' y='496' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='20' font-weight='700' fill='#92400E' text-anchor='middle'>require_approval</text>
+  <path d="M 730,408 L 778,408" fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+  <path d="M 804,366 L 752,366 L 752,236 L 36,236 L 36,385.0 L 62,385.0" fill="none" stroke="#6B7280" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-gray)"/>
+  <rect x="318" y="196" width="164" height="32" rx="8" fill="#F5F0E8" stroke="none" stroke-width="0"/>
+  <text x='400' y='219' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='20' font-weight='600' fill='#6B7280' text-anchor='middle'>结构化原因</text>
+  <rect x="780" y="650" width="380" height="150" rx="16" fill="#FEF3C7" stroke="#f59e0b" stroke-width="3.5"/>
+  <g transform="translate(798,668) scale(1.35)">
+      <rect x="5" y="11" width="14" height="11" rx="2" fill="none" stroke="#92400E" stroke-width="2"/>
+      <path d="M8 11 V8.2 a4 4 0 0 1 8 0 V11" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  <text x='980.0' y='700' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='26' font-weight='700' fill='#92400E' text-anchor='middle'>Approval Queue</text>
+  <text x='970.0' y='758' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='600' fill='#92400E' text-anchor='middle'>params_hash 冻结</text>
+  <path d="M 970.0,550 L 970.0,648" fill="none" stroke="#92400E" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-amber)"/>
+  <text x='986.0' y='620' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='20' font-weight='600' fill='#92400E' text-anchor='start'>require_approval</text>
+  <polygon points="1248,670.0 1348.0,740 1248,810.0 1148.0,740" fill="#FFF" stroke="#111111" stroke-width="2.8"/>
+  <text x='1248' y='730' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='20' font-weight='700' fill='#111111' text-anchor='middle'>hash</text>
+  <text x='1248' y='764' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#111111' text-anchor='middle'>一致？</text>
+  <path d="M 1160,725.0 L 1148,725.0 L 1148,740 L 1146,740" fill="none" stroke="#92400E" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-amber)"/>
+  <rect x="1340" y="250" width="250" height="130" rx="14" fill="#FFFDF8" stroke="#111111" stroke-width="2.8"/>
+  <text x='1465.0' y='326' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='24' font-weight='700' fill='#111111' text-anchor='middle'>Tool Registry</text>
+  <rect x="1640" y="250" width="230" height="130" rx="14" fill="#FFFDF8" stroke="#111111" stroke-width="2.8"/>
+  <text x='1755.0' y='308' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='22' font-weight='700' fill='#111111' text-anchor='middle'>MCP Gateway</text>
+  <text x='1755.0' y='342' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='16' font-weight='400' fill='#6B6B6B' text-anchor='middle'>auth / proxy / sanitize</text>
+  <rect x="1640" y="430" width="230" height="150" rx="14" fill="#FFFDF8" stroke="#111111" stroke-width="2.8"/>
+  <text x='1755.0' y='482' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='22' font-weight='700' fill='#111111' text-anchor='middle'>MCP Servers</text>
+  <text x='1755.0' y='526' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='16' font-weight='400' fill='#6B6B6B' text-anchor='middle'>GitHub · Jira · Database</text>
+  <rect x="1340" y="430" width="250" height="150" rx="14" fill="#FFFDF8" stroke="#111111" stroke-width="2.8"/>
+  <text x='1465.0' y='482' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='22' font-weight='700' fill='#111111' text-anchor='middle'>Code Sandbox</text>
+  <text x='1465.0' y='526' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='16' font-weight='400' fill='#6B6B6B' text-anchor='middle'>隔离 / 断网 / 资源上限</text>
+  <path d="M 1160,315.0 L 1338,315.0" fill="none" stroke="#0F766E" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-teal)"/>
+  <rect x="1168" y="267.0" width="110" height="34" rx="8" fill="#D8F6F0" stroke="#0F766E" stroke-width="1.6"/>
+  <text x='1223' y='291.0' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='18' font-weight='700' fill='#0F766E' text-anchor='middle'>allow</text>
+  <path d="M 1590,315.0 L 1638,315.0" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+  <path d="M 1465.0,380 L 1465.0,428" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+  <path d="M 1755.0,380 L 1755.0,428" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+  <path d="M 1248,670 L 1248,315.0 L 1334,315.0" fill="none" stroke="#0F766E" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-teal)"/>
+  <text x='1262' y='580' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#0F766E' text-anchor='start'>是</text>
+  <rect x="1360" y="790" width="220" height="80" rx="12" fill="#FEE2E2" stroke="#DC2626" stroke-width="3"/>
+  <text x='1470' y='840' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='26' font-weight='700' fill='#DC2626' text-anchor='middle'>TAMPERED</text>
+  <path d="M 1308,780 L 1358,830" fill="none" stroke="#DC2626" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-red)"/>
+  <text x='1338' y='776' font-family='Noto Sans CJK SC, Noto Sans SC, sans-serif' font-size='22' font-weight='700' fill='#DC2626' text-anchor='start'>否</text>
+  <path d="M 1870,505.0 L 1896,505.0 L 1896,148 L 219.0,148 L 219.0,298" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 7" marker-end="url(#arr-open)"/>
+  <path d="M 1465.0,580 L 1465.0,610 L 1896,610 L 1896,505" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 7"/>
+  <text x='1640' y='178' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='20' font-weight='600' fill='#111111' text-anchor='middle'>observe</text>
+  <rect x="64" y="980" width="1792" height="64" rx="12" fill="#EFE8DC" stroke="#111111" stroke-width="2"/>
+  <text x='960' y='1022' font-family='JetBrains Mono, IBM Plex Mono, ui-monospace, monospace' font-size='26' font-weight='600' fill='#111111' text-anchor='middle'>action_id 贯穿：trace · Audit Log · replay</text>
+</svg>
